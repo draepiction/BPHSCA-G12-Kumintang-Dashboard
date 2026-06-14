@@ -150,13 +150,13 @@
     justify-content: space-between;
   }
   .status-tag {
-    font-size: 10px;
+    font-size: 10.5px;
     text-transform: uppercase;
     font-weight: 700;
-    letter-spacing: .1em;
+    letter-spacing: .08em;
     background: var(--accent);
     color: #fff;
-    padding: 2px 8px;
+    padding: 3px 10px;
     border-radius: 4px;
   }
 
@@ -493,7 +493,18 @@
   .block-row:last-child, .member-row:last-child, .uni-row:last-child { border-bottom: none; }
   .block-name, .member-name, .uni-desc { color: var(--muted); }
   
-  .block-days, .uni-tag {
+  .block-days {
+    font-weight: 500;
+    font-size: 11px;
+    color: #fff;
+    background: var(--soft);
+    border-radius: 3px;
+    padding: 2px 7px;
+    letter-spacing: .02em;
+    text-transform: uppercase;
+  }
+  
+  .uni-tag {
     font-weight: 500;
     font-size: 11px;
     color: #fff;
@@ -535,7 +546,6 @@
   }
   .grand-total .g-num { font-family: 'Playfair Display', serif; font-size: 22px; font-weight: 600; color: var(--soft); }
 
-  /* TOGGLE SWITCH FOR GLOBAL VIEW CONTROL */
   .view-toggle-btn {
     background: var(--ink);
     color: var(--parchment);
@@ -557,12 +567,11 @@
 <header>
   <div class="eyebrow">Batangas Province High School for Culture and Arts</div>
   <h1>G12 <span>Kumintang</span></h1>
-  <div class="sub">First Trimester &middot; SY 2026&ndash;2027</div>
+  <div class="sub">First Trimester &middot; SY 2026-2027</div>
 </header>
 
 <div class="wrapper">
 
-  <!-- DYNAMIC TODAY VIEW PANEL -->
   <div class="today-box" id="todayDashboard">
     <div class="today-banner">
       <div class="today-title" id="todayDayName">Loading Today...</div>
@@ -570,32 +579,34 @@
     </div>
     <div class="today-grid">
       
-      <!-- Live Schedule Tracking (Convenience Feature) -->
       <div class="live-status-bar" id="liveStatusBar">
         <span>Current Class Status</span>
         <span class="status-tag" id="currentPeriodLabel">Checking...</span>
       </div>
 
-      <!-- Left Column: Class List for Today -->
       <div class="dashboard-pane">
         <h3>Today's Timeline</h3>
         <div id="todayScheduleContainer">
-          <!-- Populated by JavaScript -->
-        </div>
+          </div>
       </div>
 
-      <!-- Right Column: Uniform & Cleaners Profile -->
       <div class="dashboard-pane">
         <h3>Daily Protocol</h3>
         
+        <div class="meta-card" style="border-left: 4px solid var(--eapp);">
+          <div class="meta-title">Academic Term Status</div>
+          <div class="meta-value" id="academicBlockVal" style="font-weight:700;">Calculating...</div>
+          <div style="font-size: 11.5px; color: var(--muted);" id="academicBlockSub">Analyzing current term block...</div>
+        </div>
+        
         <div class="meta-card" style="border-left: 4px solid var(--accent);">
           <div class="meta-title">Required Dress Code</div>
-          <div class="meta-value" id="todayUniformVal" style="font-weight:700;">&mdash;</div>
+          <div class="meta-value" id="todayUniformVal" style="font-weight:700;">-</div>
         </div>
 
         <div class="meta-card" style="border-left: 4px solid var(--muted);">
           <div class="meta-title">Duty Cleaners Today</div>
-          <div class="meta-value" id="todayCleanersTeam" style="margin-bottom: 6px;">&mdash;</div>
+          <div class="meta-value" id="todayCleanersTeam" style="margin-bottom: 6px;">-</div>
           <div style="font-size: 11.5px; color: var(--muted);" id="todayCleanersMembers"></div>
         </div>
 
@@ -608,16 +619,13 @@
     </div>
   </div>
 
-  <!-- ALL WEEK ARCHIVE CONTROL -->
   <p class="section-label">
     <span>Master Schedules</span>
     <button class="view-toggle-btn" onclick="toggleArchive()" id="toggleBtn">Show Full Week Archive</button>
   </p>
 
-  <!-- ARCHIVE CONTAINER (Hidden by default on load for clean dashboard experience) -->
   <div id="archiveSchedules" style="display: none;">
 
-    <!-- DESKTOP TABLE -->
     <div class="desktop-view">
       <div class="tbl-wrap">
         <table>
@@ -633,11 +641,11 @@
           </thead>
           <tbody>
             <tr>
-              <td class="time-cell">6:30 &ndash; 7:00</td>
+              <td class="time-cell">6:30 - 7:00</td>
               <td class="subj-cell" colspan="5"><span class="subj-pill c-ae" style="max-width:none;width:96%;">Housekeeping &amp; Sanitation Activities</span></td>
             </tr>
             <tr>
-              <td class="time-cell">7:00 &ndash; 8:30</td>
+              <td class="time-cell">7:00 - 8:30</td>
               <td class="subj-cell"><span class="subj-pill c-phil">Phil.</span></td>
               <td class="subj-cell"><span class="subj-pill c-phil">Phil.</span></td>
               <td class="subj-cell"><span class="subj-pill c-phil">Phil.</span></td>
@@ -645,7 +653,7 @@
               <td class="subj-cell"><span class="subj-pill c-hgp">HGP</span></td>
             </tr>
             <tr>
-              <td class="time-cell">8:30 &ndash; 10:00</td>
+              <td class="time-cell">8:30 - 10:00</td>
               <td class="subj-cell"><span class="subj-pill c-ucsp">UCSP</span></td>
               <td class="subj-cell"><span class="subj-pill c-ucsp">UCSP</span></td>
               <td class="subj-cell"><span class="subj-pill c-ucsp">UCSP</span></td>
@@ -653,11 +661,11 @@
               <td class="subj-cell"><span class="subj-pill c-eapp">EAPP</span></td>
             </tr>
             <tr class="break-row">
-              <td class="time-cell">10:00 &ndash; 10:15</td>
+              <td class="time-cell">10:00 - 10:15</td>
               <td class="break-label" colspan="5">Break</td>
             </tr>
             <tr>
-              <td class="time-cell">10:15 &ndash; 11:45</td>
+              <td class="time-cell">10:15 - 11:45</td>
               <td class="subj-cell"><span class="subj-pill c-ae">A&amp;E</span></td>
               <td class="subj-cell"><span class="subj-pill c-ae">A&amp;E</span></td>
               <td class="subj-cell"><span class="subj-pill c-ae">A&amp;E</span></td>
@@ -665,11 +673,11 @@
               <td class="subj-cell"><span class="subj-pill c-ucsp">UCSP</span></td>
             </tr>
             <tr class="lunch-row">
-              <td class="time-cell">11:45 &ndash; 12:30</td>
+              <td class="time-cell">11:45 - 12:30</td>
               <td class="break-label" colspan="5">Lunch Break</td>
             </tr>
             <tr>
-              <td class="time-cell">12:30 &ndash; 2:00</td>
+              <td class="time-cell">12:30 - 2:00</td>
               <td class="subj-cell"><span class="subj-pill c-eapp">EAPP</span></td>
               <td class="subj-cell"><span class="subj-pill c-eapp">EAPP</span></td>
               <td class="subj-cell"><span class="subj-pill c-peh">PEH 3</span></td>
@@ -677,7 +685,7 @@
               <td class="subj-cell"><span class="subj-pill c-mil">MIL</span></td>
             </tr>
             <tr>
-              <td class="time-cell">2:00 &ndash; 3:30</td>
+              <td class="time-cell">2:00 - 3:30</td>
               <td class="subj-cell"><span class="subj-pill c-mil">MIL</span></td>
               <td class="subj-cell"><span class="subj-pill c-mil">MIL</span></td>
               <td class="subj-cell empty-cell"></td>
@@ -689,70 +697,68 @@
       </div>
     </div>
 
-    <!-- MOBILE CARDS -->
     <div class="mobile-view">
       <div class="day-card">
         <div class="day-header"><span class="day-num">Day 1</span> Monday</div>
-        <div class="period-row"><div class="period-time">6:30–7:00</div><div class="period-subj"><span class="subj-pill c-ae">Housekeeping</span></div></div>
-        <div class="period-row"><div class="period-time">7:00–8:30</div><div class="period-subj"><span class="subj-pill c-phil">Intro to Phil.</span></div></div>
-        <div class="period-row"><div class="period-time">8:30–10:00</div><div class="period-subj"><span class="subj-pill c-ucsp">UCSP</span></div></div>
-        <div class="period-row break-row-m"><div class="period-time">10:00–10:15</div><div class="period-break">Break</div></div>
-        <div class="period-row"><div class="period-time">10:15–11:45</div><div class="period-subj"><span class="subj-pill c-ae">A&amp;E</span></div></div>
-        <div class="period-row lunch-row-m"><div class="period-time">11:45–12:30</div><div class="period-break">Lunch Break</div></div>
-        <div class="period-row"><div class="period-time">12:30–2:00</div><div class="period-subj"><span class="subj-pill c-eapp">EAPP</span></div></div>
-        <div class="period-row"><div class="period-time">2:00–3:30</div><div class="period-subj"><span class="subj-pill c-mil">MIL</span></div></div>
+        <div class="period-row"><div class="period-time">6:30-7:00</div><div class="period-subj"><span class="subj-pill c-ae">Housekeeping</span></div></div>
+        <div class="period-row"><div class="period-time">7:00-8:30</div><div class="period-subj"><span class="subj-pill c-phil">Intro to Phil.</span></div></div>
+        <div class="period-row"><div class="period-time">8:30-10:00</div><div class="period-subj"><span class="subj-pill c-ucsp">UCSP</span></div></div>
+        <div class="period-row break-row-m"><div class="period-time">10:00-10:15</div><div class="period-break">Break</div></div>
+        <div class="period-row"><div class="period-time">10:15-11:45</div><div class="period-subj"><span class="subj-pill c-ae">A&amp;E</span></div></div>
+        <div class="period-row lunch-row-m"><div class="period-time">11:45-12:30</div><div class="period-break">Lunch Break</div></div>
+        <div class="period-row"><div class="period-time">12:30-2:00</div><div class="period-subj"><span class="subj-pill c-eapp">EAPP</span></div></div>
+        <div class="period-row"><div class="period-time">2:00-3:30</div><div class="period-subj"><span class="subj-pill c-mil">MIL</span></div></div>
       </div>
 
       <div class="day-card">
         <div class="day-header"><span class="day-num">Day 2</span> Tuesday</div>
-        <div class="period-row"><div class="period-time">6:30–7:00</div><div class="period-subj"><span class="subj-pill c-ae">Housekeeping</span></div></div>
-        <div class="period-row"><div class="period-time">7:00–8:30</div><div class="period-subj"><span class="subj-pill c-phil">Intro to Phil.</span></div></div>
-        <div class="period-row"><div class="period-time">8:30–10:00</div><div class="period-subj"><span class="subj-pill c-ucsp">UCSP</span></div></div>
-        <div class="period-row break-row-m"><div class="period-time">10:00–10:15</div><div class="period-break">Break</div></div>
-        <div class="period-row"><div class="period-time">10:15–11:45</div><div class="period-subj"><span class="subj-pill c-ae">A&amp;E</span></div></div>
-        <div class="period-row lunch-row-m"><div class="period-time">11:45–12:30</div><div class="period-break">Lunch Break</div></div>
-        <div class="period-row"><div class="period-time">12:30–2:00</div><div class="period-subj"><span class="subj-pill c-eapp">EAPP</span></div></div>
-        <div class="period-row"><div class="period-time">2:00–3:30</div><div class="period-subj"><span class="subj-pill c-mil">MIL</span></div></div>
+        <div class="period-row"><div class="period-time">6:30-7:00</div><div class="period-subj"><span class="subj-pill c-ae">Housekeeping</span></div></div>
+        <div class="period-row"><div class="period-time">7:00-8:30</div><div class="period-subj"><span class="subj-pill c-phil">Intro to Phil.</span></div></div>
+        <div class="period-row"><div class="period-time">8:30-10:00</div><div class="period-subj"><span class="subj-pill c-ucsp">UCSP</span></div></div>
+        <div class="period-row break-row-m"><div class="period-time">10:00-10:15</div><div class="period-break">Break</div></div>
+        <div class="period-row"><div class="period-time">10:15-11:45</div><div class="period-subj"><span class="subj-pill c-ae">A&amp;E</span></div></div>
+        <div class="period-row lunch-row-m"><div class="period-time">11:45-12:30</div><div class="period-break">Lunch Break</div></div>
+        <div class="period-row"><div class="period-time">12:30-2:00</div><div class="period-subj"><span class="subj-pill c-eapp">EAPP</span></div></div>
+        <div class="period-row"><div class="period-time">2:00-3:30</div><div class="period-subj"><span class="subj-pill c-mil">MIL</span></div></div>
       </div>
 
       <div class="day-card">
         <div class="day-header"><span class="day-num">Day 3</span> Wednesday</div>
-        <div class="period-row"><div class="period-time">6:30–7:00</div><div class="period-subj"><span class="subj-pill c-ae">Housekeeping</span></div></div>
-        <div class="period-row"><div class="period-time">7:00–8:30</div><div class="period-subj"><span class="subj-pill c-phil">Intro to Phil.</span></div></div>
-        <div class="period-row"><div class="period-time">8:30–10:00</div><div class="period-subj"><span class="subj-pill c-ucsp">UCSP</span></div></div>
-        <div class="period-row break-row-m"><div class="period-time">10:00–10:15</div><div class="period-break">Break</div></div>
-        <div class="period-row"><div class="period-time">10:15–11:45</div><div class="period-subj"><span class="subj-pill c-ae">A&amp;E</span></div></div>
-        <div class="period-row lunch-row-m"><div class="period-time">11:45–12:30</div><div class="period-break">Lunch Break</div></div>
-        <div class="period-row"><div class="period-time">12:30–2:00</div><div class="period-subj"><span class="subj-pill c-peh">PEH 3</span></div></div>
-        <div class="period-row"><div class="period-time">2:00–3:30</div><div class="period-subj" style="color:var(--rule);font-style:italic;font-size:11px;">&mdash;</div></div>
+        <div class="period-row"><div class="period-time">6:30-7:00</div><div class="period-subj"><span class="subj-pill c-ae">Housekeeping</span></div></div>
+        <div class="period-row"><div class="period-time">7:00-8:30</div><div class="period-subj"><span class="subj-pill c-phil">Intro to Phil.</span></div></div>
+        <div class="period-row"><div class="period-time">8:30-10:00</div><div class="period-subj"><span class="subj-pill c-ucsp">UCSP</span></div></div>
+        <div class="period-row break-row-m"><div class="period-time">10:00-10:15</div><div class="period-break">Break</div></div>
+        <div class="period-row"><div class="period-time">10:15-11:45</div><div class="period-subj"><span class="subj-pill c-ae">A&amp;E</span></div></div>
+        <div class="period-row lunch-row-m"><div class="period-time">11:45-12:30</div><div class="period-break">Lunch Break</div></div>
+        <div class="period-row"><div class="period-time">12:30-2:00</div><div class="period-subj"><span class="subj-pill c-peh">PEH 3</span></div></div>
+        <div class="period-row"><div class="period-time">2:00-3:30</div><div class="period-subj" style="color:var(--rule);font-style:italic;font-size:11px;">-</div></div>
       </div>
 
       <div class="day-card">
         <div class="day-header"><span class="day-num">Day 4</span> Thursday</div>
-        <div class="period-row"><div class="period-time">6:30–7:00</div><div class="period-subj"><span class="subj-pill c-ae">Housekeeping</span></div></div>
-        <div class="period-row"><div class="period-time">7:00–8:30</div><div class="period-subj"><span class="subj-pill c-phil">Intro to Phil.</span></div></div>
-        <div class="period-row"><div class="period-time">8:30–10:00</div><div class="period-subj"><span class="subj-pill c-eapp">EAPP</span></div></div>
-        <div class="period-row break-row-m"><div class="period-time">10:00–10:15</div><div class="period-break">Break</div></div>
-        <div class="period-row"><div class="period-time">10:15–11:45</div><div class="period-subj"><span class="subj-pill c-ae">A&amp;E</span></div></div>
-        <div class="period-row lunch-row-m"><div class="period-time">11:45–12:30</div><div class="period-break">Lunch Break</div></div>
-        <div class="period-row"><div class="period-time">12:30–2:00</div><div class="period-subj"><span class="subj-pill c-mil">MIL</span></div></div>
-        <div class="period-row"><div class="period-time">2:00–3:30</div><div class="period-subj"><span class="subj-pill c-peh">PEH 3</span></div></div>
+        <div class="period-row"><div class="period-time">6:30-7:00</div><div class="period-subj"><span class="subj-pill c-ae">Housekeeping</span></div></div>
+        <div class="period-row"><div class="period-time">7:00-8:30</div><div class="period-subj"><span class="subj-pill c-phil">Intro to Phil.</span></div></div>
+        <div class="period-row"><div class="period-time">8:30-10:00</div><div class="period-subj"><span class="subj-pill c-eapp">EAPP</span></div></div>
+        <div class="period-row break-row-m"><div class="period-time">10:00-10:15</div><div class="period-break">Break</div></div>
+        <div class="period-row"><div class="period-time">10:15-11:45</div><div class="period-subj"><span class="subj-pill c-ae">A&amp;E</span></div></div>
+        <div class="period-row lunch-row-m"><div class="period-time">11:45-12:30</div><div class="period-break">Lunch Break</div></div>
+        <div class="period-row"><div class="period-time">12:30-2:00</div><div class="period-subj"><span class="subj-pill c-mil">MIL</span></div></div>
+        <div class="period-row"><div class="period-time">2:00-3:30</div><div class="period-subj"><span class="subj-pill c-peh">PEH 3</span></div></div>
       </div>
 
       <div class="day-card">
         <div class="day-header"><span class="day-num">Day 5</span> Friday</div>
-        <div class="period-row"><div class="period-time">6:30–7:00</div><div class="period-subj"><span class="subj-pill c-ae">Housekeeping</span></div></div>
-        <div class="period-row"><div class="period-time">7:00–8:30</div><div class="period-subj"><span class="subj-pill c-hgp">HGP</span></div></div>
-        <div class="period-row"><div class="period-time">8:30–10:00</div><div class="period-subj"><span class="subj-pill c-eapp">EAPP</span></div></div>
-        <div class="period-row break-row-m"><div class="period-time">10:00–10:15</div><div class="period-break">Break</div></div>
-        <div class="period-row"><div class="period-time">10:15–11:45</div><div class="period-subj"><span class="subj-pill c-ucsp">UCSP</span></div></div>
-        <div class="period-row lunch-row-m"><div class="period-time">11:45–12:30</div><div class="period-break">Lunch Break</div></div>
-        <div class="period-row"><div class="period-time">12:30–2:00</div><div class="period-subj"><span class="subj-pill c-mil">MIL</span></div></div>
-        <div class="period-row"><div class="period-time">2:00–3:30</div><div class="period-subj" style="color:var(--rule);font-style:italic;font-size:11px;">&mdash;</div></div>
+        <div class="period-row"><div class="period-time">6:30-7:00</div><div class="period-subj"><span class="subj-pill c-ae">Housekeeping</span></div></div>
+        <div class="period-row"><div class="period-time">7:00-8:00</div><div class="period-subj"><span class="subj-pill c-hgp">HGP</span></div></div>
+        <div class="period-row"><div class="period-time">8:30-10:00</div><div class="period-subj"><span class="subj-pill c-eapp">EAPP</span></div></div>
+        <div class="period-row break-row-m"><div class="period-time">10:00-10:15</div><div class="period-break">Break</div></div>
+        <div class="period-row"><div class="period-time">10:15-11:45</div><div class="period-subj"><span class="subj-pill c-ucsp">UCSP</span></div></div>
+        <div class="period-row lunch-row-m"><div class="period-time">11:45-12:30</div><div class="period-break">Lunch Break</div></div>
+        <div class="period-row"><div class="period-time">12:30-2:00</div><div class="period-subj"><span class="subj-pill c-mil">MIL</span></div></div>
+        <div class="period-row"><div class="period-time">2:00-3:30</div><div class="period-subj" style="color:var(--rule);font-style:italic;font-size:11px;">-</div></div>
       </div>
     </div>
 
-    <!-- LEGEND -->
     <p class="section-label">Subjects</p>
     <div class="legend">
       <div class="legend-item"><div class="legend-dot c-phil"></div>Intro to Philosophy</div>
@@ -764,7 +770,6 @@
       <div class="legend-item"><div class="legend-dot c-hgp"></div>HGP</div>
     </div>
 
-    <!-- TEACHERS TABLE -->
     <p class="section-label">Teachers</p>
     <table class="teachers-tbl">
       <thead>
@@ -781,7 +786,6 @@
       </tbody>
     </table>
 
-    <!-- ASSIGNMENT OF CLEANERS -->
     <p class="section-label">Assignment of Cleaners &middot; Schedule of Areas</p>
     <div class="tbl-wrap">
       <table class="cleaners-tbl">
@@ -798,7 +802,6 @@
       </table>
     </div>
 
-    <!-- CLEANERS ROSTERS -->
     <p class="section-label">Cleaner Group Members</p>
     <div class="cleaners-grid">
       <div class="cleaner-card">
@@ -833,7 +836,6 @@
       </div>
     </div>
 
-    <!-- UNIFORM CYCLE PROTOCOL REFERENCE -->
     <p class="section-label">Uniform Cycle Protocol</p>
     <div class="uniform-grid">
       <div class="uniform-card">
@@ -850,34 +852,31 @@
       </div>
     </div>
 
-  </div> <!-- END OF ARCHIVE -->
-
-  <!-- ACADEMIC CALENDAR -->
-  <p class="section-label">Academic Calendar</p>
+  </div> <p class="section-label">Academic Calendar</p>
   <div class="cal-grid">
     <div class="term-card">
-      <div class="term-head"><div class="t-label">Term 1</div><div class="t-dates">June 8 &ndash;<br>Sept 15, 2026</div></div>
+      <div class="term-head"><div class="t-label">Term 1</div><div class="t-dates">June 8 to<br>Sept 15, 2026</div></div>
       <div class="term-body">
         <div class="block-row"><span class="block-name">Opening Block</span><span class="block-days">4 days</span></div>
-        <div class="block-row"><span class="block-name">Instructional</span><span class="block-days">55 days</span></div>
-        <div class="block-row"><span class="block-name">End of Term</span><span class="block-days">10 days</span></div>
+        <div class="block-row"><span class="block-name">Instructional Block</span><span class="block-days">55 days</span></div>
+        <div class="block-row"><span class="block-name">End of Term Block</span><span class="block-days">10 days</span></div>
         <div class="total-row"><span>Total</span><span class="total-num">69</span></div>
       </div>
     </div>
     <div class="term-card">
-      <div class="term-head"><div class="t-label">Term 2</div><div class="t-dates">Sept 16 &ndash;<br>Dec 18, 2026</div></div>
+      <div class="term-head"><div class="t-label">Term 2</div><div class="t-dates">Sept 16 to<br>Dec 18, 2026</div></div>
       <div class="term-body">
-        <div class="block-row"><span class="block-name">Instructional</span><span class="block-days">65 days</span></div>
-        <div class="block-row"><span class="block-name">End of Term</span><span class="block-days">9 days</span></div>
-        <div class="block-row"><span class="block-name">Year-End Break</span><span class="block-days">&mdash;</span></div>
+        <div class="block-row"><span class="block-name">Instructional Block</span><span class="block-days">65 days</span></div>
+        <div class="block-row"><span class="block-name">End of Term Block</span><span class="block-days">9 days</span></div>
+        <div class="block-row"><span class="block-name">Year-End Break</span><span class="block-days">Active</span></div>
         <div class="total-row"><span>Total</span><span class="total-num">74</span></div>
       </div>
     </div>
     <div class="term-card">
-      <div class="term-head"><div class="t-label">Term 3</div><div class="t-dates">Jan 4 &ndash;<br>Apr 8, 2027</div></div>
+      <div class="term-head"><div class="t-label">Term 3</div><div class="t-dates">Jan 4 to<br>Apr 8, 2027</div></div>
       <div class="term-body">
-        <div class="block-row"><span class="block-name">Instructional</span><span class="block-days">57 days</span></div>
-        <div class="block-row"><span class="block-name">End of Term</span><span class="block-days">10 days</span></div>
+        <div class="block-row"><span class="block-name">Instructional Block</span><span class="block-days">57 days</span></div>
+        <div class="block-row"><span class="block-name">End of Term Block</span><span class="block-days">10 days</span></div>
         <div class="total-row"><span>Total</span><span class="total-num">67</span></div>
       </div>
     </div>
@@ -888,12 +887,10 @@
     <span class="g-num">201 days</span>
   </div>
 
-  <footer>G12 &middot; Kumintang &middot; First Trimester SY 2026&ndash;2027</footer>
+  <footer>G12 &middot; Kumintang &middot; First Trimester SY 2026-2027</footer>
 </div>
 
-<!-- INLINE CORE DATABASE AND CONTROLLER LOGIC -->
 <script>
-  // Core Class Data Structure
   const classData = {
     groups: {
       1: { name: "Group 1", color: "var(--g1)", members: ["Angelo Salazar", "Dave Falogme", "Jewel Barrameda", "Jerica De la Cruz"] },
@@ -908,14 +905,14 @@
         uniform: "Complete School Uniform",
         cleaners: { team: 1, duties: { "Room": 1, "Stairs": 2, "Hallway": 3, "Front Ground": 4, "Pathway & Side": 5 } },
         schedule: [
-          { time: "6:30–7:00", name: "Housekeeping & Sanitation", type: "c-ae" },
-          { time: "7:00–8:30", name: "Intro to Philosophy", type: "c-phil" },
-          { time: "8:30–10:00", name: "UCSP", type: "c-ucsp" },
-          { time: "10:00–10:15", name: "Recess Break", type: "break" },
-          { time: "10:15–11:45", name: "A&E", type: "c-ae" },
-          { time: "11:45–12:30", name: "Lunch Break", type: "lunch" },
-          { time: "12:30–2:00", name: "EAPP", type: "c-eapp" },
-          { time: "2:00–3:30", name: "MIL", type: "c-mil" }
+          { time: "6:30-7:00", name: "Housekeeping & Sanitation", type: "c-ae" },
+          { time: "7:00-8:30", name: "Intro to Philosophy", type: "c-phil" },
+          { time: "8:30-10:00", name: "UCSP", type: "c-ucsp" },
+          { time: "10:00-10:15", name: "Recess Break", type: "break" },
+          { time: "10:15-11:45", name: "A&E", type: "c-ae" },
+          { time: "11:45-12:30", name: "Lunch Break", type: "lunch" },
+          { time: "12:30-2:00", name: "EAPP", type: "c-eapp" },
+          { time: "2:00-3:30", name: "MIL", type: "c-mil" }
         ]
       },
       2: {
@@ -923,14 +920,14 @@
         uniform: "Complete School Uniform",
         cleaners: { team: 2, duties: { "Room": 2, "Stairs": 3, "Hallway": 4, "Front Ground": 5, "Pathway & Side": 1 } },
         schedule: [
-          { time: "6:30–7:00", name: "Housekeeping & Sanitation", type: "c-ae" },
-          { time: "7:00–8:30", name: "Intro to Philosophy", type: "c-phil" },
-          { time: "8:30–10:00", name: "UCSP", type: "c-ucsp" },
-          { time: "10:00–10:15", name: "Recess Break", type: "break" },
-          { time: "10:15–11:45", name: "A&E", type: "c-ae" },
-          { time: "11:45–12:30", name: "Lunch Break", type: "lunch" },
-          { time: "12:30–2:00", name: "EAPP", type: "c-eapp" },
-          { time: "2:00–3:30", name: "MIL", type: "c-mil" }
+          { time: "6:30-7:00", name: "Housekeeping & Sanitation", type: "c-ae" },
+          { time: "7:00-8:30", name: "Intro to Philosophy", type: "c-phil" },
+          { time: "8:30-10:00", name: "UCSP", type: "c-ucsp" },
+          { time: "10:00-10:15", name: "Recess Break", type: "break" },
+          { time: "10:15-11:45", name: "A&E", type: "c-ae" },
+          { time: "11:45-12:30", name: "Lunch Break", type: "lunch" },
+          { time: "12:30-2:00", name: "EAPP", type: "c-eapp" },
+          { time: "2:00-3:30", name: "MIL", type: "c-mil" }
         ]
       },
       3: {
@@ -938,13 +935,13 @@
         uniform: "PE Uniform",
         cleaners: { team: 3, duties: { "Room": 3, "Stairs": 4, "Hallway": 5, "Front Ground": 1, "Pathway & Side": 2 } },
         schedule: [
-          { time: "6:30–7:00", name: "Housekeeping & Sanitation", type: "c-ae" },
-          { time: "7:00–8:30", name: "Intro to Philosophy", type: "c-phil" },
-          { time: "8:30–10:00", name: "UCSP", type: "c-ucsp" },
-          { time: "10:00–10:15", name: "Recess Break", type: "break" },
-          { time: "10:15–11:45", name: "A&E", type: "c-ae" },
-          { time: "11:45–12:30", name: "Lunch Break", type: "lunch" },
-          { time: "12:30–2:00", name: "PEH 3", type: "c-peh" }
+          { time: "6:30-7:00", name: "Housekeeping & Sanitation", type: "c-ae" },
+          { time: "7:00-8:30", name: "Intro to Philosophy", type: "c-phil" },
+          { time: "8:30-10:00", name: "UCSP", type: "c-ucsp" },
+          { time: "10:00-10:15", name: "Recess Break", type: "break" },
+          { time: "10:15-11:45", name: "A&E", type: "c-ae" },
+          { time: "11:45-12:30", name: "Lunch Break", type: "lunch" },
+          { time: "12:30-2:00", name: "PEH 3", type: "c-peh" }
         ]
       },
       4: {
@@ -952,14 +949,14 @@
         uniform: "Complete School Uniform",
         cleaners: { team: 4, duties: { "Room": 4, "Stairs": 5, "Hallway": 1, "Front Ground": 2, "Pathway & Side": 3 } },
         schedule: [
-          { time: "6:30–7:00", name: "Housekeeping & Sanitation", type: "c-ae" },
-          { time: "7:00–8:30", name: "Intro to Philosophy", type: "c-phil" },
-          { time: "8:30–10:00", name: "EAPP", type: "c-eapp" },
-          { time: "10:00–10:15", name: "Recess Break", type: "break" },
-          { time: "10:15–11:45", name: "A&E", type: "c-ae" },
-          { time: "11:45–12:30", name: "Lunch Break", type: "lunch" },
-          { time: "12:30–2:00", name: "MIL", type: "c-mil" },
-          { time: "2:00–3:30", name: "PEH 3", type: "c-peh" }
+          { time: "6:30-7:00", name: "Housekeeping & Sanitation", type: "c-ae" },
+          { time: "7:00-8:30", name: "Intro to Philosophy", type: "c-phil" },
+          { time: "8:30-10:00", name: "EAPP", type: "c-eapp" },
+          { time: "10:00-10:15", name: "Recess Break", type: "break" },
+          { time: "10:15-11:45", name: "A&E", type: "c-ae" },
+          { time: "11:45-12:30", name: "Lunch Break", type: "lunch" },
+          { time: "12:30-2:00", name: "MIL", type: "c-mil" },
+          { time: "2:00-3:30", name: "PEH 3", type: "c-peh" }
         ]
       },
       5: {
@@ -967,13 +964,13 @@
         uniform: "Spec Shirt / Black Shirt & Pants",
         cleaners: { team: 5, duties: { "Room": 5, "Stairs": 1, "Hallway": 2, "Front Ground": 3, "Pathway & Side": 4 } },
         schedule: [
-          { time: "6:30–7:00", name: "Housekeeping & Sanitation", type: "c-ae" },
-          { time: "7:00–8:00", name: "HGP", type: "c-hgp" },
-          { time: "8:30–10:00", name: "EAPP", type: "c-eapp" },
-          { time: "10:00–10:15", name: "Recess Break", type: "break" },
-          { time: "10:15–11:45", name: "UCSP", type: "c-ucsp" },
-          { time: "11:45–12:30", name: "Lunch Break", type: "lunch" },
-          { time: "12:30–2:00", name: "MIL", type: "c-mil" }
+          { time: "6:30-7:00", name: "Housekeeping & Sanitation", type: "c-ae" },
+          { time: "7:00-8:00", name: "HGP", type: "c-hgp" },
+          { time: "8:30-10:00", name: "EAPP", type: "c-eapp" },
+          { time: "10:00-10:15", name: "Recess Break", type: "break" },
+          { time: "10:15-11:45", name: "UCSP", type: "c-ucsp" },
+          { time: "11:45-12:30", name: "Lunch Break", type: "lunch" },
+          { time: "12:30-2:00", name: "MIL", type: "c-mil" }
         ]
       }
     }
@@ -983,24 +980,20 @@
     const now = new Date();
     let dayIndex = now.getDay(); 
     
-    // Fallback strategy for weekend tracking: assume Monday if viewed on Saturday or Sunday
     if (dayIndex === 0 || dayIndex === 6) {
       dayIndex = 1; 
     }
 
     const currentDayData = classData.days[dayIndex];
     
-    // Set Day Title Headers
     document.getElementById('todayDayName').innerText = `Today's Overview · ${currentDayData.name}`;
     document.getElementById('todayUniformVal').innerText = currentDayData.uniform;
 
-    // Track Main Area Cleaners Group
     const roomTeamId = currentDayData.cleaners.team;
     const roomGroup = classData.groups[roomTeamId];
     document.getElementById('todayCleanersTeam').innerHTML = `<span class="g-pill" style="background:${roomGroup.color}">${roomGroup.name}</span> (Room Main Focus)`;
     document.getElementById('todayCleanersMembers').innerText = `Members: ${roomGroup.members.join(', ')}`;
 
-    // Build complete clean up grid zones map for current day context
     let zoneHtml = '';
     for (const [zone, groupId] of Object.entries(currentDayData.cleaners.duties)) {
       const gObj = classData.groups[groupId];
@@ -1008,7 +1001,6 @@
     }
     document.getElementById('todayCleanersZones').innerHTML = zoneHtml;
 
-    // Render schedule timeline list rows
     let scheduleHtml = '';
     currentDayData.schedule.forEach(item => {
       if (item.type === 'break' || item.type === 'lunch') {
@@ -1029,31 +1021,83 @@
     document.getElementById('todayScheduleContainer').innerHTML = `<div class="day-card" style="margin-bottom:0; border-radius:6px;">${scheduleHtml}</div>`;
 
     evaluateLiveStatus(currentDayData.schedule, now);
+    evaluateAcademicBlock(now);
   }
 
-  // Live status block tracker calculator engine (Convenience Track Feature)
-  function evaluateLiveStatus(schedule, now) {
-    const currentMinutes = (now.getHours() * 60) + now.getMinutes();
-    let matchedPeriod = "Classes Finished / No School Session";
-
-    for (let i = 0; i < schedule.forEach; i++) {} // Guard hook loop space
+  function evaluateAcademicBlock(now) {
+    const blockVal = document.getElementById('academicBlockVal');
+    const blockSub = document.getElementById('academicBlockSub');
     
-    // Parse time strings manually to discover current block
-    for (const period of schedule) {
-      const parts = period.time.replace(/–/g, '-').split('-');
-      if(parts.length === 2) {
-        const startMin = parseTimeToMinutes(parts[0]);
-        const endMin = parseTimeToMinutes(parts[1]);
-        
-        if (currentMinutes >= startMin && currentMinutes < endMin) {
-          matchedPeriod = `Now: ${period.name} (${period.time})`;
-          break;
-        } else if (currentMinutes < startMin) {
-          matchedPeriod = `Next up: ${period.name} at ${parts[0]}`;
-          break;
+    const targetYear = now.getFullYear();
+    const targetMonth = now.getMonth() + 1;
+    const targetDate = now.getDate();
+    
+    if (targetYear === 2026) {
+      if (targetMonth === 6 && targetDate < 15) {
+        blockVal.innerText = "Term 1: Opening Block";
+        blockSub.innerText = "Completed! Instructional phase launches tomorrow, June 15.";
+      } else if (targetMonth === 6 && targetDate === 15) {
+        blockVal.innerText = "Term 1: Instructional Block";
+        blockSub.innerText = "Day 1 of 55 (Official shift initiated)";
+      } else {
+        blockVal.innerText = "Term 1: Instructional Block";
+        blockSub.innerText = "Instructional track currently ongoing";
+      }
+    } else {
+      blockVal.innerText = "Term Track Active";
+      blockSub.innerText = "See master grid records below";
+    }
+  }
+
+  function evaluateLiveStatus(schedule, now) {
+    const realDay = now.getDay();
+    
+    if (realDay === 0 || realDay === 6) {
+      document.getElementById('currentPeriodLabel').innerText = "🎉 Weekend Mode: Enjoy your rest!";
+      return;
+    }
+
+    const currentMinutes = (now.getHours() * 60) + now.getMinutes();
+    
+    const firstPeriodParts = schedule[0].time.split('-');
+    const lastPeriodParts = schedule[schedule.length - 1].time.split('-');
+    
+    const schoolStartMin = parseTimeToMinutes(firstPeriodParts[0]);
+    const schoolEndMin = parseTimeToMinutes(lastPeriodParts[1]);
+    
+    let matchedPeriod = "";
+
+    if (currentMinutes < schoolStartMin) {
+      if (currentMinutes >= 300) { 
+        matchedPeriod = `🌅 Incoming: ${schedule[0].name} at ${firstPeriodParts[0].trim()}`;
+      } else {
+        matchedPeriod = "🌙 School hasn't started yet. Sleep well!";
+      }
+    } else if (currentMinutes >= schoolEndMin) {
+      if (now.getHours() >= 18) { 
+        matchedPeriod = "✨ Day completed! Rest well for tomorrow.";
+      } else {
+        matchedPeriod = "🚀 Dismissed! School is over for today.";
+      }
+    } else {
+      for (const period of schedule) {
+        const parts = period.time.split('-');
+        if (parts.length === 2) {
+          const startMin = parseTimeToMinutes(parts[0]);
+          const endMin = parseTimeToMinutes(parts[1]);
+          
+          if (currentMinutes >= startMin && currentMinutes < endMin) {
+            const minutesLeft = endMin - currentMinutes;
+            matchedPeriod = `⏱️ Now: ${period.name} (${minutesLeft} mins left)`;
+            break;
+          } else if (currentMinutes < startMin) {
+            matchedPeriod = `🔜 Next up: ${period.name} at ${parts[0].trim()}`;
+            break;
+          }
         }
       }
     }
+    
     document.getElementById('currentPeriodLabel').innerText = matchedPeriod;
   }
 
@@ -1064,19 +1108,16 @@
     let hours = parseInt(parts[0], 10);
     const minutes = parseInt(parts[1], 10);
     
-    // Native parser system smart check rules for typical layout structures
     if (timeStr.includes('pm') && hours < 12) hours += 12;
     if (timeStr.includes('am') && hours === 12) hours = 0;
     
-    // Handle implicit PM conversions based on specific standard school shifts
     if (!timeStr.includes('am') && !timeStr.includes('pm')) {
-      if (hours === 12 || hours === 1 || hours === 2 || hours === 3) hours += 12;
+      if (hours === 1 || hours === 2 || hours === 3) hours += 12;
     }
     
     return (hours * 60) + minutes;
   }
 
-  // Real-time Clock Interface Engine
   function runClock() {
     const now = new Date();
     let hours = now.getHours();
@@ -1090,7 +1131,6 @@
     document.getElementById('digitalClock').innerText = `${hours}:${minutes}:${seconds} ${ampm}`;
   }
 
-  // Display Controller Toggle Logic Block
   function toggleArchive() {
     const target = document.getElementById('archiveSchedules');
     const btn = document.getElementById('toggleBtn');
@@ -1103,11 +1143,9 @@
     }
   }
 
-  // Initial Runtime Initializations
   updateDashboard();
   runClock();
   setInterval(runClock, 1000);
-  // Re-verify current live schedules tracking blocks updates every single minute frame
   setInterval(updateDashboard, 60000);
 </script>
 
