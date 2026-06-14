@@ -1,0 +1,1115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>G12 Kumintang · Dashboard</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --ink:        #1a1612;
+    --parchment: #f5f0e8;
+    --warm-mid:  #e8dfd0;
+    --rule:      #c9bfad;
+    --accent:    #7a5c3a;
+    --soft:      #a0876a;
+    --muted:     #6b5d4f;
+    --break-bg:  #ede5d8;
+    --lunch-bg:  #e2d8c9;
+    --empty:     #ede8df;
+
+    --phil:  #c2856a;
+    --ucsp:  #7a9c7a;
+    --eapp:  #6a8ca0;
+    --ae:    #b09060;
+    --mil:   #8a7aaa;
+    --peh:   #c07070;
+    --hgp:   #78a090;
+    
+    --g1:    #b56565;
+    --g2:    #5f8575;
+    --g3:    #557a95;
+    --g4:    #b08850;
+    --g5:    #7e689e;
+
+    --uni-complete: #4a5d6e;
+    --uni-pe:       #9c5a5a;
+    --uni-spec:     #3e3a36;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--parchment);
+    color: var(--ink);
+    font-family: 'DM Sans', system-ui, sans-serif;
+    font-size: 14px;
+    line-height: 1.5;
+    min-height: 100vh;
+    padding: 0 0 48px;
+  }
+
+  header {
+    background: var(--ink);
+    color: var(--parchment);
+    padding: 36px 24px 28px;
+    text-align: center;
+    border-bottom: 3px solid var(--accent);
+  }
+  header .eyebrow {
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: .18em;
+    text-transform: uppercase;
+    color: var(--soft);
+    margin-bottom: 10px;
+  }
+  header h1 {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: clamp(22px, 5vw, 36px);
+    font-weight: 600;
+    letter-spacing: .01em;
+    line-height: 1.15;
+  }
+  header h1 span { color: var(--soft); }
+  header .sub {
+    margin-top: 8px;
+    font-size: 11px;
+    color: var(--rule);
+    letter-spacing: .08em;
+  }
+
+  .wrapper {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 0 16px;
+  }
+
+  .section-label {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: .16em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin: 32px 0 12px;
+    padding-bottom: 6px;
+    border-bottom: 1px solid var(--rule);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  /* CURRENT DAY LIVE DASHBOARD */
+  .today-box {
+    background: #fff;
+    border: 2px solid var(--accent);
+    border-radius: 12px;
+    overflow: hidden;
+    margin-top: 24px;
+    box-shadow: 0 4px 20px rgba(26,22,18,.08);
+  }
+  .today-banner {
+    background: var(--ink);
+    color: var(--parchment);
+    padding: 16px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px solid var(--accent);
+  }
+  .today-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 20px;
+    font-weight: 600;
+  }
+  .today-time {
+    font-size: 12px;
+    letter-spacing: .05em;
+    color: var(--soft);
+    font-weight: 500;
+  }
+  .today-grid {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr;
+    gap: 20px;
+    padding: 20px;
+  }
+  @media (max-width: 768px) {
+    .today-grid { grid-template-columns: 1fr; gap: 16px; padding: 16px; }
+  }
+
+  .live-status-bar {
+    grid-column: 1 / -1;
+    background: var(--parchment);
+    border: 1px dashed var(--accent);
+    border-radius: 6px;
+    padding: 12px 16px;
+    font-size: 13px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .status-tag {
+    font-size: 10px;
+    text-transform: uppercase;
+    font-weight: 700;
+    letter-spacing: .1em;
+    background: var(--accent);
+    color: #fff;
+    padding: 2px 8px;
+    border-radius: 4px;
+  }
+
+  .dashboard-pane h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 15px;
+    margin-bottom: 10px;
+    color: var(--ink);
+    border-bottom: 1px solid var(--warm-mid);
+    padding-bottom: 4px;
+  }
+
+  .meta-card {
+    background: var(--parchment);
+    border: 1px solid var(--rule);
+    border-radius: 8px;
+    padding: 14px;
+    margin-bottom: 12px;
+  }
+  .meta-title {
+    font-size: 9px;
+    text-transform: uppercase;
+    font-weight: 700;
+    letter-spacing: .12em;
+    color: var(--muted);
+    margin-bottom: 4px;
+  }
+  .meta-value {
+    font-size: 14px;
+    font-weight: 500;
+  }
+
+  /* DESKTOP TABLE */
+  .desktop-view { display: block; }
+  .mobile-view  { display: none; }
+
+  .tbl-wrap {
+    overflow-x: auto;
+    border-radius: 6px;
+    border: 1px solid var(--rule);
+    box-shadow: 0 2px 12px rgba(26,22,18,.07);
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #fff;
+  }
+
+  th, td {
+    border: 1px solid var(--warm-mid);
+    padding: 0;
+    vertical-align: middle;
+    text-align: center;
+  }
+
+  thead th {
+    background: var(--ink);
+    color: var(--parchment);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    padding: 12px 8px;
+  }
+  thead th:first-child {
+    background: #2a2420;
+    color: var(--soft);
+    font-size: 10px;
+    letter-spacing: .1em;
+    min-width: 90px;
+  }
+
+  .time-cell {
+    background: var(--warm-mid);
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--muted);
+    letter-spacing: .04em;
+    padding: 8px 10px;
+    white-space: nowrap;
+    min-width: 90px;
+    border-right: 2px solid var(--rule) !important;
+  }
+
+  .subj-cell {
+    padding: 6px 4px;
+    height: 54px;
+  }
+  .subj-pill {
+    display: inline-block;
+    border-radius: 4px;
+    padding: 5px 10px;
+    font-size: 11.5px;
+    font-weight: 500;
+    color: #fff;
+    letter-spacing: .01em;
+    width: 90%;
+    max-width: 130px;
+  }
+
+  .break-row td { background: var(--break-bg); }
+  .break-row .time-cell { background: #ddd6c8; }
+  .break-label {
+    font-size: 10px;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: var(--muted);
+    font-weight: 500;
+    padding: 7px;
+  }
+
+  .lunch-row td { background: var(--lunch-bg); }
+  .lunch-row .time-cell { background: #d6ccbd; }
+
+  .empty-cell { background: var(--empty); }
+
+  /* MOBILE CARDS */
+  @media (max-width: 640px) {
+    .desktop-view { display: none; }
+    .mobile-view  { display: block; }
+  }
+
+  .day-card {
+    background: #fff;
+    border: 1px solid var(--rule);
+    border-radius: 8px;
+    overflow: hidden;
+    margin-bottom: 16px;
+    box-shadow: 0 1px 6px rgba(26,22,18,.06);
+  }
+  .day-header {
+    background: var(--ink);
+    color: var(--parchment);
+    font-family: 'Playfair Display', serif;
+    font-size: 15px;
+    font-weight: 600;
+    letter-spacing: .04em;
+    padding: 12px 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .day-header .day-num {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 10px;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: var(--soft);
+  }
+
+  .period-row {
+    display: flex;
+    align-items: stretch;
+    border-top: 1px solid var(--warm-mid);
+  }
+  .period-time {
+    min-width: 88px;
+    background: var(--warm-mid);
+    font-size: 10.5px;
+    font-weight: 500;
+    color: var(--muted);
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    letter-spacing: .02em;
+    border-right: 2px solid var(--rule);
+    white-space: nowrap;
+  }
+  .period-subj {
+    flex: 1;
+    padding: 8px 12px;
+    display: flex;
+    align-items: center;
+  }
+  .period-subj .subj-pill {
+    width: auto;
+    max-width: none;
+    text-align: left;
+    font-size: 12px;
+  }
+  .period-break {
+    flex: 1;
+    padding: 8px 12px;
+    font-size: 10px;
+    letter-spacing: .13em;
+    text-transform: uppercase;
+    color: var(--muted);
+    display: flex;
+    align-items: center;
+  }
+  .break-row-m { background: var(--break-bg); }
+  .lunch-row-m { background: var(--lunch-bg); }
+
+  /* LEGEND */
+  .legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 4px;
+  }
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    font-size: 12px;
+    color: var(--muted);
+  }
+  .legend-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 3px;
+    flex-shrink: 0;
+  }
+
+  /* TABLES */
+  .teachers-tbl, .cleaners-tbl {
+    width: 100%;
+    border-collapse: collapse;
+    background: #fff;
+    border: 1px solid var(--rule);
+    border-radius: 6px;
+    overflow: hidden;
+    box-shadow: 0 1px 6px rgba(26,22,18,.06);
+  }
+  .teachers-tbl thead th, .cleaners-tbl thead th {
+    background: var(--ink);
+    color: var(--parchment);
+    font-size: 10px;
+    letter-spacing: .13em;
+    text-transform: uppercase;
+    font-weight: 500;
+    padding: 11px 14px;
+    text-align: left;
+  }
+  .teachers-tbl tbody tr:nth-child(even) td, .cleaners-tbl tbody tr:nth-child(even) td { background: var(--parchment); }
+  .teachers-tbl td, .cleaners-tbl td {
+    padding: 10px 14px;
+    font-size: 12.5px;
+    border-bottom: 1px solid var(--warm-mid);
+    text-align: left;
+    vertical-align: middle;
+  }
+  .subject-code {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 3px;
+    padding: 3px 8px;
+    font-size: 11px;
+    font-weight: 500;
+    color: #fff;
+    letter-spacing: .03em;
+  }
+  .teacher-name { color: var(--muted); font-size: 11.5px; }
+  .area-cell { font-weight: 500; color: var(--ink); width: 180px; }
+
+  .c-phil { background: var(--phil); }
+  .c-ucsp { background: var(--ucsp); }
+  .c-eapp { background: var(--eapp); }
+  .c-ae   { background: var(--ae);   }
+  .c-mil   { background: var(--mil);  }
+  .c-peh   { background: var(--peh);  }
+  .c-hgp   { background: var(--hgp); }
+
+  .g-pill {
+    display: inline-block;
+    border-radius: 4px;
+    padding: 4px 8px;
+    font-size: 11px;
+    font-weight: 500;
+    color: #fff;
+    letter-spacing: .02em;
+  }
+  .c-g1 { background: var(--g1); }
+  .c-g2 { background: var(--g2); }
+  .c-g3 { background: var(--g3); }
+  .c-g4 { background: var(--g4); }
+  .c-g5 { background: var(--g5); }
+
+  footer {
+    margin-top: 40px;
+    text-align: center;
+    font-size: 11px;
+    color: var(--rule);
+    letter-spacing: .06em;
+  }
+
+  .cal-grid, .uniform-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+  }
+  .cleaners-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 10px;
+  }
+  
+  @media (max-width: 768px) {
+    .cleaners-grid { grid-template-columns: repeat(2, 1fr); }
+    .uniform-grid { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 480px) { .cleaners-grid { grid-template-columns: 1fr; } }
+  @media (max-width: 600px) { .cal-grid { grid-template-columns: 1fr; } }
+  
+  .term-card, .cleaner-card, .uniform-card {
+    background: #fff;
+    border: 1px solid var(--rule);
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 1px 6px rgba(26,22,18,.06);
+  }
+  .term-head, .cleaner-head, .uniform-head { background: var(--ink); color: var(--parchment); padding: 12px 14px; }
+  .term-head .t-label, .cleaner-head .g-label, .uniform-head .u-label {
+    font-size: 9px;
+    font-weight: 500;
+    letter-spacing: .18em;
+    text-transform: uppercase;
+    color: var(--soft);
+    margin-bottom: 3px;
+  }
+  .term-head .t-dates, .cleaner-head .g-title, .uniform-head .u-title { font-family: 'Playfair Display', serif; font-size: 13px; line-height: 1.3; }
+  .term-body, .cleaner-body, .uniform-body { padding: 10px 14px 12px; }
+  
+  .block-row, .member-row, .uni-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 6px 0;
+    border-bottom: 1px solid var(--warm-mid);
+    font-size: 11.5px;
+  }
+  .block-row:last-child, .member-row:last-child, .uni-row:last-child { border-bottom: none; }
+  .block-name, .member-name, .uni-desc { color: var(--muted); }
+  
+  .block-days, .uni-tag {
+    font-weight: 500;
+    font-size: 11px;
+    color: #fff;
+    border-radius: 3px;
+    padding: 1px 7px;
+    letter-spacing: .02em;
+    text-transform: uppercase;
+  }
+  .bg-complete { background: var(--uni-complete); }
+  .bg-pe       { background: var(--uni-pe); }
+  .bg-spec     { background: var(--uni-spec); }
+
+  .total-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 10px;
+    padding-top: 8px;
+    border-top: 2px solid var(--rule);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .total-row .total-num { font-size: 18px; font-family: 'Playfair Display', serif; font-weight: 600; color: var(--ink); }
+  .grand-total {
+    margin-top: 14px;
+    background: var(--ink);
+    color: var(--parchment);
+    border-radius: 6px;
+    padding: 12px 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 11px;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+  }
+  .grand-total .g-num { font-family: 'Playfair Display', serif; font-size: 22px; font-weight: 600; color: var(--soft); }
+
+  /* TOGGLE SWITCH FOR GLOBAL VIEW CONTROL */
+  .view-toggle-btn {
+    background: var(--ink);
+    color: var(--parchment);
+    border: 1px solid var(--accent);
+    padding: 4px 10px;
+    border-radius: 4px;
+    font-size: 11px;
+    font-family: 'DM Sans', sans-serif;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .view-toggle-btn:hover {
+    background: var(--accent);
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="eyebrow">Batangas Province High School for Culture and Arts</div>
+  <h1>G12 <span>Kumintang</span></h1>
+  <div class="sub">First Trimester &middot; SY 2026&ndash;2027</div>
+</header>
+
+<div class="wrapper">
+
+  <!-- DYNAMIC TODAY VIEW PANEL -->
+  <div class="today-box" id="todayDashboard">
+    <div class="today-banner">
+      <div class="today-title" id="todayDayName">Loading Today...</div>
+      <div class="today-time" id="digitalClock">00:00:00 AM</div>
+    </div>
+    <div class="today-grid">
+      
+      <!-- Live Schedule Tracking (Convenience Feature) -->
+      <div class="live-status-bar" id="liveStatusBar">
+        <span>Current Class Status</span>
+        <span class="status-tag" id="currentPeriodLabel">Checking...</span>
+      </div>
+
+      <!-- Left Column: Class List for Today -->
+      <div class="dashboard-pane">
+        <h3>Today's Timeline</h3>
+        <div id="todayScheduleContainer">
+          <!-- Populated by JavaScript -->
+        </div>
+      </div>
+
+      <!-- Right Column: Uniform & Cleaners Profile -->
+      <div class="dashboard-pane">
+        <h3>Daily Protocol</h3>
+        
+        <div class="meta-card" style="border-left: 4px solid var(--accent);">
+          <div class="meta-title">Required Dress Code</div>
+          <div class="meta-value" id="todayUniformVal" style="font-weight:700;">&mdash;</div>
+        </div>
+
+        <div class="meta-card" style="border-left: 4px solid var(--muted);">
+          <div class="meta-title">Duty Cleaners Today</div>
+          <div class="meta-value" id="todayCleanersTeam" style="margin-bottom: 6px;">&mdash;</div>
+          <div style="font-size: 11.5px; color: var(--muted);" id="todayCleanersMembers"></div>
+        </div>
+
+        <div class="meta-card">
+          <div class="meta-title">Your Cleaners Assignment Zone</div>
+          <div style="font-size:11.5px;" id="todayCleanersZones"></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ALL WEEK ARCHIVE CONTROL -->
+  <p class="section-label">
+    <span>Master Schedules</span>
+    <button class="view-toggle-btn" onclick="toggleArchive()" id="toggleBtn">Show Full Week Archive</button>
+  </p>
+
+  <!-- ARCHIVE CONTAINER (Hidden by default on load for clean dashboard experience) -->
+  <div id="archiveSchedules" style="display: none;">
+
+    <!-- DESKTOP TABLE -->
+    <div class="desktop-view">
+      <div class="tbl-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Time</th>
+              <th>Monday</th>
+              <th>Tuesday</th>
+              <th>Wednesday</th>
+              <th>Thursday</th>
+              <th>Friday</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="time-cell">6:30 &ndash; 7:00</td>
+              <td class="subj-cell" colspan="5"><span class="subj-pill c-ae" style="max-width:none;width:96%;">Housekeeping &amp; Sanitation Activities</span></td>
+            </tr>
+            <tr>
+              <td class="time-cell">7:00 &ndash; 8:30</td>
+              <td class="subj-cell"><span class="subj-pill c-phil">Phil.</span></td>
+              <td class="subj-cell"><span class="subj-pill c-phil">Phil.</span></td>
+              <td class="subj-cell"><span class="subj-pill c-phil">Phil.</span></td>
+              <td class="subj-cell"><span class="subj-pill c-phil">Phil.</span></td>
+              <td class="subj-cell"><span class="subj-pill c-hgp">HGP</span></td>
+            </tr>
+            <tr>
+              <td class="time-cell">8:30 &ndash; 10:00</td>
+              <td class="subj-cell"><span class="subj-pill c-ucsp">UCSP</span></td>
+              <td class="subj-cell"><span class="subj-pill c-ucsp">UCSP</span></td>
+              <td class="subj-cell"><span class="subj-pill c-ucsp">UCSP</span></td>
+              <td class="subj-cell"><span class="subj-pill c-eapp">EAPP</span></td>
+              <td class="subj-cell"><span class="subj-pill c-eapp">EAPP</span></td>
+            </tr>
+            <tr class="break-row">
+              <td class="time-cell">10:00 &ndash; 10:15</td>
+              <td class="break-label" colspan="5">Break</td>
+            </tr>
+            <tr>
+              <td class="time-cell">10:15 &ndash; 11:45</td>
+              <td class="subj-cell"><span class="subj-pill c-ae">A&amp;E</span></td>
+              <td class="subj-cell"><span class="subj-pill c-ae">A&amp;E</span></td>
+              <td class="subj-cell"><span class="subj-pill c-ae">A&amp;E</span></td>
+              <td class="subj-cell"><span class="subj-pill c-ae">A&amp;E</span></td>
+              <td class="subj-cell"><span class="subj-pill c-ucsp">UCSP</span></td>
+            </tr>
+            <tr class="lunch-row">
+              <td class="time-cell">11:45 &ndash; 12:30</td>
+              <td class="break-label" colspan="5">Lunch Break</td>
+            </tr>
+            <tr>
+              <td class="time-cell">12:30 &ndash; 2:00</td>
+              <td class="subj-cell"><span class="subj-pill c-eapp">EAPP</span></td>
+              <td class="subj-cell"><span class="subj-pill c-eapp">EAPP</span></td>
+              <td class="subj-cell"><span class="subj-pill c-peh">PEH 3</span></td>
+              <td class="subj-cell"><span class="subj-pill c-mil">MIL</span></td>
+              <td class="subj-cell"><span class="subj-pill c-mil">MIL</span></td>
+            </tr>
+            <tr>
+              <td class="time-cell">2:00 &ndash; 3:30</td>
+              <td class="subj-cell"><span class="subj-pill c-mil">MIL</span></td>
+              <td class="subj-cell"><span class="subj-pill c-mil">MIL</span></td>
+              <td class="subj-cell empty-cell"></td>
+              <td class="subj-cell"><span class="subj-pill c-peh">PEH 3</span></td>
+              <td class="subj-cell empty-cell"></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- MOBILE CARDS -->
+    <div class="mobile-view">
+      <div class="day-card">
+        <div class="day-header"><span class="day-num">Day 1</span> Monday</div>
+        <div class="period-row"><div class="period-time">6:30–7:00</div><div class="period-subj"><span class="subj-pill c-ae">Housekeeping</span></div></div>
+        <div class="period-row"><div class="period-time">7:00–8:30</div><div class="period-subj"><span class="subj-pill c-phil">Intro to Phil.</span></div></div>
+        <div class="period-row"><div class="period-time">8:30–10:00</div><div class="period-subj"><span class="subj-pill c-ucsp">UCSP</span></div></div>
+        <div class="period-row break-row-m"><div class="period-time">10:00–10:15</div><div class="period-break">Break</div></div>
+        <div class="period-row"><div class="period-time">10:15–11:45</div><div class="period-subj"><span class="subj-pill c-ae">A&amp;E</span></div></div>
+        <div class="period-row lunch-row-m"><div class="period-time">11:45–12:30</div><div class="period-break">Lunch Break</div></div>
+        <div class="period-row"><div class="period-time">12:30–2:00</div><div class="period-subj"><span class="subj-pill c-eapp">EAPP</span></div></div>
+        <div class="period-row"><div class="period-time">2:00–3:30</div><div class="period-subj"><span class="subj-pill c-mil">MIL</span></div></div>
+      </div>
+
+      <div class="day-card">
+        <div class="day-header"><span class="day-num">Day 2</span> Tuesday</div>
+        <div class="period-row"><div class="period-time">6:30–7:00</div><div class="period-subj"><span class="subj-pill c-ae">Housekeeping</span></div></div>
+        <div class="period-row"><div class="period-time">7:00–8:30</div><div class="period-subj"><span class="subj-pill c-phil">Intro to Phil.</span></div></div>
+        <div class="period-row"><div class="period-time">8:30–10:00</div><div class="period-subj"><span class="subj-pill c-ucsp">UCSP</span></div></div>
+        <div class="period-row break-row-m"><div class="period-time">10:00–10:15</div><div class="period-break">Break</div></div>
+        <div class="period-row"><div class="period-time">10:15–11:45</div><div class="period-subj"><span class="subj-pill c-ae">A&amp;E</span></div></div>
+        <div class="period-row lunch-row-m"><div class="period-time">11:45–12:30</div><div class="period-break">Lunch Break</div></div>
+        <div class="period-row"><div class="period-time">12:30–2:00</div><div class="period-subj"><span class="subj-pill c-eapp">EAPP</span></div></div>
+        <div class="period-row"><div class="period-time">2:00–3:30</div><div class="period-subj"><span class="subj-pill c-mil">MIL</span></div></div>
+      </div>
+
+      <div class="day-card">
+        <div class="day-header"><span class="day-num">Day 3</span> Wednesday</div>
+        <div class="period-row"><div class="period-time">6:30–7:00</div><div class="period-subj"><span class="subj-pill c-ae">Housekeeping</span></div></div>
+        <div class="period-row"><div class="period-time">7:00–8:30</div><div class="period-subj"><span class="subj-pill c-phil">Intro to Phil.</span></div></div>
+        <div class="period-row"><div class="period-time">8:30–10:00</div><div class="period-subj"><span class="subj-pill c-ucsp">UCSP</span></div></div>
+        <div class="period-row break-row-m"><div class="period-time">10:00–10:15</div><div class="period-break">Break</div></div>
+        <div class="period-row"><div class="period-time">10:15–11:45</div><div class="period-subj"><span class="subj-pill c-ae">A&amp;E</span></div></div>
+        <div class="period-row lunch-row-m"><div class="period-time">11:45–12:30</div><div class="period-break">Lunch Break</div></div>
+        <div class="period-row"><div class="period-time">12:30–2:00</div><div class="period-subj"><span class="subj-pill c-peh">PEH 3</span></div></div>
+        <div class="period-row"><div class="period-time">2:00–3:30</div><div class="period-subj" style="color:var(--rule);font-style:italic;font-size:11px;">&mdash;</div></div>
+      </div>
+
+      <div class="day-card">
+        <div class="day-header"><span class="day-num">Day 4</span> Thursday</div>
+        <div class="period-row"><div class="period-time">6:30–7:00</div><div class="period-subj"><span class="subj-pill c-ae">Housekeeping</span></div></div>
+        <div class="period-row"><div class="period-time">7:00–8:30</div><div class="period-subj"><span class="subj-pill c-phil">Intro to Phil.</span></div></div>
+        <div class="period-row"><div class="period-time">8:30–10:00</div><div class="period-subj"><span class="subj-pill c-eapp">EAPP</span></div></div>
+        <div class="period-row break-row-m"><div class="period-time">10:00–10:15</div><div class="period-break">Break</div></div>
+        <div class="period-row"><div class="period-time">10:15–11:45</div><div class="period-subj"><span class="subj-pill c-ae">A&amp;E</span></div></div>
+        <div class="period-row lunch-row-m"><div class="period-time">11:45–12:30</div><div class="period-break">Lunch Break</div></div>
+        <div class="period-row"><div class="period-time">12:30–2:00</div><div class="period-subj"><span class="subj-pill c-mil">MIL</span></div></div>
+        <div class="period-row"><div class="period-time">2:00–3:30</div><div class="period-subj"><span class="subj-pill c-peh">PEH 3</span></div></div>
+      </div>
+
+      <div class="day-card">
+        <div class="day-header"><span class="day-num">Day 5</span> Friday</div>
+        <div class="period-row"><div class="period-time">6:30–7:00</div><div class="period-subj"><span class="subj-pill c-ae">Housekeeping</span></div></div>
+        <div class="period-row"><div class="period-time">7:00–8:30</div><div class="period-subj"><span class="subj-pill c-hgp">HGP</span></div></div>
+        <div class="period-row"><div class="period-time">8:30–10:00</div><div class="period-subj"><span class="subj-pill c-eapp">EAPP</span></div></div>
+        <div class="period-row break-row-m"><div class="period-time">10:00–10:15</div><div class="period-break">Break</div></div>
+        <div class="period-row"><div class="period-time">10:15–11:45</div><div class="period-subj"><span class="subj-pill c-ucsp">UCSP</span></div></div>
+        <div class="period-row lunch-row-m"><div class="period-time">11:45–12:30</div><div class="period-break">Lunch Break</div></div>
+        <div class="period-row"><div class="period-time">12:30–2:00</div><div class="period-subj"><span class="subj-pill c-mil">MIL</span></div></div>
+        <div class="period-row"><div class="period-time">2:00–3:30</div><div class="period-subj" style="color:var(--rule);font-style:italic;font-size:11px;">&mdash;</div></div>
+      </div>
+    </div>
+
+    <!-- LEGEND -->
+    <p class="section-label">Subjects</p>
+    <div class="legend">
+      <div class="legend-item"><div class="legend-dot c-phil"></div>Intro to Philosophy</div>
+      <div class="legend-item"><div class="legend-dot c-ucsp"></div>UCSP</div>
+      <div class="legend-item"><div class="legend-dot c-eapp"></div>EAPP</div>
+      <div class="legend-item"><div class="legend-dot c-ae"></div>A&amp;E / Housekeeping</div>
+      <div class="legend-item"><div class="legend-dot c-mil"></div>MIL</div>
+      <div class="legend-item"><div class="legend-dot c-peh"></div>PEH 3</div>
+      <div class="legend-item"><div class="legend-dot c-hgp"></div>HGP</div>
+    </div>
+
+    <!-- TEACHERS TABLE -->
+    <p class="section-label">Teachers</p>
+    <table class="teachers-tbl">
+      <thead>
+        <tr><th>Code</th><th>Subject</th><th>Teacher</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><span class="subject-code c-phil">Phil.</span></td><td>Introduction to the Philosophy of the Human Person</td><td class="teacher-name">Mrs. Emily C. Medrano</td></tr>
+        <tr><td><span class="subject-code c-ucsp">UCSP</span></td><td>Understanding Culture, Society, and Politics</td><td class="teacher-name">Mrs. Maribel B. Ellazar</td></tr>
+        <tr><td><span class="subject-code c-eapp">EAPP</span></td><td>English for Academic and Professional Purposes</td><td class="teacher-name">Mrs. Cristina J. Masangcay</td></tr>
+        <tr><td><span class="subject-code c-ae">A&amp;E</span></td><td>Apprenticeship and Exploration</td><td class="teacher-name">Mr. Mark Freddierick Divino</td></tr>
+        <tr><td><span class="subject-code c-mil">MIL</span></td><td>Media and Information Literacy</td><td class="teacher-name">Mrs. Cristina J. Masangcay</td></tr>
+        <tr><td><span class="subject-code c-peh">PEH 3</span></td><td>Physical Education and Health 3</td><td class="teacher-name">Mrs. Emily C. Medrano</td></tr>
+        <tr><td><span class="subject-code c-hgp">HGP</span></td><td>Homeroom Guidance Program</td><td class="teacher-name">Mrs. Maribel B. Ellazar</td></tr>
+      </tbody>
+    </table>
+
+    <!-- ASSIGNMENT OF CLEANERS -->
+    <p class="section-label">Assignment of Cleaners &middot; Schedule of Areas</p>
+    <div class="tbl-wrap">
+      <table class="cleaners-tbl">
+        <thead>
+          <tr><th>Area / Zone</th><th>Monday</th><th>Tuesday</th><th>Wednesday</th><th>Thursday</th><th>Friday</th></tr>
+        </thead>
+        <tbody>
+          <tr><td class="area-cell">Room</td><td><span class="g-pill c-g1">Group 1</span></td><td><span class="g-pill c-g2">Group 2</span></td><td><span class="g-pill c-g3">Group 3</span></td><td><span class="g-pill c-g4">Group 4</span></td><td><span class="g-pill c-g5">Group 5</span></td></tr>
+          <tr><td class="area-cell">Stairs</td><td><span class="g-pill c-g2">Group 2</span></td><td><span class="g-pill c-g3">Group 3</span></td><td><span class="g-pill c-g4">Group 4</span></td><td><span class="g-pill c-g5">Group 5</span></td><td><span class="g-pill c-g1">Group 1</span></td></tr>
+          <tr><td class="area-cell">Hallway</td><td><span class="g-pill c-g3">Group 3</span></td><td><span class="g-pill c-g4">Group 4</span></td><td><span class="g-pill c-g5">Group 5</span></td><td><span class="g-pill c-g1">Group 1</span></td><td><span class="g-pill c-g2">Group 2</span></td></tr>
+          <tr><td class="area-cell">Front Ground</td><td><span class="g-pill c-g4">Group 4</span></td><td><span class="g-pill c-g5">Group 5</span></td><td><span class="g-pill c-g1">Group 1</span></td><td><span class="g-pill c-g2">Group 2</span></td><td><span class="g-pill c-g3">Group 3</span></td></tr>
+          <tr><td class="area-cell">Pathway &amp; Side Ground</td><td><span class="g-pill c-g5">Group 5</span></td><td><span class="g-pill c-g1">Group 1</span></td><td><span class="g-pill c-g2">Group 2</span></td><td><span class="g-pill c-g3">Group 3</span></td><td><span class="g-pill c-g4">Group 4</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- CLEANERS ROSTERS -->
+    <p class="section-label">Cleaner Group Members</p>
+    <div class="cleaners-grid">
+      <div class="cleaner-card">
+        <div class="cleaner-head" style="border-bottom: 3px solid var(--g1)"><div class="g-label">Team 01</div><div class="g-title">Group 1</div></div>
+        <div class="cleaner-body">
+          <div class="member-row"><span class="member-name">Angelo Salazar</span></div><div class="member-row"><span class="member-name">Dave Falogme</span></div><div class="member-row"><span class="member-name">Jewel Barrameda</span></div><div class="member-row"><span class="member-name">Jerica De la Cruz</span></div>
+        </div>
+      </div>
+      <div class="cleaner-card">
+        <div class="cleaner-head" style="border-bottom: 3px solid var(--g2)"><div class="g-label">Team 02</div><div class="g-title">Group 2</div></div>
+        <div class="cleaner-body">
+          <div class="member-row"><span class="member-name">Andrew Papa</span></div><div class="member-row"><span class="member-name">Justin Evangelista</span></div><div class="member-row"><span class="member-name">Trixie Martizana</span></div><div class="member-row"><span class="member-name">Justine Kaye Balina</span></div><div class="member-row"><span class="member-name">Mariel Labatique</span></div>
+        </div>
+      </div>
+      <div class="cleaner-card">
+        <div class="cleaner-head" style="border-bottom: 3px solid var(--g3)"><div class="g-label">Team 03</div><div class="g-title">Group 3</div></div>
+        <div class="cleaner-body">
+          <div class="member-row"><span class="member-name">Kenedy Nieves</span></div><div class="member-row"><span class="member-name">Vince Datinguinoo</span></div><div class="member-row"><span class="member-name">Jhoan Mae Coliat</span></div><div class="member-row"><span class="member-name">Althea Masangcay</span></div>
+        </div>
+      </div>
+      <div class="cleaner-card">
+        <div class="cleaner-head" style="border-bottom: 3px solid var(--g4)"><div class="g-label">Team 04</div><div class="g-title">Group 4</div></div>
+        <div class="cleaner-body">
+          <div class="member-row"><span class="member-name">Gian Masangcay</span></div><div class="member-row"><span class="member-name">Kenneth Bisa</span></div><div class="member-row"><span class="member-name">Andrei Martija</span></div><div class="member-row"><span class="member-name">Jessa Brucal</span></div><div class="member-row"><span class="member-name">CJ Sagarino</span></div>
+        </div>
+      </div>
+      <div class="cleaner-card">
+        <div class="cleaner-head" style="border-bottom: 3px solid var(--g5)"><div class="g-label">Team 05</div><div class="g-title">Group 5</div></div>
+        <div class="cleaner-body">
+          <div class="member-row"><span class="member-name">Wilmer Hernandez</span></div><div class="member-row"><span class="member-name">Jeromy Balina</span></div><div class="member-row"><span class="member-name">Janellie Balmes</span></div><div class="member-row"><span class="member-name">Jada Javier</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- UNIFORM CYCLE PROTOCOL REFERENCE -->
+    <p class="section-label">Uniform Cycle Protocol</p>
+    <div class="uniform-grid">
+      <div class="uniform-card">
+        <div class="uniform-head" style="border-bottom: 3px solid var(--uni-complete)"><div class="u-label">Mon &middot; Tue &middot; Thu</div><div class="u-title">Complete Uniform</div></div>
+        <div class="uniform-body"><div class="uni-row"><span class="uni-desc">Prescribed regular formal uniform</span><span class="uni-tag bg-complete">Complete</span></div></div>
+      </div>
+      <div class="uniform-card">
+        <div class="uniform-head" style="border-bottom: 3px solid var(--uni-pe)"><div class="u-label">Wednesday</div><div class="u-title">PE Uniform</div></div>
+        <div class="uniform-body"><div class="uni-row"><span class="uni-desc">Official PE shirt and athletic pants</span><span class="uni-tag bg-pe">PE Gear</span></div></div>
+      </div>
+      <div class="uniform-card">
+        <div class="uniform-head" style="border-bottom: 3px solid var(--uni-spec)"><div class="u-label">Friday</div><div class="u-title">Spec / Black Shirt</div></div>
+        <div class="uniform-body"><div class="uni-row"><span class="uni-desc">Spec or plain black shirt with pants</span><span class="uni-tag bg-spec">Casual</span></div></div>
+      </div>
+    </div>
+
+  </div> <!-- END OF ARCHIVE -->
+
+  <!-- ACADEMIC CALENDAR -->
+  <p class="section-label">Academic Calendar</p>
+  <div class="cal-grid">
+    <div class="term-card">
+      <div class="term-head"><div class="t-label">Term 1</div><div class="t-dates">June 8 &ndash;<br>Sept 15, 2026</div></div>
+      <div class="term-body">
+        <div class="block-row"><span class="block-name">Opening Block</span><span class="block-days">4 days</span></div>
+        <div class="block-row"><span class="block-name">Instructional</span><span class="block-days">55 days</span></div>
+        <div class="block-row"><span class="block-name">End of Term</span><span class="block-days">10 days</span></div>
+        <div class="total-row"><span>Total</span><span class="total-num">69</span></div>
+      </div>
+    </div>
+    <div class="term-card">
+      <div class="term-head"><div class="t-label">Term 2</div><div class="t-dates">Sept 16 &ndash;<br>Dec 18, 2026</div></div>
+      <div class="term-body">
+        <div class="block-row"><span class="block-name">Instructional</span><span class="block-days">65 days</span></div>
+        <div class="block-row"><span class="block-name">End of Term</span><span class="block-days">9 days</span></div>
+        <div class="block-row"><span class="block-name">Year-End Break</span><span class="block-days">&mdash;</span></div>
+        <div class="total-row"><span>Total</span><span class="total-num">74</span></div>
+      </div>
+    </div>
+    <div class="term-card">
+      <div class="term-head"><div class="t-label">Term 3</div><div class="t-dates">Jan 4 &ndash;<br>Apr 8, 2027</div></div>
+      <div class="term-body">
+        <div class="block-row"><span class="block-name">Instructional</span><span class="block-days">57 days</span></div>
+        <div class="block-row"><span class="block-name">End of Term</span><span class="block-days">10 days</span></div>
+        <div class="total-row"><span>Total</span><span class="total-num">67</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="grand-total">
+    <span>Total School Days</span>
+    <span class="g-num">201 days</span>
+  </div>
+
+  <footer>G12 &middot; Kumintang &middot; First Trimester SY 2026&ndash;2027</footer>
+</div>
+
+<!-- INLINE CORE DATABASE AND CONTROLLER LOGIC -->
+<script>
+  // Core Class Data Structure
+  const classData = {
+    groups: {
+      1: { name: "Group 1", color: "var(--g1)", members: ["Angelo Salazar", "Dave Falogme", "Jewel Barrameda", "Jerica De la Cruz"] },
+      2: { name: "Group 2", color: "var(--g2)", members: ["Andrew Papa", "Justin Evangelista", "Trixie Martizana", "Justine Kaye Balina", "Mariel Labatique"] },
+      3: { name: "Group 3", color: "var(--g3)", members: ["Kenedy Nieves", "Vince Datinguinoo", "Jhoan Mae Coliat", "Althea Masangcay"] },
+      4: { name: "Group 4", color: "var(--g4)", members: ["Gian Masangcay", "Kenneth Bisa", "Andrei Martija", "Jessa Brucal", "CJ Sagarino"] },
+      5: { name: "Group 5", color: "var(--g5)", members: ["Wilmer Hernandez", "Jeromy Balina", "Janellie Balmes", "Jada Javier"] }
+    },
+    days: {
+      1: {
+        name: "Monday",
+        uniform: "Complete School Uniform",
+        cleaners: { team: 1, duties: { "Room": 1, "Stairs": 2, "Hallway": 3, "Front Ground": 4, "Pathway & Side": 5 } },
+        schedule: [
+          { time: "6:30–7:00", name: "Housekeeping & Sanitation", type: "c-ae" },
+          { time: "7:00–8:30", name: "Intro to Philosophy", type: "c-phil" },
+          { time: "8:30–10:00", name: "UCSP", type: "c-ucsp" },
+          { time: "10:00–10:15", name: "Recess Break", type: "break" },
+          { time: "10:15–11:45", name: "A&E", type: "c-ae" },
+          { time: "11:45–12:30", name: "Lunch Break", type: "lunch" },
+          { time: "12:30–2:00", name: "EAPP", type: "c-eapp" },
+          { time: "2:00–3:30", name: "MIL", type: "c-mil" }
+        ]
+      },
+      2: {
+        name: "Tuesday",
+        uniform: "Complete School Uniform",
+        cleaners: { team: 2, duties: { "Room": 2, "Stairs": 3, "Hallway": 4, "Front Ground": 5, "Pathway & Side": 1 } },
+        schedule: [
+          { time: "6:30–7:00", name: "Housekeeping & Sanitation", type: "c-ae" },
+          { time: "7:00–8:30", name: "Intro to Philosophy", type: "c-phil" },
+          { time: "8:30–10:00", name: "UCSP", type: "c-ucsp" },
+          { time: "10:00–10:15", name: "Recess Break", type: "break" },
+          { time: "10:15–11:45", name: "A&E", type: "c-ae" },
+          { time: "11:45–12:30", name: "Lunch Break", type: "lunch" },
+          { time: "12:30–2:00", name: "EAPP", type: "c-eapp" },
+          { time: "2:00–3:30", name: "MIL", type: "c-mil" }
+        ]
+      },
+      3: {
+        name: "Wednesday",
+        uniform: "PE Uniform",
+        cleaners: { team: 3, duties: { "Room": 3, "Stairs": 4, "Hallway": 5, "Front Ground": 1, "Pathway & Side": 2 } },
+        schedule: [
+          { time: "6:30–7:00", name: "Housekeeping & Sanitation", type: "c-ae" },
+          { time: "7:00–8:30", name: "Intro to Philosophy", type: "c-phil" },
+          { time: "8:30–10:00", name: "UCSP", type: "c-ucsp" },
+          { time: "10:00–10:15", name: "Recess Break", type: "break" },
+          { time: "10:15–11:45", name: "A&E", type: "c-ae" },
+          { time: "11:45–12:30", name: "Lunch Break", type: "lunch" },
+          { time: "12:30–2:00", name: "PEH 3", type: "c-peh" }
+        ]
+      },
+      4: {
+        name: "Thursday",
+        uniform: "Complete School Uniform",
+        cleaners: { team: 4, duties: { "Room": 4, "Stairs": 5, "Hallway": 1, "Front Ground": 2, "Pathway & Side": 3 } },
+        schedule: [
+          { time: "6:30–7:00", name: "Housekeeping & Sanitation", type: "c-ae" },
+          { time: "7:00–8:30", name: "Intro to Philosophy", type: "c-phil" },
+          { time: "8:30–10:00", name: "EAPP", type: "c-eapp" },
+          { time: "10:00–10:15", name: "Recess Break", type: "break" },
+          { time: "10:15–11:45", name: "A&E", type: "c-ae" },
+          { time: "11:45–12:30", name: "Lunch Break", type: "lunch" },
+          { time: "12:30–2:00", name: "MIL", type: "c-mil" },
+          { time: "2:00–3:30", name: "PEH 3", type: "c-peh" }
+        ]
+      },
+      5: {
+        name: "Friday",
+        uniform: "Spec Shirt / Black Shirt & Pants",
+        cleaners: { team: 5, duties: { "Room": 5, "Stairs": 1, "Hallway": 2, "Front Ground": 3, "Pathway & Side": 4 } },
+        schedule: [
+          { time: "6:30–7:00", name: "Housekeeping & Sanitation", type: "c-ae" },
+          { time: "7:00–8:00", name: "HGP", type: "c-hgp" },
+          { time: "8:30–10:00", name: "EAPP", type: "c-eapp" },
+          { time: "10:00–10:15", name: "Recess Break", type: "break" },
+          { time: "10:15–11:45", name: "UCSP", type: "c-ucsp" },
+          { time: "11:45–12:30", name: "Lunch Break", type: "lunch" },
+          { time: "12:30–2:00", name: "MIL", type: "c-mil" }
+        ]
+      }
+    }
+  };
+
+  function updateDashboard() {
+    const now = new Date();
+    let dayIndex = now.getDay(); 
+    
+    // Fallback strategy for weekend tracking: assume Monday if viewed on Saturday or Sunday
+    if (dayIndex === 0 || dayIndex === 6) {
+      dayIndex = 1; 
+    }
+
+    const currentDayData = classData.days[dayIndex];
+    
+    // Set Day Title Headers
+    document.getElementById('todayDayName').innerText = `Today's Overview · ${currentDayData.name}`;
+    document.getElementById('todayUniformVal').innerText = currentDayData.uniform;
+
+    // Track Main Area Cleaners Group
+    const roomTeamId = currentDayData.cleaners.team;
+    const roomGroup = classData.groups[roomTeamId];
+    document.getElementById('todayCleanersTeam').innerHTML = `<span class="g-pill" style="background:${roomGroup.color}">${roomGroup.name}</span> (Room Main Focus)`;
+    document.getElementById('todayCleanersMembers').innerText = `Members: ${roomGroup.members.join(', ')}`;
+
+    // Build complete clean up grid zones map for current day context
+    let zoneHtml = '';
+    for (const [zone, groupId] of Object.entries(currentDayData.cleaners.duties)) {
+      const gObj = classData.groups[groupId];
+      zoneHtml += `<div style="margin-bottom:4px;"><strong>${zone}:</strong> ${gObj.name}</div>`;
+    }
+    document.getElementById('todayCleanersZones').innerHTML = zoneHtml;
+
+    // Render schedule timeline list rows
+    let scheduleHtml = '';
+    currentDayData.schedule.forEach(item => {
+      if (item.type === 'break' || item.type === 'lunch') {
+        const rowBg = item.type === 'break' ? 'var(--break-bg)' : 'var(--lunch-bg)';
+        scheduleHtml += `
+          <div class="period-row" style="background:${rowBg}">
+            <div class="period-time">${item.time}</div>
+            <div class="period-break">${item.name}</div>
+          </div>`;
+      } else {
+        scheduleHtml += `
+          <div class="period-row">
+            <div class="period-time">${item.time}</div>
+            <div class="period-subj"><span class="subj-pill ${item.type}">${item.name}</span></div>
+          </div>`;
+      }
+    });
+    document.getElementById('todayScheduleContainer').innerHTML = `<div class="day-card" style="margin-bottom:0; border-radius:6px;">${scheduleHtml}</div>`;
+
+    evaluateLiveStatus(currentDayData.schedule, now);
+  }
+
+  // Live status block tracker calculator engine (Convenience Track Feature)
+  function evaluateLiveStatus(schedule, now) {
+    const currentMinutes = (now.getHours() * 60) + now.getMinutes();
+    let matchedPeriod = "Classes Finished / No School Session";
+
+    for (let i = 0; i < schedule.forEach; i++) {} // Guard hook loop space
+    
+    // Parse time strings manually to discover current block
+    for (const period of schedule) {
+      const parts = period.time.replace(/–/g, '-').split('-');
+      if(parts.length === 2) {
+        const startMin = parseTimeToMinutes(parts[0]);
+        const endMin = parseTimeToMinutes(parts[1]);
+        
+        if (currentMinutes >= startMin && currentMinutes < endMin) {
+          matchedPeriod = `Now: ${period.name} (${period.time})`;
+          break;
+        } else if (currentMinutes < startMin) {
+          matchedPeriod = `Next up: ${period.name} at ${parts[0]}`;
+          break;
+        }
+      }
+    }
+    document.getElementById('currentPeriodLabel').innerText = matchedPeriod;
+  }
+
+  function parseTimeToMinutes(timeStr) {
+    timeStr = timeStr.trim().toLowerCase();
+    const cleanTime = timeStr.replace(/[^0-9:]/g, '');
+    const parts = cleanTime.split(':');
+    let hours = parseInt(parts[0], 10);
+    const minutes = parseInt(parts[1], 10);
+    
+    // Native parser system smart check rules for typical layout structures
+    if (timeStr.includes('pm') && hours < 12) hours += 12;
+    if (timeStr.includes('am') && hours === 12) hours = 0;
+    
+    // Handle implicit PM conversions based on specific standard school shifts
+    if (!timeStr.includes('am') && !timeStr.includes('pm')) {
+      if (hours === 12 || hours === 1 || hours === 2 || hours === 3) hours += 12;
+    }
+    
+    return (hours * 60) + minutes;
+  }
+
+  // Real-time Clock Interface Engine
+  function runClock() {
+    const now = new Date();
+    let hours = now.getHours();
+    let minutes = now.getMinutes();
+    let seconds = now.getSeconds();
+    const ampm = hours >= 12 ? 'PM' : 'AM';
+    hours = hours % 12;
+    hours = hours ? hours : 12; 
+    minutes = minutes < 10 ? '0' + minutes : minutes;
+    seconds = seconds < 10 ? '0' + seconds : seconds;
+    document.getElementById('digitalClock').innerText = `${hours}:${minutes}:${seconds} ${ampm}`;
+  }
+
+  // Display Controller Toggle Logic Block
+  function toggleArchive() {
+    const target = document.getElementById('archiveSchedules');
+    const btn = document.getElementById('toggleBtn');
+    if (target.style.display === 'none') {
+      target.style.display = 'block';
+      btn.innerText = 'Hide Full Week Archive';
+    } else {
+      target.style.display = 'none';
+      btn.innerText = 'Show Full Week Archive';
+    }
+  }
+
+  // Initial Runtime Initializations
+  updateDashboard();
+  runClock();
+  setInterval(runClock, 1000);
+  // Re-verify current live schedules tracking blocks updates every single minute frame
+  setInterval(updateDashboard, 60000);
+</script>
+
+</body>
+</html>
