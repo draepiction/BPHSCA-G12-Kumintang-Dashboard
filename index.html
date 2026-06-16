@@ -130,7 +130,7 @@
   }
   .today-grid {
     display: grid;
-    grid-template-columns: 1.5fr 1fr;
+    grid-template-columns: 1.2fr 1fr;
     gap: 20px;
     padding: 20px;
   }
@@ -187,6 +187,56 @@
   .meta-value {
     font-size: 14px;
     font-weight: 500;
+  }
+
+  /* Cleaner Highlighting Features */
+  .cleaner-search-box {
+    margin-bottom: 10px;
+  }
+  .cleaner-input {
+    width: 100%;
+    padding: 8px 12px;
+    font-size: 12.5px;
+    border: 1px solid var(--rule);
+    border-radius: 6px;
+    background: #fff;
+    color: var(--ink);
+    font-family: 'DM Sans', sans-serif;
+  }
+  .cleaner-input:focus {
+    outline: 2px solid var(--accent);
+  }
+  .highlight-alert {
+    background: #fff8ee;
+    border: 1px solid var(--accent);
+    padding: 10px;
+    border-radius: 6px;
+    margin-top: 8px;
+    font-size: 13px;
+    line-height: 1.4;
+    display: none;
+  }
+  .highlight-alert strong {
+    color: var(--accent);
+  }
+  .zone-highlight {
+    background: #fff3e3 !important;
+    border: 1px solid var(--accent) !important;
+    font-weight: 700;
+    transform: scale(1.01);
+  }
+
+  .zone-item-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #fff;
+    border: 1px solid var(--warm-mid);
+    margin-bottom: 4px;
+    padding: 6px 10px;
+    border-radius: 5px;
+    font-size: 12.5px;
+    transition: all 0.2s ease;
   }
 
   /* DESKTOP TABLE */
@@ -586,8 +636,7 @@
 
       <div class="dashboard-pane">
         <h3>Today's Timeline</h3>
-        <div id="todayScheduleContainer">
-          </div>
+        <div id="todayScheduleContainer"></div>
       </div>
 
       <div class="dashboard-pane">
@@ -605,13 +654,12 @@
         </div>
 
         <div class="meta-card" style="border-left: 4px solid var(--muted);">
-          <div class="meta-title">Duty Cleaners Today</div>
-          <div class="meta-value" id="todayCleanersTeam" style="margin-bottom: 6px;">-</div>
-          <div style="font-size: 11.5px; color: var(--muted);" id="todayCleanersMembers"></div>
-        </div>
-
-        <div class="meta-card">
-          <div class="meta-title">Your Cleaners Assignment Zone</div>
+          <div class="meta-title">Cleaners Duty Locator</div>
+          <div class="cleaner-search-box">
+            <input type="text" id="cleanerSearchInput" class="cleaner-input" placeholder="Type your name to find your task..." oninput="handleCleanerSearch()">
+            <div id="cleanerHighlightAlert" class="highlight-alert"></div>
+          </div>
+          <div class="meta-value" style="font-size: 12px; margin-bottom: 8px; font-weight: 700; color: var(--muted); letter-spacing: 0.04em; text-transform: uppercase;">Zone Assignments for Today</div>
           <div style="font-size:11.5px;" id="todayCleanersZones"></div>
         </div>
       </div>
@@ -839,16 +887,15 @@
     <p class="section-label">Uniform Cycle Protocol</p>
     <div class="uniform-grid">
       <div class="uniform-card">
-        <div class="uniform-head" style="border-bottom: 3px solid var(--uni-complete)"><div class="u-label">Mon &middot; Tue &middot; Thu</div><div class="u-title">Complete Uniform</div></div>
+        <div class="uniform-head" style="border-bottom: 3px solid var(--uni-complete)"><div class="u-label">Mon &middot; Wed &middot; Thu</div><div class="u-title">Complete Uniform</div></div>
         <div class="uniform-body"><div class="uni-row"><span class="uni-desc">Prescribed regular formal uniform</span><span class="uni-tag bg-complete">Complete</span></div></div>
       </div>
       <div class="uniform-card">
-        <div class="uniform-head" style="border-bottom: 3px solid var(--uni-pe)"><div class="u-label">Wednesday</div><div class="u-title">PE Uniform</div></div>
-        <div class="uniform-body"><div class="uni-row"><span class="uni-desc">Official PE shirt and athletic pants</span><span class="uni-tag bg-pe">PE Gear</span></div></div>
-      </div>
-      <div class="uniform-card">
-        <div class="uniform-head" style="border-bottom: 3px solid var(--uni-spec)"><div class="u-label">Friday</div><div class="u-title">Spec / Black Shirt</div></div>
-        <div class="uniform-body"><div class="uni-row"><span class="uni-desc">Spec or plain black shirt with pants</span><span class="uni-tag bg-spec">Casual</span></div></div>
+        <div class="uniform-head" style="border-bottom: 3px solid var(--uni-pe)"><div class="u-label">Tuesday &middot; Friday</div><div class="u-title">PE / Casual Variations</div></div>
+        <div class="uniform-body">
+          <div class="uni-row"><span class="uni-desc">Tue: White Shirt</span><span class="uni-tag bg-pe">Variant</span></div>
+          <div class="uni-row"><span class="uni-desc">Fri: Spec Shirt / Black Shirt &amp; Pants</span><span class="uni-tag bg-spec">Casual</span></div>
+        </div>
       </div>
     </div>
 
@@ -891,6 +938,8 @@
 </div>
 
 <script>
+  let activeDayIndex = 1; 
+
   const classData = {
     groups: {
       1: { name: "Group 1", color: "var(--g1)", members: ["Angelo Salazar", "Dave Falogme", "Jewel Barrameda", "Jerica De la Cruz"] },
@@ -903,7 +952,7 @@
       1: {
         name: "Monday",
         uniform: "Complete School Uniform",
-        cleaners: { team: 1, duties: { "Room": 1, "Stairs": 2, "Hallway": 3, "Front Ground": 4, "Pathway & Side": 5 } },
+        cleaners: { duties: { "Room": 1, "Stairs": 2, "Hallway": 3, "Front Ground": 4, "Pathway & Side Ground": 5 } },
         schedule: [
           { time: "6:30-7:00", name: "Housekeeping & Sanitation", type: "c-ae" },
           { time: "7:00-8:30", name: "Intro to Philosophy", type: "c-phil" },
@@ -917,8 +966,8 @@
       },
       2: {
         name: "Tuesday",
-        uniform: "Complete School Uniform",
-        cleaners: { team: 2, duties: { "Room": 2, "Stairs": 3, "Hallway": 4, "Front Ground": 5, "Pathway & Side": 1 } },
+        uniform: "White Shirt & Pants",
+        cleaners: { duties: { "Room": 2, "Stairs": 3, "Hallway": 4, "Front Ground": 5, "Pathway & Side Ground": 1 } },
         schedule: [
           { time: "6:30-7:00", name: "Housekeeping & Sanitation", type: "c-ae" },
           { time: "7:00-8:30", name: "Intro to Philosophy", type: "c-phil" },
@@ -932,8 +981,8 @@
       },
       3: {
         name: "Wednesday",
-        uniform: "PE Uniform",
-        cleaners: { team: 3, duties: { "Room": 3, "Stairs": 4, "Hallway": 5, "Front Ground": 1, "Pathway & Side": 2 } },
+        uniform: "Full PE Uniform",
+        cleaners: { duties: { "Room": 3, "Stairs": 4, "Hallway": 5, "Front Ground": 1, "Pathway & Side Ground": 2 } },
         schedule: [
           { time: "6:30-7:00", name: "Housekeeping & Sanitation", type: "c-ae" },
           { time: "7:00-8:30", name: "Intro to Philosophy", type: "c-phil" },
@@ -947,7 +996,7 @@
       4: {
         name: "Thursday",
         uniform: "Complete School Uniform",
-        cleaners: { team: 4, duties: { "Room": 4, "Stairs": 5, "Hallway": 1, "Front Ground": 2, "Pathway & Side": 3 } },
+        cleaners: { duties: { "Room": 4, "Stairs": 5, "Hallway": 1, "Front Ground": 2, "Pathway & Side Ground": 3 } },
         schedule: [
           { time: "6:30-7:00", name: "Housekeeping & Sanitation", type: "c-ae" },
           { time: "7:00-8:30", name: "Intro to Philosophy", type: "c-phil" },
@@ -962,7 +1011,7 @@
       5: {
         name: "Friday",
         uniform: "Spec Shirt / Black Shirt & Pants",
-        cleaners: { team: 5, duties: { "Room": 5, "Stairs": 1, "Hallway": 2, "Front Ground": 3, "Pathway & Side": 4 } },
+        cleaners: { duties: { "Room": 5, "Stairs": 1, "Hallway": 2, "Front Ground": 3, "Pathway & Side Ground": 4 } },
         schedule: [
           { time: "6:30-7:00", name: "Housekeeping & Sanitation", type: "c-ae" },
           { time: "7:00-8:00", name: "HGP", type: "c-hgp" },
@@ -979,27 +1028,25 @@
   function updateDashboard() {
     const now = new Date();
     let dayIndex = now.getDay(); 
+    let isWeekendPreview = false;
     
     if (dayIndex === 0 || dayIndex === 6) {
       dayIndex = 1; 
+      isWeekendPreview = true;
     }
 
+    activeDayIndex = dayIndex;
     const currentDayData = classData.days[dayIndex];
     
-    document.getElementById('todayDayName').innerText = `Today's Overview · ${currentDayData.name}`;
+    if (isWeekendPreview) {
+      document.getElementById('todayDayName').innerText = `Monday Preview · Weekend Mode`;
+    } else {
+      document.getElementById('todayDayName').innerText = `Today's Overview · ${currentDayData.name}`;
+    }
+
     document.getElementById('todayUniformVal').innerText = currentDayData.uniform;
 
-    const roomTeamId = currentDayData.cleaners.team;
-    const roomGroup = classData.groups[roomTeamId];
-    document.getElementById('todayCleanersTeam').innerHTML = `<span class="g-pill" style="background:${roomGroup.color}">${roomGroup.name}</span> (Room Main Focus)`;
-    document.getElementById('todayCleanersMembers').innerText = `Members: ${roomGroup.members.join(', ')}`;
-
-    let zoneHtml = '';
-    for (const [zone, groupId] of Object.entries(currentDayData.cleaners.duties)) {
-      const gObj = classData.groups[groupId];
-      zoneHtml += `<div style="margin-bottom:4px;"><strong>${zone}:</strong> ${gObj.name}</div>`;
-    }
-    document.getElementById('todayCleanersZones').innerHTML = zoneHtml;
+    renderCleanersZones(currentDayData);
 
     let scheduleHtml = '';
     currentDayData.schedule.forEach(item => {
@@ -1020,8 +1067,73 @@
     });
     document.getElementById('todayScheduleContainer').innerHTML = `<div class="day-card" style="margin-bottom:0; border-radius:6px;">${scheduleHtml}</div>`;
 
-    evaluateLiveStatus(currentDayData.schedule, now);
     evaluateAcademicBlock(now);
+    handleCleanerSearch(); 
+  }
+
+  function renderCleanersZones(currentDayData) {
+    let zoneHtml = '';
+    for (const [zone, groupId] of Object.entries(currentDayData.cleaners.duties)) {
+      const gObj = classData.groups[groupId];
+      zoneHtml += `
+        <div class="zone-item-row" id="zone-row-${zone.replace(/[^a-zA-Z0-9]/g, '')}">
+          <span style="font-weight: 500;">${zone}</span>
+          <span class="g-pill" style="background:${gObj.color}">${gObj.name}</span>
+        </div>`;
+    }
+    document.getElementById('todayCleanersZones').innerHTML = zoneHtml;
+  }
+
+  function handleCleanerSearch() {
+    const searchInput = document.getElementById('cleanerSearchInput').value.trim().toLowerCase();
+    const alertBox = document.getElementById('cleanerHighlightAlert');
+    
+    document.querySelectorAll('.zone-item-row').forEach(row => {
+      row.classList.remove('zone-highlight');
+    });
+
+    if (!searchInput) {
+      alertBox.style.display = 'none';
+      return;
+    }
+
+    let foundMember = null;
+    let foundGroupNum = null;
+    let foundGroupName = "";
+
+    for (const [groupNum, groupData] of Object.entries(classData.groups)) {
+      const matched = groupData.members.find(m => m.toLowerCase().includes(searchInput));
+      if (matched) {
+        foundMember = matched;
+        foundGroupNum = groupNum;
+        foundGroupName = groupData.name;
+        break;
+      }
+    }
+
+    if (foundMember) {
+      alertBox.style.display = 'block';
+      
+      const currentDayData = classData.days[activeDayIndex];
+      let assignedZone = "None";
+      
+      for (const [zone, groupId] of Object.entries(currentDayData.cleaners.duties)) {
+        if (parseInt(groupId) === parseInt(foundGroupNum)) {
+          assignedZone = zone;
+          const rowId = `zone-row-${zone.replace(/[^a-zA-Z0-9]/g, '')}`;
+          const targetRow = document.getElementById(rowId);
+          if (targetRow) {
+            targetRow.classList.add('zone-highlight');
+          }
+        }
+      }
+      
+      alertBox.innerHTML = `👋 <strong>${foundMember}</strong> is in <strong>${foundGroupName}</strong>.<br>📍 Today's Task: Assigned to clean the <strong>${assignedZone}</strong>.`;
+      
+    } else {
+      alertBox.style.display = 'block';
+      alertBox.innerHTML = `❌ No matching class member found in cleaner records.`;
+    }
   }
 
   function evaluateAcademicBlock(now) {
@@ -1049,7 +1161,8 @@
     }
   }
 
-  function evaluateLiveStatus(schedule, now) {
+  function evaluateLiveStatus() {
+    const now = new Date();
     const realDay = now.getDay();
     
     if (realDay === 0 || realDay === 6) {
@@ -1057,7 +1170,11 @@
       return;
     }
 
+    const currentDayData = classData.days[realDay];
+    if (!currentDayData) return;
+
     const currentMinutes = (now.getHours() * 60) + now.getMinutes();
+    const schedule = currentDayData.schedule;
     
     const firstPeriodParts = schedule[0].time.split('-');
     const lastPeriodParts = schedule[schedule.length - 1].time.split('-');
@@ -1129,6 +1246,8 @@
     minutes = minutes < 10 ? '0' + minutes : minutes;
     seconds = seconds < 10 ? '0' + seconds : seconds;
     document.getElementById('digitalClock').innerText = `${hours}:${minutes}:${seconds} ${ampm}`;
+    
+    evaluateLiveStatus();
   }
 
   function toggleArchive() {
