@@ -49,6 +49,56 @@
     padding: 0 0 48px;
   }
 
+  /* LIVE ANNOUNCEMENT TICKER STYLES */
+  .ticker-wrap {
+    display: flex;
+    background: var(--ink); 
+    color: var(--parchment); 
+    overflow: hidden;
+    height: 40px;
+    align-items: center;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.03em;
+    border-bottom: 2px solid var(--accent);
+    position: sticky;
+    top: 0;
+    z-index: 999;
+  }
+  .ticker-title {
+    background: var(--accent); 
+    color: var(--parchment);
+    padding: 0 16px;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    font-weight: 700;
+    white-space: nowrap;
+    z-index: 1000;
+    font-size: 11px;
+    letter-spacing: 0.05em;
+  }
+  .ticker-content-box {
+    overflow: hidden;
+    white-space: nowrap;
+    display: flex;
+    align-items: center;
+    flex-grow: 1;
+  }
+  .ticker-text {
+    display: inline-block;
+    padding-left: 100%; 
+    animation: marquee-scroll 30s linear infinite;
+  }
+  .ticker-wrap:hover .ticker-text {
+    animation-play-state: paused;
+  }
+  @keyframes marquee-scroll {
+    0% { transform: translate3d(0, 0, 0); }
+    100% { transform: translate3d(-100%, 0, 0); }
+  }
+
   header {
     background: var(--ink);
     color: var(--parchment);
@@ -614,6 +664,15 @@
 </head>
 <body>
 
+<div class="ticker-wrap">
+  <div class="ticker-title">⚡ ANNOUNCEMENTS</div>
+  <div class="ticker-content-box">
+    <div id="liveTickerText" class="ticker-text">
+      ✦ LOADING LIVE ANNOUNCEMENTS FROM DATABASE... ✦
+    </div>
+  </div>
+</div>
+
 <header>
   <div class="eyebrow">Batangas Province High School for Culture and Arts</div>
   <h1>G12 <span>Kumintang</span></h1>
@@ -940,6 +999,8 @@
 <script>
   let activeDayIndex = 1; 
 
+  const CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTgmFZWIlhIamlLt7sDQEHR87JhLcXs_yqECpeckRbDkahNYZj3_QeKySuXrpFLZbxWPPaCE70cNyw4/pub?output=csv";
+
   const classData = {
     groups: {
       1: { name: "Group 1", color: "var(--g1)", members: ["Angelo Salazar", "Dave Falogme", "Jewel Barrameda", "Jerica De la Cruz"] },
@@ -1024,6 +1085,43 @@
       }
     }
   };
+
+  async function fetchLiveTicker() {
+    try {
+      const response = await fetch(CSV_URL);
+      const data = await response.text();
+      
+      const rows = data.split('\n').map(row => row.split(','));
+      let activeMessages = [];
+      const today = new Date();
+      today.setHours(0,0,0,0);
+
+      for (let i = 1; i < rows.length; i++) {
+        const row = rows[i];
+        if (!row || row.length < 3) continue;
+
+        const messageText = row[0].replace(/^"|"$/g, '').trim();
+        const status = row[1].replace(/^"|"$/g, '').trim().toLowerCase();
+        const expiryStr = row[2].replace(/^"|"$/g, '').trim();
+        const expiryDate = new Date(expiryStr);
+
+        if (status === 'active' && (expiryStr === '' || expiryDate >= today)) {
+          if (messageText) activeMessages.push(messageText);
+        }
+      }
+
+      if (activeMessages.length > 0) {
+        const compiledTickerText = " ✦ " + activeMessages.join(" / ") + " ✦ ";
+        document.getElementById('liveTickerText').innerText = compiledTickerText.toUpperCase();
+      } else {
+        document.getElementById('liveTickerText').innerText = "✦ WELCOME BACK KUMINTANG! NO CURRENT ANNOUNCEMENTS. HAVE A GREAT DAY! ✦";
+      }
+
+    } catch (error) {
+      console.error("Error fetching live announcements:", error);
+      document.getElementById('liveTickerText').innerText = "⚠️ UNABLE TO CONNECT TO LIVE ANNOUNCEMENTS DATA STREAM.";
+    }
+  }
 
   function updateDashboard() {
     const now = new Date();
@@ -1264,8 +1362,11 @@
 
   updateDashboard();
   runClock();
+  fetchLiveTicker();
+
   setInterval(runClock, 1000);
   setInterval(updateDashboard, 60000);
+  setInterval(fetchLiveTicker, 120000); // Re-checks spreadsheet automatically every 2 minutes
 </script>
 
 </body>
