@@ -49,7 +49,6 @@
     padding: 0 0 48px;
   }
 
-  /* LIVE ANNOUNCEMENT TICKER STYLES */
   .ticker-wrap {
     display: flex;
     background: var(--ink); 
@@ -129,10 +128,49 @@
     letter-spacing: .08em;
   }
 
+  .app-nav-bar {
+    display: flex;
+    justify-content: center;
+    background: #fff;
+    border-bottom: 1px solid var(--rule);
+    position: sticky;
+    top: 40px;
+    z-index: 998;
+  }
+  .nav-tab-btn {
+    flex: 1;
+    max-width: 240px;
+    background: none;
+    border: none;
+    padding: 14px 16px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--muted);
+    cursor: pointer;
+    text-align: center;
+    transition: all 0.2s ease;
+    border-bottom: 3px solid transparent;
+  }
+  .nav-tab-btn.active-tab {
+    color: var(--accent);
+    border-bottom-color: var(--accent);
+    background: var(--parchment);
+  }
+
   .wrapper {
     max-width: 960px;
     margin: 0 auto;
     padding: 0 16px;
+  }
+
+  .app-view-panel {
+    display: none;
+  }
+  .app-view-panel.active-panel {
+    display: block;
   }
 
   .section-label {
@@ -149,7 +187,6 @@
     align-items: center;
   }
 
-  /* CURRENT DAY LIVE DASHBOARD */
   .today-box {
     background: #fff;
     border: 2px solid var(--accent);
@@ -239,36 +276,93 @@
     font-weight: 500;
   }
 
-  /* Assignment Feature Layout Styles */
-  .assignment-card {
+  .assignment-locator-box {
     background: #fff;
-    border: 1px solid var(--warm-mid);
-    border-radius: 6px;
-    padding: 12px;
-    margin-bottom: 10px;
-    font-size: 13px;
+    border: 2px solid var(--accent);
+    border-radius: 10px;
+    padding: 16px;
+    margin-bottom: 24px;
+    box-shadow: 0 4px 15px rgba(26,22,18,.05);
   }
-  .assignment-subject-badge {
+  .assignment-locator-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 4px;
+    color: var(--ink);
+  }
+  .assignment-locator-sub {
+    font-size: 12px;
+    color: var(--muted);
+    margin-bottom: 12px;
+  }
+
+  .subject-grouped-card {
+    background: #fff;
+    border: 1px solid var(--rule);
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 10px rgba(26,22,18,.04);
+  }
+  .subject-grouped-header {
+    padding: 14px 18px;
+    color: #fff;
+    font-family: 'Playfair Display', serif;
+    font-size: 16px;
+    font-weight: 600;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .sub-count-badge {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 11px;
+    background: rgba(255,255,255,0.2);
+    padding: 2px 8px;
+    border-radius: 12px;
+    font-weight: 700;
+  }
+  .nested-assignment-item {
+    padding: 16px 18px;
+    border-bottom: 1px solid var(--warm-mid);
+    transition: background 0.2s ease;
+  }
+  .nested-assignment-item:last-child {
+    border-bottom: none;
+  }
+  
+  .task-status-indicator {
     display: inline-block;
     font-size: 10px;
     font-weight: 700;
+    letter-spacing: 0.06em;
     text-transform: uppercase;
-    letter-spacing: 0.05em;
-    color: #fff;
-    padding: 2px 6px;
-    border-radius: 3px;
+    padding: 2px 8px;
+    border-radius: 4px;
     margin-bottom: 6px;
   }
+  .task-status-done {
+    background: #e2edd8;
+    color: #4a6b32;
+    border: 1px solid #c3dbb1;
+  }
+  .task-status-pending {
+    background: #fff0db;
+    color: #a36200;
+    border: 1px solid #f5d4a4;
+  }
+
   .assignment-title-text {
     font-weight: 700;
-    font-size: 14px;
-    margin-bottom: 4px;
+    font-size: 15px;
+    margin-bottom: 6px;
     color: var(--ink);
   }
   .assignment-detail-item {
     margin-top: 4px;
     color: var(--muted);
-    font-size: 12px;
+    font-size: 13px;
     line-height: 1.4;
   }
   .assignment-completion-toggle {
@@ -283,16 +377,15 @@
   .initials-revealer-box {
     margin-top: 6px;
     background: var(--parchment);
-    padding: 6px 10px;
+    padding: 8px 12px;
     border-radius: 4px;
-    font-size: 11px;
+    font-size: 11.5px;
     font-style: italic;
     color: var(--muted);
     display: none;
     border-left: 2px solid var(--soft);
   }
 
-  /* Cleaner Highlighting Features */
   .cleaner-search-box {
     margin-bottom: 10px;
   }
@@ -342,7 +435,6 @@
     transition: all 0.2s ease;
   }
 
-  /* DESKTOP TABLE */
   .desktop-view { display: block; }
   .mobile-view  { display: none; }
 
@@ -427,7 +519,6 @@
 
   .empty-cell { background: var(--empty); }
 
-  /* MOBILE CARDS */
   @media (max-width: 640px) {
     .desktop-view { display: none; }
     .mobile-view  { display: block; }
@@ -504,7 +595,6 @@
   .break-row-m { background: var(--break-bg); }
   .lunch-row-m { background: var(--lunch-bg); }
 
-  /* LEGEND */
   .legend {
     display: flex;
     flex-wrap: wrap;
@@ -525,7 +615,6 @@
     flex-shrink: 0;
   }
 
-  /* TABLES */
   .teachers-tbl, .cleaners-tbl {
     width: 100%;
     border-collapse: collapse;
@@ -732,294 +821,179 @@
   <div class="sub">First Trimester &middot; SY 2026-2027</div>
 </header>
 
+<div class="app-nav-bar">
+  <button class="nav-tab-btn active-tab" id="tabBtnDashboard" onclick="switchAppTab('dashboard')">Main Dashboard</button>
+  <button class="nav-tab-btn" id="tabBtnAssignments" onclick="switchAppTab('assignments')">Assignments Board</button>
+</div>
+
 <div class="wrapper">
 
-  <div class="today-box" id="todayDashboard">
-    <div class="today-banner">
-      <div class="today-title" id="todayDayName">Loading Today...</div>
-      <div class="today-time" id="digitalClock">00:00:00 AM</div>
-    </div>
-    <div class="today-grid">
-      
-      <div class="live-status-bar" id="liveStatusBar">
-        <span>Current Class Status</span>
-        <span class="status-tag" id="currentPeriodLabel">Checking...</span>
+  <div id="panelDashboard" class="app-view-panel active-panel">
+    <div class="today-box" id="todayDashboard">
+      <div class="today-banner">
+        <div class="today-title" id="todayDayName">Loading Today...</div>
+        <div class="today-time" id="digitalClock">00:00:00 AM</div>
       </div>
-
-      <div class="dashboard-pane">
-        <h3>Today's Timeline</h3>
-        <div id="todayScheduleContainer"></div>
-      </div>
-
-      <div class="dashboard-pane">
-        <h3>Daily Protocol &amp; Tasks</h3>
+      <div class="today-grid">
         
-        <div class="meta-card" style="border-left: 4px solid var(--eapp);">
-          <div class="meta-title">Academic Term Status</div>
-          <div class="meta-value" id="academicBlockVal" style="font-weight:700;">Calculating...</div>
-          <div style="font-size: 11.5px; color: var(--muted);" id="academicBlockSub">Analyzing current term block...</div>
-        </div>
-        
-        <div class="meta-card" style="border-left: 4px solid var(--accent);">
-          <div class="meta-title">Required Dress Code</div>
-          <div class="meta-value" id="todayUniformVal" style="font-weight:700;">-</div>
+        <div class="live-status-bar" id="liveStatusBar">
+          <span>Current Class Status</span>
+          <span class="status-tag" id="currentPeriodLabel">Checking...</span>
         </div>
 
-        <!-- NEW SUBJECT ASSIGNMENTS CONTAINER -->
-        <div class="meta-card" style="border-left: 4px solid var(--mil);">
-          <div class="meta-title">Active Assignments &amp; Requirements</div>
-          <div id="activeAssignmentsContainer" style="margin-top: 6px;">
-            <div style="font-size:12px; color:var(--muted); font-style:italic;">Syncing assignments data block...</div>
+        <div class="dashboard-pane">
+          <h3>Today's Timeline</h3>
+          <div id="todayScheduleContainer"></div>
+        </div>
+
+        <div class="dashboard-pane">
+          <h3>Daily Protocol &amp; Tasks</h3>
+          
+          <div class="meta-card" style="border-left: 4px solid var(--eapp);">
+            <div class="meta-title">Academic Term Status</div>
+            <div class="meta-value" id="academicBlockVal" style="font-weight:700;">Calculating...</div>
+            <div style="font-size: 11.5px; color: var(--muted);" id="academicBlockSub">Analyzing current term block...</div>
+          </div>
+          
+          <div class="meta-card" style="border-left: 4px solid var(--accent);">
+            <div class="meta-title">Required Dress Code</div>
+            <div class="meta-value" id="todayUniformVal" style="font-weight:700;">-</div>
+          </div>
+
+          <div class="meta-card" style="border-left: 4px solid var(--muted);">
+            <div class="meta-title">Cleaners Duty Locator</div>
+            <div class="cleaner-search-box">
+              <input type="text" id="cleanerSearchInput" class="cleaner-input" placeholder="Type your name to find your task..." oninput="handleCleanerSearch()">
+              <div id="cleanerHighlightAlert" class="highlight-alert"></div>
+            </div>
+            <div class="meta-value" style="font-size: 12px; margin-bottom: 8px; font-weight: 700; color: var(--muted); letter-spacing: 0.04em; text-transform: uppercase;">Zone Assignments for Today</div>
+            <div style="font-size:11.5px;" id="todayCleanersZones"></div>
           </div>
         </div>
 
-        <div class="meta-card" style="border-left: 4px solid var(--muted);">
-          <div class="meta-title">Cleaners Duty Locator</div>
-          <div class="cleaner-search-box">
-            <input type="text" id="cleanerSearchInput" class="cleaner-input" placeholder="Type your name to find your task..." oninput="handleCleanerSearch()">
-            <div id="cleanerHighlightAlert" class="highlight-alert"></div>
-          </div>
-          <div class="meta-value" style="font-size: 12px; margin-bottom: 8px; font-weight: 700; color: var(--muted); letter-spacing: 0.04em; text-transform: uppercase;">Zone Assignments for Today</div>
-          <div style="font-size:11.5px;" id="todayCleanersZones"></div>
+      </div>
+    </div>
+
+    <p class="section-label">
+      <span>Master Schedules</span>
+      <button class="view-toggle-btn" onclick="toggleArchive()" id="toggleBtn">Show Full Week Archive</button>
+    </p>
+
+    <div id="archiveSchedules" style="display: none;">
+      <div class="desktop-view">
+        <div class="tbl-wrap">
+          <table>
+            <thead>
+              <tr><th>Time</th><th>Monday</th><th>Tuesday</th><th>Wednesday</th><th>Thursday</th><th>Friday</th></tr>
+            </thead>
+            <tbody>
+              <tr><td class="time-cell">6:30 - 7:00</td><td class="subj-cell" colspan="5"><span class="subj-pill c-ae" style="max-width:none;width:96%;">Housekeeping &amp; Sanitation Activities</span></td></tr>
+              <tr><td class="time-cell">7:00 - 8:30</td><td class="subj-cell"><span class="subj-pill c-phil">Phil.</span></td><td class="subj-cell"><span class="subj-pill c-phil">Phil.</span></td><td class="subj-cell"><span class="subj-pill c-phil">Phil.</span></td><td class="subj-cell"><span class="subj-pill c-phil">Phil.</span></td><td class="subj-cell"><span class="subj-pill c-hgp">HGP</span></td></tr>
+              <tr><td class="time-cell">8:30 - 10:00</td><td class="subj-cell"><span class="subj-pill c-ucsp">UCSP</span></td><td class="subj-cell"><span class="subj-pill c-ucsp">UCSP</span></td><td class="subj-cell"><span class="subj-pill c-ucsp">UCSP</span></td><td class="subj-cell"><span class="subj-pill c-eapp">EAPP</span></td><td class="subj-cell"><span class="subj-pill c-eapp">EAPP</span></td></tr>
+              <tr class="break-row"><td class="time-cell">10:00 - 10:15</td><td class="break-label" colspan="5">Break</td></tr>
+              <tr><td class="time-cell">10:15 - 11:45</td><td class="subj-cell"><span class="subj-pill c-ae">A&amp;E</span></td><td class="subj-cell"><span class="subj-pill c-ae">A&amp;E</span></td><td class="subj-cell"><span class="subj-pill c-ae">A&amp;E</span></td><td class="subj-cell"><span class="subj-pill c-ae">A&amp;E</span></td><td class="subj-cell"><span class="subj-pill c-ucsp">UCSP</span></td></tr>
+              <tr class="lunch-row"><td class="time-cell">11:45 - 12:30</td><td class="break-label" colspan="5">Lunch Break</td></tr>
+              <tr><td class="time-cell">12:30 - 2:00</td><td class="subj-cell"><span class="subj-pill c-eapp">EAPP</span></td><td class="subj-cell"><span class="subj-pill c-eapp">EAPP</span></td><td class="subj-cell"><span class="subj-pill c-peh">PEH 3</span></td><td class="subj-cell"><span class="subj-pill c-mil">MIL</span></td><td class="subj-cell"><span class="subj-pill c-mil">MIL</span></td></tr>
+              <tr><td class="time-cell">2:00 - 3:30</td><td class="subj-cell"><span class="subj-pill c-mil">MIL</span></td><td class="subj-cell"><span class="subj-pill c-mil">MIL</span></td><td class="subj-cell empty-cell"></td><td class="subj-cell"><span class="subj-pill c-peh">PEH 3</span></td><td class="subj-cell empty-cell"></td></tr>
+            </tbody>
+          </table>
         </div>
       </div>
 
-    </div>
-  </div>
+      <div class="mobile-view">
+        <div class="day-card">
+          <div class="day-header"><span class="day-num">Day 1</span> Monday</div>
+          <div class="period-row"><div class="period-time">6:30-7:00</div><div class="period-subj"><span class="subj-pill c-ae">Housekeeping</span></div></div>
+          <div class="period-row"><div class="period-time">7:00-8:30</div><div class="period-subj"><span class="subj-pill c-phil">Intro to Phil.</span></div></div>
+          <div class="period-row"><div class="period-time">8:30-10:00</div><div class="period-subj"><span class="subj-pill c-ucsp">UCSP</span></div></div>
+          <div class="period-row break-row-m"><div class="period-time">10:00-10:15</div><div class="period-break">Break</div></div>
+          <div class="period-row"><div class="period-time">10:15-11:45</div><div class="period-subj"><span class="subj-pill c-ae">A&amp;E</span></div></div>
+          <div class="period-row lunch-row-m"><div class="period-time">11:45-12:30</div><div class="period-break">Lunch Break</div></div>
+          <div class="period-row"><div class="period-time">12:30-2:00</div><div class="period-subj"><span class="subj-pill c-eapp">EAPP</span></div></div>
+          <div class="period-row"><div class="period-time">2:00-3:30</div><div class="period-subj"><span class="subj-pill c-mil">MIL</span></div></div>
+        </div>
+      </div>
 
-  <p class="section-label">
-    <span>Master Schedules</span>
-    <button class="view-toggle-btn" onclick="toggleArchive()" id="toggleBtn">Show Full Week Archive</button>
-  </p>
+      <p class="section-label">Subjects</p>
+      <div class="legend">
+        <div class="legend-item"><div class="legend-dot c-phil"></div>Intro to Philosophy</div>
+        <div class="legend-item"><div class="legend-dot c-ucsp"></div>UCSP</div>
+        <div class="legend-item"><div class="legend-dot c-eapp"></div>EAPP</div>
+        <div class="legend-item"><div class="legend-dot c-ae"></div>A&amp;E / Housekeeping</div>
+        <div class="legend-item"><div class="legend-dot c-mil"></div>MIL</div>
+        <div class="legend-item"><div class="legend-dot c-peh"></div>PEH 3</div>
+        <div class="legend-item"><div class="legend-dot c-hgp"></div>HGP</div>
+      </div>
 
-  <div id="archiveSchedules" style="display: none;">
+      <p class="section-label">Teachers</p>
+      <table class="teachers-tbl">
+        <thead><tr><th>Code</th><th>Subject</th><th>Teacher</th></tr></thead>
+        <tbody>
+          <tr><td><span class="subject-code c-phil">Phil.</span></td><td>Introduction to the Philosophy of the Human Person</td><td class="teacher-name">Mrs. Emily C. Medrano</td></tr>
+          <tr><td><span class="subject-code c-ucsp">UCSP</span></td><td>Understanding Culture, Society, and Politics</td><td class="teacher-name">Mrs. Maribel B. Ellazar</td></tr>
+          <tr><td><span class="subject-code c-eapp">EAPP</span></td><td>English for Academic and Professional Purposes</td><td class="teacher-name">Mrs. Cristina J. Masangcay</td></tr>
+          <tr><td><span class="subject-code c-ae">A&amp;E</span></td><td>Apprenticeship and Exploration</td><td class="teacher-name">Mr. Mark Freddierick Divino</td></tr>
+          <tr><td><span class="subject-code c-mil">MIL</span></td><td>Media and Information Literacy</td><td class="teacher-name">Mrs. Cristina J. Masangcay</td></tr>
+          <tr><td><span class="subject-code c-peh">PEH 3</span></td><td>Physical Education and Health 3</td><td class="teacher-name">Mrs. Emily C. Medrano</td></tr>
+          <tr><td><span class="subject-code c-hgp">HGP</span></td><td>Homeroom Guidance Program</td><td class="teacher-name">Mrs. Maribel B. Ellazar</td></tr>
+        </tbody>
+      </table>
 
-    <div class="desktop-view">
+      <p class="section-label">Assignment of Cleaners &middot; Schedule of Areas</p>
       <div class="tbl-wrap">
-        <table>
-          <thead>
-            <tr>
-              <th>Time</th>
-              <th>Monday</th>
-              <th>Tuesday</th>
-              <th>Wednesday</th>
-              <th>Thursday</th>
-              <th>Friday</th>
-            </tr>
-          </thead>
+        <table class="cleaners-tbl">
+          <thead><tr><th>Area / Zone</th><th>Monday</th><th>Tuesday</th><th>Wednesday</th><th>Thursday</th><th>Friday</th></tr></thead>
           <tbody>
-            <tr>
-              <td class="time-cell">6:30 - 7:00</td>
-              <td class="subj-cell" colspan="5"><span class="subj-pill c-ae" style="max-width:none;width:96%;">Housekeeping &amp; Sanitation Activities</span></td>
-            </tr>
-            <tr>
-              <td class="time-cell">7:00 - 8:30</td>
-              <td class="subj-cell"><span class="subj-pill c-phil">Phil.</span></td>
-              <td class="subj-cell"><span class="subj-pill c-phil">Phil.</span></td>
-              <td class="subj-cell"><span class="subj-pill c-phil">Phil.</span></td>
-              <td class="subj-cell"><span class="subj-pill c-phil">Phil.</span></td>
-              <td class="subj-cell"><span class="subj-pill c-hgp">HGP</span></td>
-            </tr>
-            <tr>
-              <td class="time-cell">8:30 - 10:00</td>
-              <td class="subj-cell"><span class="subj-pill c-ucsp">UCSP</span></td>
-              <td class="subj-cell"><span class="subj-pill c-ucsp">UCSP</span></td>
-              <td class="subj-cell"><span class="subj-pill c-ucsp">UCSP</span></td>
-              <td class="subj-cell"><span class="subj-pill c-eapp">EAPP</span></td>
-              <td class="subj-cell"><span class="subj-pill c-eapp">EAPP</span></td>
-            </tr>
-            <tr class="break-row">
-              <td class="time-cell">10:00 - 10:15</td>
-              <td class="break-label" colspan="5">Break</td>
-            </tr>
-            <tr>
-              <td class="time-cell">10:15 - 11:45</td>
-              <td class="subj-cell"><span class="subj-pill c-ae">A&amp;E</span></td>
-              <td class="subj-cell"><span class="subj-pill c-ae">A&amp;E</span></td>
-              <td class="subj-cell"><span class="subj-pill c-ae">A&amp;E</span></td>
-              <td class="subj-cell"><span class="subj-pill c-ae">A&amp;E</span></td>
-              <td class="subj-cell"><span class="subj-pill c-ucsp">UCSP</span></td>
-            </tr>
-            <tr class="lunch-row">
-              <td class="time-cell">11:45 - 12:30</td>
-              <td class="break-label" colspan="5">Lunch Break</td>
-            </tr>
-            <tr>
-              <td class="time-cell">12:30 - 2:00</td>
-              <td class="subj-cell"><span class="subj-pill c-eapp">EAPP</span></td>
-              <td class="subj-cell"><span class="subj-pill c-eapp">EAPP</span></td>
-              <td class="subj-cell"><span class="subj-pill c-peh">PEH 3</span></td>
-              <td class="subj-cell"><span class="subj-pill c-mil">MIL</span></td>
-              <td class="subj-cell"><span class="subj-pill c-mil">MIL</span></td>
-            </tr>
-            <tr>
-              <td class="time-cell">2:00 - 3:30</td>
-              <td class="subj-cell"><span class="subj-pill c-mil">MIL</span></td>
-              <td class="subj-cell"><span class="subj-pill c-mil">MIL</span></td>
-              <td class="subj-cell empty-cell"></td>
-              <td class="subj-cell"><span class="subj-pill c-peh">PEH 3</span></td>
-              <td class="subj-cell empty-cell"></td>
-            </tr>
+            <tr><td class="area-cell">Room</td><td><span class="g-pill c-g1">Group 1</span></td><td><span class="g-pill c-g2">Group 2</span></td><td><span class="g-pill c-g3">Group 3</span></td><td><span class="g-pill c-g4">Group 4</span></td><td><span class="g-pill c-g5">Group 5</span></td></tr>
+            <tr><td class="area-cell">Stairs</td><td><span class="g-pill c-g2">Group 2</span></td><td><span class="g-pill c-g3">Group 3</span></td><td><span class="g-pill c-g4">Group 4</span></td><td><span class="g-pill c-g5">Group 5</span></td><td><span class="g-pill c-g1">Group 1</span></td></tr>
+            <tr><td class="area-cell">Hallway</td><td><span class="g-pill c-g3">Group 3</span></td><td><span class="g-pill c-g4">Group 4</span></td><td><span class="g-pill c-g5">Group 5</span></td><td><span class="g-pill c-g1">Group 1</span></td><td><span class="g-pill c-g2">Group 2</span></td></tr>
+            <tr><td class="area-cell">Front Ground</td><td><span class="g-pill c-g4">Group 4</span></td><td><span class="g-pill c-g5">Group 5</span></td><td><span class="g-pill c-g1">Group 1</span></td><td><span class="g-pill c-g2">Group 2</span></td><td><span class="g-pill c-g3">Group 3</span></td></tr>
+            <tr><td class="area-cell">Pathway &amp; Side Ground</td><td><span class="g-pill c-g5">Group 5</span></td><td><span class="g-pill c-g1">Group 1</span></td><td><span class="g-pill c-g2">Group 2</span></td><td><span class="g-pill c-g3">Group 3</span></td><td><span class="g-pill c-g4">Group 4</span></td></tr>
           </tbody>
         </table>
       </div>
-    </div>
 
-    <div class="mobile-view">
-      <div class="day-card">
-        <div class="day-header"><span class="day-num">Day 1</span> Monday</div>
-        <div class="period-row"><div class="period-time">6:30-7:00</div><div class="period-subj"><span class="subj-pill c-ae">Housekeeping</span></div></div>
-        <div class="period-row"><div class="period-time">7:00-8:30</div><div class="period-subj"><span class="subj-pill c-phil">Intro to Phil.</span></div></div>
-        <div class="period-row"><div class="period-time">8:30-10:00</div><div class="period-subj"><span class="subj-pill c-ucsp">UCSP</span></div></div>
-        <div class="period-row break-row-m"><div class="period-time">10:00-10:15</div><div class="period-break">Break</div></div>
-        <div class="period-row"><div class="period-time">10:15-11:45</div><div class="period-subj"><span class="subj-pill c-ae">A&amp;E</span></div></div>
-        <div class="period-row lunch-row-m"><div class="period-time">11:45-12:30</div><div class="period-break">Lunch Break</div></div>
-        <div class="period-row"><div class="period-time">12:30-2:00</div><div class="period-subj"><span class="subj-pill c-eapp">EAPP</span></div></div>
-        <div class="period-row"><div class="period-time">2:00-3:30</div><div class="period-subj"><span class="subj-pill c-mil">MIL</span></div></div>
-      </div>
-
-      <div class="day-card">
-        <div class="day-header"><span class="day-num">Day 2</span> Tuesday</div>
-        <div class="period-row"><div class="period-time">6:30-7:00</div><div class="period-subj"><span class="subj-pill c-ae">Housekeeping</span></div></div>
-        <div class="period-row"><div class="period-time">7:00-8:30</div><div class="period-subj"><span class="subj-pill c-phil">Intro to Phil.</span></div></div>
-        <div class="period-row"><div class="period-time">8:30-10:00</div><div class="period-subj"><span class="subj-pill c-ucsp">UCSP</span></div></div>
-        <div class="period-row break-row-m"><div class="period-time">10:00-10:15</div><div class="period-break">Break</div></div>
-        <div class="period-row"><div class="period-time">10:15-11:45</div><div class="period-subj"><span class="subj-pill c-ae">A&amp;E</span></div></div>
-        <div class="period-row lunch-row-m"><div class="period-time">11:45-12:30</div><div class="period-break">Lunch Break</div></div>
-        <div class="period-row"><div class="period-time">12:30-2:00</div><div class="period-subj"><span class="subj-pill c-eapp">EAPP</span></div></div>
-        <div class="period-row"><div class="period-time">2:00-3:30</div><div class="period-subj"><span class="subj-pill c-mil">MIL</span></div></div>
-      </div>
-
-      <div class="day-card">
-        <div class="day-header"><span class="day-num">Day 3</span> Wednesday</div>
-        <div class="period-row"><div class="period-time">6:30-7:00</div><div class="period-subj"><span class="subj-pill c-ae">Housekeeping</span></div></div>
-        <div class="period-row"><div class="period-time">7:00-8:30</div><div class="period-subj"><span class="subj-pill c-phil">Intro to Phil.</span></div></div>
-        <div class="period-row"><div class="period-time">8:30-10:00</div><div class="period-subj"><span class="subj-pill c-ucsp">UCSP</span></div></div>
-        <div class="period-row break-row-m"><div class="period-time">10:00-10:15</div><div class="period-break">Break</div></div>
-        <div class="period-row"><div class="period-time">10:15-11:45</div><div class="period-subj"><span class="subj-pill c-ae">A&amp;E</span></div></div>
-        <div class="period-row lunch-row-m"><div class="period-time">11:45-12:30</div><div class="period-break">Lunch Break</div></div>
-        <div class="period-row"><div class="period-time">12:30-2:00</div><div class="period-subj"><span class="subj-pill c-peh">PEH 3</span></div></div>
-        <div class="period-row"><div class="period-time">2:00-3:30</div><div class="period-subj" style="color:var(--rule);font-style:italic;font-size:11px;">-</div></div>
-      </div>
-
-      <div class="day-card">
-        <div class="day-header"><span class="day-num">Day 4</span> Thursday</div>
-        <div class="period-row"><div class="period-time">6:30-7:00</div><div class="period-subj"><span class="subj-pill c-ae">Housekeeping</span></div></div>
-        <div class="period-row"><div class="period-time">7:00-8:30</div><div class="period-subj"><span class="subj-pill c-phil">Intro to Phil.</span></div></div>
-        <div class="period-row"><div class="period-time">8:30-10:00</div><div class="period-subj"><span class="subj-pill c-eapp">EAPP</span></div></div>
-        <div class="period-row break-row-m"><div class="period-time">10:00-10:15</div><div class="period-break">Break</div></div>
-        <div class="period-row"><div class="period-time">10:15-11:45</div><div class="period-subj"><span class="subj-pill c-ae">A&amp;E</span></div></div>
-        <div class="period-row lunch-row-m"><div class="period-time">11:45-12:30</div><div class="period-break">Lunch Break</div></div>
-        <div class="period-row"><div class="period-time">12:30-2:00</div><div class="period-subj"><span class="subj-pill c-mil">MIL</span></div></div>
-        <div class="period-row"><div class="period-time">2:00-3:30</div><div class="period-subj"><span class="subj-pill c-peh">PEH 3</span></div></div>
-      </div>
-
-      <div class="day-card">
-        <div class="day-header"><span class="day-num">Day 5</span> Friday</div>
-        <div class="period-row"><div class="period-time">6:30-7:00</div><div class="period-subj"><span class="subj-pill c-ae">Housekeeping</span></div></div>
-        <div class="period-row"><div class="period-time">7:00-8:00</div><div class="period-subj"><span class="subj-pill c-hgp">HGP</span></div></div>
-        <div class="period-row"><div class="period-time">8:30-10:00</div><div class="period-subj"><span class="subj-pill c-eapp">EAPP</span></div></div>
-        <div class="period-row break-row-m"><div class="period-time">10:00-10:15</div><div class="period-break">Break</div></div>
-        <div class="period-row"><div class="period-time">10:15-11:45</div><div class="period-subj"><span class="subj-pill c-ucsp">UCSP</span></div></div>
-        <div class="period-row lunch-row-m"><div class="period-time">11:45-12:30</div><div class="period-break">Lunch Break</div></div>
-        <div class="period-row"><div class="period-time">12:30-2:00</div><div class="period-subj"><span class="subj-pill c-mil">MIL</span></div></div>
-        <div class="period-row"><div class="period-time">2:00-3:30</div><div class="period-subj" style="color:var(--rule);font-style:italic;font-size:11px;">-</div></div>
-      </div>
-    </div>
-
-    <p class="section-label">Subjects</p>
-    <div class="legend">
-      <div class="legend-item"><div class="legend-dot c-phil"></div>Intro to Philosophy</div>
-      <div class="legend-item"><div class="legend-dot c-ucsp"></div>UCSP</div>
-      <div class="legend-item"><div class="legend-dot c-eapp"></div>EAPP</div>
-      <div class="legend-item"><div class="legend-dot c-ae"></div>A&amp;E / Housekeeping</div>
-      <div class="legend-item"><div class="legend-dot c-mil"></div>MIL</div>
-      <div class="legend-item"><div class="legend-dot c-peh"></div>PEH 3</div>
-      <div class="legend-item"><div class="legend-dot c-hgp"></div>HGP</div>
-    </div>
-
-    <p class="section-label">Teachers</p>
-    <table class="teachers-tbl">
-      <thead>
-        <tr><th>Code</th><th>Subject</th><th>Teacher</th></tr>
-      </thead>
-      <tbody>
-        <tr><td><span class="subject-code c-phil">Phil.</span></td><td>Introduction to the Philosophy of the Human Person</td><td class="teacher-name">Mrs. Emily C. Medrano</td></tr>
-        <tr><td><span class="subject-code c-ucsp">UCSP</span></td><td>Understanding Culture, Society, and Politics</td><td class="teacher-name">Mrs. Maribel B. Ellazar</td></tr>
-        <tr><td><span class="subject-code c-eapp">EAPP</span></td><td>English for Academic and Professional Purposes</td><td class="teacher-name">Mrs. Cristina J. Masangcay</td></tr>
-        <tr><td><span class="subject-code c-ae">A&amp;E</span></td><td>Apprenticeship and Exploration</td><td class="teacher-name">Mr. Mark Freddierick Divino</td></tr>
-        <tr><td><span class="subject-code c-mil">MIL</span></td><td>Media and Information Literacy</td><td class="teacher-name">Mrs. Cristina J. Masangcay</td></tr>
-        <tr><td><span class="subject-code c-peh">PEH 3</span></td><td>Physical Education and Health 3</td><td class="teacher-name">Mrs. Emily C. Medrano</td></tr>
-        <tr><td><span class="subject-code c-hgp">HGP</span></td><td>Homeroom Guidance Program</td><td class="teacher-name">Mrs. Maribel B. Ellazar</td></tr>
-      </tbody>
-    </table>
-
-    <p class="section-label">Assignment of Cleaners &middot; Schedule of Areas</p>
-    <div class="tbl-wrap">
-      <table class="cleaners-tbl">
-        <thead>
-          <tr><th>Area / Zone</th><th>Monday</th><th>Tuesday</th><th>Wednesday</th><th>Thursday</th><th>Friday</th></tr>
-        </thead>
-        <tbody>
-          <tr><td class="area-cell">Room</td><td><span class="g-pill c-g1">Group 1</span></td><td><span class="g-pill c-g2">Group 2</span></td><td><span class="g-pill c-g3">Group 3</span></td><td><span class="g-pill c-g4">Group 4</span></td><td><span class="g-pill c-g5">Group 5</span></td></tr>
-          <tr><td class="area-cell">Stairs</td><td><span class="g-pill c-g2">Group 2</span></td><td><span class="g-pill c-g3">Group 3</span></td><td><span class="g-pill c-g4">Group 4</span></td><td><span class="g-pill c-g5">Group 5</span></td><td><span class="g-pill c-g1">Group 1</span></td></tr>
-          <tr><td class="area-cell">Hallway</td><td><span class="g-pill c-g3">Group 3</span></td><td><span class="g-pill c-g4">Group 4</span></td><td><span class="g-pill c-g5">Group 5</span></td><td><span class="g-pill c-g1">Group 1</span></td><td><span class="g-pill c-g2">Group 2</span></td></tr>
-          <tr><td class="area-cell">Front Ground</td><td><span class="g-pill c-g4">Group 4</span></td><td><span class="g-pill c-g5">Group 5</span></td><td><span class="g-pill c-g1">Group 1</span></td><td><span class="g-pill c-g2">Group 2</span></td><td><span class="g-pill c-g3">Group 3</span></td></tr>
-          <tr><td class="area-cell">Pathway &amp; Side Ground</td><td><span class="g-pill c-g5">Group 5</span></td><td><span class="g-pill c-g1">Group 1</span></td><td><span class="g-pill c-g2">Group 2</span></td><td><span class="g-pill c-g3">Group 3</span></td><td><span class="g-pill c-g4">Group 4</span></td></tr>
-        </tbody>
-      </table>
-    </div>
-
-    <p class="section-label">Cleaner Group Members</p>
-    <div class="cleaners-grid">
-      <div class="cleaner-card">
-        <div class="cleaner-head" style="border-bottom: 3px solid var(--g1)"><div class="g-label">Team 01</div><div class="g-title">Group 1</div></div>
-        <div class="cleaner-body">
-          <div class="member-row"><span class="member-name">Angelo Salazar</span></div><div class="member-row"><span class="member-name">Dave Falogme</span></div><div class="member-row"><span class="member-name">Jewel Barrameda</span></div><div class="member-row"><span class="member-name">Jerica De la Cruz</span></div>
+      <p class="section-label">Cleaner Group Members</p>
+      <div class="cleaners-grid">
+        <div class="cleaner-card">
+          <div class="cleaner-head" style="border-bottom: 3px solid var(--g1)"><div class="g-label">Team 01</div><div class="g-title">Group 1</div></div>
+          <div class="cleaner-body"><div class="member-row"><span class="member-name">Angelo Salazar</span></div><div class="member-row"><span class="member-name">Dave Falogme</span></div><div class="member-row"><span class="member-name">Jewel Barrameda</span></div><div class="member-row"><span class="member-name">Jerica De la Cruz</span></div></div>
         </div>
-      </div>
-      <div class="cleaner-card">
-        <div class="cleaner-head" style="border-bottom: 3px solid var(--g2)"><div class="g-label">Team 02</div><div class="g-title">Group 2</div></div>
-        <div class="cleaner-body">
-          <div class="member-row"><span class="member-name">Andrew Papa</span></div><div class="member-row"><span class="member-name">Justin Evangelista</span></div><div class="member-row"><span class="member-name">Trixie Martizana</span></div><div class="member-row"><span class="member-name">Justine Kaye Balina</span></div><div class="member-row"><span class="member-name">Mariel Labatique</span></div>
+        <div class="cleaner-card">
+          <div class="cleaner-head" style="border-bottom: 3px solid var(--g2)"><div class="g-label">Team 02</div><div class="g-title">Group 2</div></div>
+          <div class="cleaner-body"><div class="member-row"><span class="member-name">Andrew Papa</span></div><div class="member-row"><span class="member-name">Justin Evangelista</span></div><div class="member-row"><span class="member-name">Trixie Martizana</span></div><div class="member-row"><span class="member-name">Justine Kaye Balina</span></div><div class="member-row"><span class="member-name">Mariel Labatique</span></div></div>
         </div>
-      </div>
-      <div class="cleaner-card">
-        <div class="cleaner-head" style="border-bottom: 3px solid var(--g3)"><div class="g-label">Team 03</div><div class="g-title">Group 3</div></div>
-        <div class="cleaner-body">
-          <div class="member-row"><span class="member-name">Kenedy Nieves</span></div><div class="member-row"><span class="member-name">Vince Datinguinoo</span></div><div class="member-row"><span class="member-name">Jhoan Mae Coliat</span></div><div class="member-row"><span class="member-name">Althea Masangcay</span></div>
+        <div class="cleaner-card">
+          <div class="cleaner-head" style="border-bottom: 3px solid var(--g3)"><div class="g-label">Team 03</div><div class="g-title">Group 3</div></div>
+          <div class="cleaner-body"><div class="member-row"><span class="member-name">Kenedy Nieves</span></div><div class="member-row"><span class="member-name">Vince Datinguinoo</span></div><div class="member-row"><span class="member-name">Jhoan Mae Coliat</span></div><div class="member-row"><span class="member-name">Althea Masangcay</span></div></div>
         </div>
-      </div>
-      <div class="cleaner-card">
-        <div class="cleaner-head" style="border-bottom: 3px solid var(--g4)"><div class="g-label">Team 04</div><div class="g-title">Group 4</div></div>
-        <div class="cleaner-body">
-          <div class="member-row"><span class="member-name">Gian Masangcay</span></div><div class="member-row"><span class="member-name">Kenneth Bisa</span></div><div class="member-row"><span class="member-name">Andrei Martija</span></div><div class="member-row"><span class="member-name">Jessa Brucal</span></div><div class="member-row"><span class="member-name">CJ Sagarino</span></div>
+        <div class="cleaner-card">
+          <div class="cleaner-head" style="border-bottom: 3px solid var(--g4)"><div class="g-label">Team 04</div><div class="g-title">Group 4</div></div>
+          <div class="cleaner-body"><div class="member-row"><span class="member-name">Gian Masangcay</span></div><div class="member-row"><span class="member-name">Kenneth Bisa</span></div><div class="member-row"><span class="member-name">Andrei Martija</span></div><div class="member-row"><span class="member-name">Jessa Brucal</span></div><div class="member-row"><span class="member-name">CJ Sagarino</span></div></div>
         </div>
-      </div>
-      <div class="cleaner-card">
-        <div class="cleaner-head" style="border-bottom: 3px solid var(--g5)"><div class="g-label">Team 05</div><div class="g-title">Group 5</div></div>
-        <div class="cleaner-body">
-          <div class="member-row"><span class="member-name">Wilmer Hernandez</span></div><div class="member-row"><span class="member-name">Jeromy Balina</span></div><div class="member-row"><span class="member-name">Janellie Balmes</span></div><div class="member-row"><span class="member-name">Jada Javier</span></div>
+        <div class="cleaner-card">
+          <div class="cleaner-head" style="border-bottom: 3px solid var(--g5)"><div class="g-label">Team 05</div><div class="g-title">Group 5</div></div>
+          <div class="cleaner-body"><div class="member-row"><span class="member-name">Wilmer Hernandez</span></div><div class="member-row"><span class="member-name">Jeromy Balina</span></div><div class="member-row"><span class="member-name">Janellie Balmes</span></div><div class="member-row"><span class="member-name">Jada Javier</span></div></div>
         </div>
       </div>
     </div>
+  </div>
 
-    <p class="section-label">Uniform Cycle Protocol</p>
-    <div class="uniform-grid">
-      <div class="uniform-card">
-        <div class="uniform-head" style="border-bottom: 3px solid var(--uni-complete)"><div class="u-label">Mon &middot; Wed &middot; Thu</div><div class="u-title">Complete Uniform</div></div>
-        <div class="uniform-body"><div class="uni-row"><span class="uni-desc">Prescribed regular formal uniform</span><span class="uni-tag bg-complete">Complete</span></div></div>
-      </div>
-      <div class="uniform-card">
-        <div class="uniform-head" style="border-bottom: 3px solid var(--uni-pe)"><div class="u-label">Tuesday &middot; Friday</div><div class="u-title">PE / Casual Variations</div></div>
-        <div class="uniform-body">
-          <div class="uni-row"><span class="uni-desc">Tue: White Shirt</span><span class="uni-tag bg-pe">Variant</span></div>
-          <div class="uni-row"><span class="uni-desc">Fri: Spec Shirt / Black Shirt &amp; Pants</span><span class="uni-tag bg-spec">Casual</span></div>
-        </div>
-      </div>
+  <div id="panelAssignments" class="app-view-panel">
+    
+    <div class="assignment-locator-box">
+      <div class="assignment-locator-title">Personal Requirements Tracker</div>
+      <div class="assignment-locator-sub">Type your name to filter and check your progress on all active assignments.</div>
+      <input type="text" id="assignmentSearchInput" class="cleaner-input" placeholder="Enter your full name or submission initials..." oninput="handleAssignmentFilterSearch()">
     </div>
 
-  </div> <p class="section-label">Academic Calendar</p>
+    <p class="section-label">Active Trimester Academic Tasks</p>
+    <div id="activeAssignmentsContainer">
+      <div style="font-size:13px; color:var(--muted); font-style:italic; padding: 20px 0;">Syncing active assignments data stream matrix...</div>
+    </div>
+  </div>
+
+  <p class="section-label">Academic Calendar</p>
   <div class="cal-grid">
     <div class="term-card">
       <div class="term-head"><div class="t-label">Term 1</div><div class="t-dates">June 8 to<br>Sept 15, 2026</div></div>
@@ -1059,14 +1033,11 @@
 
 <script>
   let activeDayIndex = 1; 
+  let globalAssignmentsCache = []; // Internal memory store array matrix to preserve lightning fast rendering loops
 
-  // TAB 1 (Announcements)
   const ANNOUNCEMENTS_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTgmFZWIlhIamlLt7sDQEHR87JhLcXs_yqECpeckRbDkahNYZj3_QeKySuXrpFLZbxWPPaCE70cNyw4/pub?output=csv";
-  
-  // TAB 2 (Assignments - CORRECTED DIRECT EXPORT URL)
   const ASSIGNMENTS_CSV_URL = "https://docs.google.com/spreadsheets/d/1935ff7NQnasKpV1rF_g6lylAJ8e5NN0kTC1NJSBcxw0/export?format=csv&gid=1439225947";
 
-  // Mapped UI subject hex styling identifiers 
   const subjectStyleMapping = {
     "intro to philosophy": "c-phil",
     "phil": "c-phil",
@@ -1090,8 +1061,7 @@
     },
     days: {
       1: {
-        name: "Monday",
-        uniform: "Complete School Uniform",
+        name: "Monday", uniform: "Complete School Uniform",
         cleaners: { duties: { "Room": 1, "Stairs": 2, "Hallway": 3, "Front Ground": 4, "Pathway & Side Ground": 5 } },
         schedule: [
           { time: "6:30-7:00", name: "Housekeeping & Sanitation", type: "c-ae" },
@@ -1105,8 +1075,7 @@
         ]
       },
       2: {
-        name: "Tuesday",
-        uniform: "White Shirt & Pants",
+        name: "Tuesday", uniform: "White Shirt & Pants",
         cleaners: { duties: { "Room": 2, "Stairs": 3, "Hallway": 4, "Front Ground": 5, "Pathway & Side Ground": 1 } },
         schedule: [
           { time: "6:30-7:00", name: "Housekeeping & Sanitation", type: "c-ae" },
@@ -1120,8 +1089,7 @@
         ]
       },
       3: {
-        name: "Wednesday",
-        uniform: "Full PE Uniform",
+        name: "Wednesday", uniform: "Full PE Uniform",
         cleaners: { duties: { "Room": 3, "Stairs": 4, "Hallway": 5, "Front Ground": 1, "Pathway & Side Ground": 2 } },
         schedule: [
           { time: "6:30-7:00", name: "Housekeeping & Sanitation", type: "c-ae" },
@@ -1134,8 +1102,7 @@
         ]
       },
       4: {
-        name: "Thursday",
-        uniform: "Complete School Uniform",
+        name: "Thursday", uniform: "Complete School Uniform",
         cleaners: { duties: { "Room": 4, "Stairs": 5, "Hallway": 1, "Front Ground": 2, "Pathway & Side Ground": 3 } },
         schedule: [
           { time: "6:30-7:00", name: "Housekeeping & Sanitation", type: "c-ae" },
@@ -1149,8 +1116,7 @@
         ]
       },
       5: {
-        name: "Friday",
-        uniform: "Spec Shirt / Black Shirt & Pants",
+        name: "Friday", uniform: "Spec Shirt / Black Shirt & Pants",
         cleaners: { duties: { "Room": 5, "Stairs": 1, "Hallway": 2, "Front Ground": 3, "Pathway & Side Ground": 4 } },
         schedule: [
           { time: "6:30-7:00", name: "Housekeeping & Sanitation", type: "c-ae" },
@@ -1165,7 +1131,19 @@
     }
   };
 
-  // Parsing utilities for handling raw CSV stream text fields cleanly
+  function switchAppTab(selectedTab) {
+    document.querySelectorAll('.app-nav-bar button').forEach(b => b.classList.remove('active-tab'));
+    document.querySelectorAll('.app-view-panel').forEach(p => p.classList.remove('active-panel'));
+
+    if(selectedTab === 'dashboard') {
+      document.getElementById('tabBtnDashboard').classList.add('active-tab');
+      document.getElementById('panelDashboard').classList.add('active-panel');
+    } else if(selectedTab === 'assignments') {
+      document.getElementById('tabBtnAssignments').classList.add('active-tab');
+      document.getElementById('panelAssignments').classList.add('active-panel');
+    }
+  }
+
   function parseCSVLine(text) {
     let p = '', r = [];
     let q = false;
@@ -1180,7 +1158,20 @@
     return r;
   }
 
-  // Generates masked student initials from full names 
+  function checkUserCompletionStatus(rawCompletedList, searchString) {
+    if (!rawCompletedList || rawCompletedList.trim() === "" || rawCompletedList === "-") return false;
+    const cleanSearch = searchString.toLowerCase().trim();
+    if (!cleanSearch) return false;
+
+    // Check by initials
+    const structuralInitials = computeMaskedInitialsList(rawCompletedList).toLowerCase();
+    if (structuralInitials.includes(cleanSearch)) return true;
+
+    // Check by full raw names listed in spreadsheet row cells
+    const rawNamesArray = rawCompletedList.split(',').map(n => n.toLowerCase().trim());
+    return rawNamesArray.some(name => name.includes(cleanSearch));
+  }
+
   function computeMaskedInitialsList(rawNamesString) {
     if (!rawNamesString || rawNamesString.trim() === "" || rawNamesString === "-") return "";
     const individualNames = rawNamesString.split(',');
@@ -1189,11 +1180,9 @@
       if (!trimmed) return "";
       let nameSegments = trimmed.split(/\s+/);
       if (nameSegments.length === 1) return trimmed;
-      
       let lastName = nameSegments[nameSegments.length - 1];
       let firstName = nameSegments[0];
       let firstInitial = firstName.charAt(0).toUpperCase();
-      
       if (nameSegments.length > 2 && nameSegments[nameSegments.length - 2].toLowerCase() === 'de') {
          lastName = nameSegments[nameSegments.length - 2] + " " + lastName;
       }
@@ -1206,7 +1195,6 @@
     try {
       const response = await fetch(ANNOUNCEMENTS_CSV_URL);
       const data = await response.text();
-      
       const lines = data.split('\n');
       let activeMessages = [];
       const today = new Date();
@@ -1216,7 +1204,6 @@
         if (!lines[i].trim()) continue;
         const row = parseCSVLine(lines[i]);
         if (!row || row.length < 3) continue;
-
         const messageText = row[0];
         const status = row[1].toLowerCase();
         const expiryStr = row[2];
@@ -1228,13 +1215,11 @@
       }
 
       if (activeMessages.length > 0) {
-        const compiledTickerText = " ✦ " + activeMessages.join(" / ") + " ✦ ";
-        document.getElementById('liveTickerText').innerText = compiledTickerText.toUpperCase();
+        document.getElementById('liveTickerText').innerText = " ✦ " + activeMessages.join(" / ").toUpperCase() + " ✦ ";
       } else {
         document.getElementById('liveTickerText').innerText = "✦ WELCOME BACK KUMINTANG! NO CURRENT ANNOUNCEMENTS. HAVE A GREAT DAY! ✦";
       }
     } catch (error) {
-      console.error("Error fetching live announcements:", error);
       document.getElementById('liveTickerText').innerText = "⚠️ UNABLE TO CONNECT TO LIVE ANNOUNCEMENTS DATA STREAM.";
     }
   }
@@ -1243,10 +1228,9 @@
     try {
       const response = await fetch(ASSIGNMENTS_CSV_URL);
       const data = await response.text();
-      
       const lines = data.split('\n');
-      let assignmentsHtml = "";
-      let activeCount = 0;
+      
+      globalAssignmentsCache = []; // Reset local cache frame array matrix
 
       for (let i = 1; i < lines.length; i++) {
         if (!lines[i].trim()) continue;
@@ -1261,54 +1245,120 @@
         const completedRaw = row[5] ? row[5].trim() : "";
 
         if (status === "active") {
-          activeCount++;
-          const sanitizedSubjectKey = subject.toLowerCase().trim();
-          const subjectPillClass = subjectStyleMapping[sanitizedSubjectKey] || "var(--muted)";
-          
-          let completionCount = 0;
-          let maskedInitialsOutput = "No records added.";
-          
-          if (completedRaw && completedRaw !== "-") {
-            completionCount = completedRaw.split(',').length;
-            maskedInitialsOutput = computeMaskedInitialsList(completedRaw);
-          }
-
-          assignmentsHtml += `
-            <div class="assignment-card">
-              <span class="assignment-subject-badge ${subjectPillClass}">${subject}</span>
-              <div class="assignment-title-text">${title}</div>
-              <div class="assignment-detail-item"><strong>Instructions:</strong> ${instructions}</div>
-              <div class="assignment-detail-item"><strong>Materials Needed:</strong> ${materials}</div>
-              
-              <div class="assignment-completion-toggle" onclick="toggleInitialsDisplay(${i})">
-                📊 ${completionCount} student${completionCount === 1 ? '' : 's'} completed this. See names?
-              </div>
-              <div class="initials-revealer-box" id="initials-box-${i}">
-                👥 ${maskedInitialsOutput}
-              </div>
-            </div>
-          `;
+          globalAssignmentsCache.push({
+            id: i,
+            subject: subject,
+            title: title,
+            instructions: instructions,
+            materials: materials,
+            completedRaw: completedRaw
+          });
         }
       }
 
-      if (activeCount === 0) {
-        assignmentsHtml = `<div style="font-size:12px; color:var(--muted); font-style:italic;">🎉 Clear checklist! No active requirements listed.</div>`;
-      }
-
-      document.getElementById('activeAssignmentsContainer').innerHTML = assignmentsHtml;
+      renderAssignmentsBoard(""); // Initial render with no search parameters active
     } catch (e) {
-      console.error("Error reading live assignment block updates:", e);
-      document.getElementById('activeAssignmentsContainer').innerHTML = `<div style="font-size:12px; color:var(--g1);">⚠️ Problem retrieving current requirements pipeline.</div>`;
+      console.error("Error updates parser execution failed:", e);
+      document.getElementById('activeAssignmentsContainer').innerHTML = `<div style="font-size:13px; color:var(--g1); padding: 20px 0;">⚠️ Problem parsing current requirements workflow.</div>`;
     }
+  }
+
+  // INTEGRATED FILTER GENERATOR RECONSTRUCTS DOM CARDS DYNAMICALLY BASED ON ACTIVE USER SEARCH QUERY
+  function renderAssignmentsBoard(searchFilterString) {
+    const container = document.getElementById('activeAssignmentsContainer');
+    if (globalAssignmentsCache.length === 0) {
+      container.innerHTML = `<div style="font-size:13px; color:var(--muted); font-style:italic; padding: 20px 0;">🎉 Clear checklist! No active assignments listed in database.</div>`;
+      return;
+    }
+
+    let subjectBuckets = {};
+    let activeTotalMatches = 0;
+    const isSearching = searchFilterString.trim().length > 0;
+
+    globalAssignmentsCache.forEach(item => {
+      if (!subjectBuckets[item.subject]) {
+        subjectBuckets[item.subject] = [];
+      }
+      subjectBuckets[item.subject].push(item);
+    });
+
+    let assignmentsHtml = "";
+
+    for (const [subjectName, itemsArray] of Object.entries(subjectBuckets)) {
+      let subCardHtml = "";
+      let subjectMatchCount = 0;
+
+      const sanitizedSubjectKey = subjectName.toLowerCase().trim();
+      const themeColorVar = `var(--${subjectStyleMapping[sanitizedSubjectKey]?.replace('c-', '') || 'muted'})`;
+
+      itemsArray.forEach(item => {
+        let completionCount = 0;
+        let maskedInitialsOutput = "No records added.";
+        if (item.completedRaw && item.completedRaw !== "-") {
+          completionCount = item.completedRaw.split(',').length;
+          maskedInitialsOutput = computeMaskedInitialsList(item.completedRaw);
+        }
+
+        let isCompletedByFilteredUser = checkUserCompletionStatus(item.completedRaw, searchFilterString);
+        
+        // Dynamic clean indicator badges based on matching search states
+        let badgeHtml = "";
+        if (isSearching) {
+          if (isCompletedByFilteredUser) {
+            badgeHtml = `<div class="task-status-indicator task-status-done">✓ Finished</div>`;
+          } else {
+            badgeHtml = `<div class="task-status-indicator task-status-pending">⏳ Missing</div>`;
+          }
+        }
+
+        subjectMatchCount++;
+        activeTotalMatches++;
+
+        subCardHtml += `
+          <div class="nested-assignment-item" style="${isSearching && !isCompletedByFilteredUser ? 'background:#fffbf5;' : ''}">
+            ${badgeHtml}
+            <div class="assignment-title-text">${item.title}</div>
+            <div class="assignment-detail-item"><strong>Instructions:</strong> ${item.instructions}</div>
+            <div class="assignment-detail-item"><strong>Materials Needed:</strong> ${item.materials}</div>
+            
+            <div class="assignment-completion-toggle" onclick="toggleInitialsDisplay(${item.id})">
+              📊 ${completionCount} student${completionCount === 1 ? '' : 's'} completed this. View list?
+            </div>
+            <div class="initials-revealer-box" id="initials-box-${item.id}">
+              👥 ${maskedInitialsOutput}
+            </div>
+          </div>
+        `;
+      });
+
+      if (subjectMatchCount > 0) {
+        assignmentsHtml += `
+          <div class="subject-grouped-card">
+            <div class="subject-grouped-header" style="background: ${themeColorVar}">
+              <span>${subjectName}</span>
+              <span class="sub-count-badge">${subjectMatchCount} Task${subjectMatchCount === 1 ? '' : 's'}</span>
+            </div>
+            ${subCardHtml}
+          </div>
+        `;
+      }
+    }
+
+    if (activeTotalMatches === 0 && isSearching) {
+      container.innerHTML = `<div style="font-size:13px; color:var(--g1); font-style:italic; padding: 20px 0;">❌ No assignments or matching records found for that name query.</div>`;
+    } else {
+      container.innerHTML = assignmentsHtml;
+    }
+  }
+
+  function handleAssignmentFilterSearch() {
+    const query = document.getElementById('assignmentSearchInput').value;
+    renderAssignmentsBoard(query);
   }
 
   function toggleInitialsDisplay(index) {
     const box = document.getElementById(`initials-box-${index}`);
-    if (box.style.display === "block") {
-      box.style.display = "none";
-    } else {
-      box.style.display = "block";
-    }
+    box.style.display = (box.style.display === "block") ? "none" : "block";
   }
 
   function updateDashboard() {
@@ -1331,7 +1381,6 @@
     }
 
     document.getElementById('todayUniformVal').innerText = currentDayData.uniform;
-
     renderCleanersZones(currentDayData);
 
     let scheduleHtml = '';
@@ -1374,9 +1423,7 @@
     const searchInput = document.getElementById('cleanerSearchInput').value.trim().toLowerCase();
     const alertBox = document.getElementById('cleanerHighlightAlert');
     
-    document.querySelectorAll('.zone-item-row').forEach(row => {
-      row.classList.remove('zone-highlight');
-    });
+    document.querySelectorAll('.zone-item-row').forEach(row => row.classList.remove('zone-highlight'));
 
     if (!searchInput) {
       alertBox.style.display = 'none';
@@ -1390,16 +1437,13 @@
     for (const [groupNum, groupData] of Object.entries(classData.groups)) {
       const matched = groupData.members.find(m => m.toLowerCase().includes(searchInput));
       if (matched) {
-        foundMember = matched;
-        foundGroupNum = groupNum;
-        foundGroupName = groupData.name;
+        foundMember = matched; foundGroupNum = groupNum; foundGroupName = groupData.name;
         break;
       }
     }
 
     if (foundMember) {
       alertBox.style.display = 'block';
-      
       const currentDayData = classData.days[activeDayIndex];
       let assignedZone = "None";
       
@@ -1408,14 +1452,10 @@
           assignedZone = zone;
           const rowId = `zone-row-${zone.replace(/[^a-zA-Z0-9]/g, '')}`;
           const targetRow = document.getElementById(rowId);
-          if (targetRow) {
-            targetRow.classList.add('zone-highlight');
-          }
+          if (targetRow) targetRow.classList.add('zone-highlight');
         }
       }
-      
       alertBox.innerHTML = `👋 <strong>${foundMember}</strong> is in <strong>${foundGroupName}</strong>.<br>📍 Today's Task: Assigned to clean the <strong>${assignedZone}</strong>.`;
-      
     } else {
       alertBox.style.display = 'block';
       alertBox.innerHTML = `❌ No matching class member found in cleaner records.`;
@@ -1425,25 +1465,20 @@
   function evaluateAcademicBlock(now) {
     const blockVal = document.getElementById('academicBlockVal');
     const blockSub = document.getElementById('academicBlockSub');
-    
     const targetYear = now.getFullYear();
     const targetMonth = now.getMonth() + 1;
     const targetDate = now.getDate();
     
     if (targetYear === 2026) {
       if (targetMonth === 6 && targetDate < 15) {
-        blockVal.innerText = "Term 1: Opening Block";
-        blockSub.innerText = "Completed! Instructional phase launches tomorrow, June 15.";
+        blockVal.innerText = "Term 1: Opening Block"; blockSub.innerText = "Completed! Instructional phase launches tomorrow, June 15.";
       } else if (targetMonth === 6 && targetDate === 15) {
-        blockVal.innerText = "Term 1: Instructional Block";
-        blockSub.innerText = "Day 1 of 55 (Official shift initiated)";
+        blockVal.innerText = "Term 1: Instructional Block"; blockSub.innerText = "Day 1 of 55 (Official shift initiated)";
       } else {
-        blockVal.innerText = "Term 1: Instructional Block";
-        blockSub.innerText = "Instructional track currently ongoing";
+        blockVal.innerText = "Term 1: Instructional Block"; blockSub.innerText = "Instructional track currently ongoing";
       }
     } else {
-      blockVal.innerText = "Term Track Active";
-      blockSub.innerText = "See master grid records below";
+      blockVal.innerText = "Term Track Active"; blockSub.innerText = "See master grid records below";
     }
   }
 
@@ -1461,37 +1496,25 @@
 
     const currentMinutes = (now.getHours() * 60) + now.getMinutes();
     const schedule = currentDayData.schedule;
-    
     const firstPeriodParts = schedule[0].time.split('-');
     const lastPeriodParts = schedule[schedule.length - 1].time.split('-');
-    
     const schoolStartMin = parseTimeToMinutes(firstPeriodParts[0]);
     const schoolEndMin = parseTimeToMinutes(lastPeriodParts[1]);
     
     let matchedPeriod = "";
 
     if (currentMinutes < schoolStartMin) {
-      if (currentMinutes >= 300) { 
-        matchedPeriod = `🌅 Incoming: ${schedule[0].name} at ${firstPeriodParts[0].trim()}`;
-      } else {
-        matchedPeriod = "🌙 School hasn't started yet. Sleep well!";
-      }
+      matchedPeriod = (currentMinutes >= 300) ? `🌅 Incoming: ${schedule[0].name} at ${firstPeriodParts[0].trim()}` : "🌙 School hasn't started yet. Sleep well!";
     } else if (currentMinutes >= schoolEndMin) {
-      if (now.getHours() >= 18) { 
-        matchedPeriod = "✨ Day completed! Rest well for tomorrow.";
-      } else {
-        matchedPeriod = "🚀 Dismissed! School is over for today.";
-      }
+      matchedPeriod = (now.getHours() >= 18) ? "✨ Day completed! Rest well for tomorrow." : "🚀 Dismissed! School is over for today.";
     } else {
       for (const period of schedule) {
         const parts = period.time.split('-');
         if (parts.length === 2) {
           const startMin = parseTimeToMinutes(parts[0]);
           const endMin = parseTimeToMinutes(parts[1]);
-          
           if (currentMinutes >= startMin && currentMinutes < endMin) {
-            const minutesLeft = endMin - currentMinutes;
-            matchedPeriod = `⏱️ Now: ${period.name} (${minutesLeft} mins left)`;
+            matchedPeriod = `⏱️ Now: ${period.name} (${endMin - currentMinutes} mins left)`;
             break;
           } else if (currentMinutes < startMin) {
             matchedPeriod = `🔜 Next up: ${period.name} at ${parts[0].trim()}`;
@@ -1500,7 +1523,6 @@
         }
       }
     }
-    
     document.getElementById('currentPeriodLabel').innerText = matchedPeriod;
   }
 
@@ -1510,29 +1532,22 @@
     const parts = cleanTime.split(':');
     let hours = parseInt(parts[0], 10);
     const minutes = parseInt(parts[1], 10);
-    
     if (timeStr.includes('pm') && hours < 12) hours += 12;
     if (timeStr.includes('am') && hours === 12) hours = 0;
-    
     if (!timeStr.includes('am') && !timeStr.includes('pm')) {
       if (hours === 1 || hours === 2 || hours === 3) hours += 12;
     }
-    
     return (hours * 60) + minutes;
   }
 
   function runClock() {
     const now = new Date();
-    let hours = now.getHours();
-    let minutes = now.getMinutes();
-    let seconds = now.getSeconds();
+    let hours = now.getHours(), minutes = now.getMinutes(), seconds = now.getSeconds();
     const ampm = hours >= 12 ? 'PM' : 'AM';
-    hours = hours % 12;
-    hours = hours ? hours : 12; 
+    hours = hours % 12; hours = hours ? hours : 12; 
     minutes = minutes < 10 ? '0' + minutes : minutes;
     seconds = seconds < 10 ? '0' + seconds : seconds;
     document.getElementById('digitalClock').innerText = `${hours}:${minutes}:${seconds} ${ampm}`;
-    
     evaluateLiveStatus();
   }
 
@@ -1540,21 +1555,17 @@
     const target = document.getElementById('archiveSchedules');
     const btn = document.getElementById('toggleBtn');
     if (target.style.display === 'none') {
-      target.style.display = 'block';
-      btn.innerText = 'Hide Full Week Archive';
+      target.style.display = 'block'; btn.innerText = 'Hide Full Week Archive';
     } else {
-      target.style.display = 'none';
-      btn.innerText = 'Show Full Week Archive';
+      target.style.display = 'none'; btn.innerText = 'Show Full Week Archive';
     }
   }
 
-  // Application initialization cycles
   updateDashboard();
   runClock();
   fetchLiveTicker();
   fetchLiveAssignments();
 
-  // Active sync loop intervals
   setInterval(runClock, 1000);
   setInterval(updateDashboard, 60000);
   setInterval(fetchLiveTicker, 120000); 
