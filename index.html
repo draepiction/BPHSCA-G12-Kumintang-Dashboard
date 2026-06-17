@@ -239,6 +239,59 @@
     font-weight: 500;
   }
 
+  /* Assignment Feature Layout Styles */
+  .assignment-card {
+    background: #fff;
+    border: 1px solid var(--warm-mid);
+    border-radius: 6px;
+    padding: 12px;
+    margin-bottom: 10px;
+    font-size: 13px;
+  }
+  .assignment-subject-badge {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #fff;
+    padding: 2px 6px;
+    border-radius: 3px;
+    margin-bottom: 6px;
+  }
+  .assignment-title-text {
+    font-weight: 700;
+    font-size: 14px;
+    margin-bottom: 4px;
+    color: var(--ink);
+  }
+  .assignment-detail-item {
+    margin-top: 4px;
+    color: var(--muted);
+    font-size: 12px;
+    line-height: 1.4;
+  }
+  .assignment-completion-toggle {
+    margin-top: 8px;
+    font-size: 11.5px;
+    color: var(--accent);
+    cursor: pointer;
+    display: inline-block;
+    font-weight: 500;
+    text-decoration: underline;
+  }
+  .initials-revealer-box {
+    margin-top: 6px;
+    background: var(--parchment);
+    padding: 6px 10px;
+    border-radius: 4px;
+    font-size: 11px;
+    font-style: italic;
+    color: var(--muted);
+    display: none;
+    border-left: 2px solid var(--soft);
+  }
+
   /* Cleaner Highlighting Features */
   .cleaner-search-box {
     margin-bottom: 10px;
@@ -699,7 +752,7 @@
       </div>
 
       <div class="dashboard-pane">
-        <h3>Daily Protocol</h3>
+        <h3>Daily Protocol &amp; Tasks</h3>
         
         <div class="meta-card" style="border-left: 4px solid var(--eapp);">
           <div class="meta-title">Academic Term Status</div>
@@ -710,6 +763,14 @@
         <div class="meta-card" style="border-left: 4px solid var(--accent);">
           <div class="meta-title">Required Dress Code</div>
           <div class="meta-value" id="todayUniformVal" style="font-weight:700;">-</div>
+        </div>
+
+        <!-- NEW SUBJECT ASSIGNMENTS CONTAINER -->
+        <div class="meta-card" style="border-left: 4px solid var(--mil);">
+          <div class="meta-title">Active Assignments &amp; Requirements</div>
+          <div id="activeAssignmentsContainer" style="margin-top: 6px;">
+            <div style="font-size:12px; color:var(--muted); font-style:italic;">Syncing assignments data block...</div>
+          </div>
         </div>
 
         <div class="meta-card" style="border-left: 4px solid var(--muted);">
@@ -999,7 +1060,25 @@
 <script>
   let activeDayIndex = 1; 
 
-  const CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTgmFZWIlhIamlLt7sDQEHR87JhLcXs_yqECpeckRbDkahNYZj3_QeKySuXrpFLZbxWPPaCE70cNyw4/pub?output=csv";
+  // TAB 1 (Announcements)
+  const ANNOUNCEMENTS_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTgmFZWIlhIamlLt7sDQEHR87JhLcXs_yqECpeckRbDkahNYZj3_QeKySuXrpFLZbxWPPaCE70cNyw4/pub?output=csv";
+  
+  // TAB 2 (Assignments - CORRECTED DIRECT EXPORT URL)
+  const ASSIGNMENTS_CSV_URL = "https://docs.google.com/spreadsheets/d/1935ff7NQnasKpV1rF_g6lylAJ8e5NN0kTC1NJSBcxw0/export?format=csv&gid=1439225947";
+
+  // Mapped UI subject hex styling identifiers 
+  const subjectStyleMapping = {
+    "intro to philosophy": "c-phil",
+    "phil": "c-phil",
+    "ucsp": "c-ucsp",
+    "uspc": "c-ucsp",
+    "eapp": "c-eapp",
+    "a&e": "c-ae",
+    "a&e (apprenticeship)": "c-ae",
+    "mil": "c-mil",
+    "peh": "c-peh",
+    "hgp": "c-hgp"
+  };
 
   const classData = {
     groups: {
@@ -1086,23 +1165,61 @@
     }
   };
 
+  // Parsing utilities for handling raw CSV stream text fields cleanly
+  function parseCSVLine(text) {
+    let p = '', r = [];
+    let q = false;
+    for (let i = 0; i < text.length; i++) {
+      let c = text[i];
+      if (c === '"') { q = !q; }
+      else if (c === ',' && !q) { r.push(p.trim()); p = ''; }
+      else if (c === '\r') { }
+      else { p += c; }
+    }
+    r.push(p.trim());
+    return r;
+  }
+
+  // Generates masked student initials from full names 
+  function computeMaskedInitialsList(rawNamesString) {
+    if (!rawNamesString || rawNamesString.trim() === "" || rawNamesString === "-") return "";
+    const individualNames = rawNamesString.split(',');
+    const structuralInitials = individualNames.map(fullName => {
+      let trimmed = fullName.trim();
+      if (!trimmed) return "";
+      let nameSegments = trimmed.split(/\s+/);
+      if (nameSegments.length === 1) return trimmed;
+      
+      let lastName = nameSegments[nameSegments.length - 1];
+      let firstName = nameSegments[0];
+      let firstInitial = firstName.charAt(0).toUpperCase();
+      
+      if (nameSegments.length > 2 && nameSegments[nameSegments.length - 2].toLowerCase() === 'de') {
+         lastName = nameSegments[nameSegments.length - 2] + " " + lastName;
+      }
+      return `${firstInitial}. ${lastName}`;
+    });
+    return structuralInitials.filter(Boolean).join(', ');
+  }
+
   async function fetchLiveTicker() {
     try {
-      const response = await fetch(CSV_URL);
+      const response = await fetch(ANNOUNCEMENTS_CSV_URL);
       const data = await response.text();
       
-      const rows = data.split('\n').map(row => row.split(','));
+      const lines = data.split('\n');
       let activeMessages = [];
       const today = new Date();
       today.setHours(0,0,0,0);
 
-      for (let i = 1; i < rows.length; i++) {
-        const row = rows[i];
+      for (let i = 1; i < lines.length; i++) {
+        if (!lines[i].trim()) continue;
+        const row = parseCSVLine(lines[i]);
         if (!row || row.length < 3) continue;
 
-        const messageText = row[0].replace(/^"|"$/g, '').trim();
-        const status = row[1].replace(/^"|"$/g, '').trim().toLowerCase();
-        const expiryStr = row[2].replace(/^"|"$/g, '').trim();
+        const messageText = row[0];
+        const status = row[1].toLowerCase();
+        const expiryStr = row[2];
         const expiryDate = new Date(expiryStr);
 
         if (status === 'active' && (expiryStr === '' || expiryDate >= today)) {
@@ -1116,10 +1233,81 @@
       } else {
         document.getElementById('liveTickerText').innerText = "✦ WELCOME BACK KUMINTANG! NO CURRENT ANNOUNCEMENTS. HAVE A GREAT DAY! ✦";
       }
-
     } catch (error) {
       console.error("Error fetching live announcements:", error);
       document.getElementById('liveTickerText').innerText = "⚠️ UNABLE TO CONNECT TO LIVE ANNOUNCEMENTS DATA STREAM.";
+    }
+  }
+
+  async function fetchLiveAssignments() {
+    try {
+      const response = await fetch(ASSIGNMENTS_CSV_URL);
+      const data = await response.text();
+      
+      const lines = data.split('\n');
+      let assignmentsHtml = "";
+      let activeCount = 0;
+
+      for (let i = 1; i < lines.length; i++) {
+        if (!lines[i].trim()) continue;
+        const row = parseCSVLine(lines[i]);
+        if (row.length < 5) continue;
+
+        const subject = row[0];
+        const title = row[1];
+        const instructions = row[2];
+        const materials = row[3];
+        const status = row[4] ? row[4].toLowerCase().trim() : "";
+        const completedRaw = row[5] ? row[5].trim() : "";
+
+        if (status === "active") {
+          activeCount++;
+          const sanitizedSubjectKey = subject.toLowerCase().trim();
+          const subjectPillClass = subjectStyleMapping[sanitizedSubjectKey] || "var(--muted)";
+          
+          let completionCount = 0;
+          let maskedInitialsOutput = "No records added.";
+          
+          if (completedRaw && completedRaw !== "-") {
+            completionCount = completedRaw.split(',').length;
+            maskedInitialsOutput = computeMaskedInitialsList(completedRaw);
+          }
+
+          assignmentsHtml += `
+            <div class="assignment-card">
+              <span class="assignment-subject-badge ${subjectPillClass}">${subject}</span>
+              <div class="assignment-title-text">${title}</div>
+              <div class="assignment-detail-item"><strong>Instructions:</strong> ${instructions}</div>
+              <div class="assignment-detail-item"><strong>Materials Needed:</strong> ${materials}</div>
+              
+              <div class="assignment-completion-toggle" onclick="toggleInitialsDisplay(${i})">
+                📊 ${completionCount} student${completionCount === 1 ? '' : 's'} completed this. See names?
+              </div>
+              <div class="initials-revealer-box" id="initials-box-${i}">
+                👥 ${maskedInitialsOutput}
+              </div>
+            </div>
+          `;
+        }
+      }
+
+      if (activeCount === 0) {
+        assignmentsHtml = `<div style="font-size:12px; color:var(--muted); font-style:italic;">🎉 Clear checklist! No active requirements listed.</div>`;
+      }
+
+      document.getElementById('activeAssignmentsContainer').innerHTML = assignmentsHtml;
+    } catch (e) {
+      console.error("Error reading live assignment block updates:", e);
+      document.getElementById('activeAssignmentsContainer').innerHTML = `<div style="font-size:12px; color:var(--g1);">⚠️ Problem retrieving current requirements pipeline.</div>`;
+    }
+  }
+
+  function toggleInitialsDisplay(index) {
+    const box = document.getElementById(`initials-box-${index}`);
+    if (box.style.display === "block") {
+      box.style.display = "none";
+    } else {
+      box.style.display = "block";
     }
   }
 
@@ -1360,13 +1548,17 @@
     }
   }
 
+  // Application initialization cycles
   updateDashboard();
   runClock();
   fetchLiveTicker();
+  fetchLiveAssignments();
 
+  // Active sync loop intervals
   setInterval(runClock, 1000);
   setInterval(updateDashboard, 60000);
-  setInterval(fetchLiveTicker, 120000); // Re-checks spreadsheet automatically every 2 minutes
+  setInterval(fetchLiveTicker, 120000); 
+  setInterval(fetchLiveAssignments, 120000);
 </script>
 
 </body>
