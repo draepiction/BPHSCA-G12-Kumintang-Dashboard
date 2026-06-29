@@ -990,11 +990,11 @@
       <div class="cleaners-grid">
         <div class="cleaner-card">
           <div class="cleaner-head" style="border-bottom: 3px solid var(--g1)"><div class="g-label">Team 01</div><div class="g-title">Group 1</div></div>
-          <div class="cleaner-body"><div class="member-row"><span class="member-name">Angelo Salazar</span></div><div class="member-row"><span class="member-name">Dave Falogme</span></div><div class="member-row"><span class="member-name">Jewel Barrameda</span></div><div class="member-row"><span class="member-name">Jerica De la Cruz</span></div></div>
+          <div class="cleaner-body"><div class="member-row"><span class="member-name">Angelo Salazar</span></div><div class="member-row"><span class="member-name">Dave Falogme</span></div><div class="member-row"><span class="member-name">Jewel Barrameda</span></div><div class="member-row"><span class="member-name">Jerica Dela Cruz</span></div></div>
         </div>
         <div class="cleaner-card">
           <div class="cleaner-head" style="border-bottom: 3px solid var(--g2)"><div class="g-label">Team 02</div><div class="g-title">Group 2</div></div>
-          <div class="cleaner-body"><div class="member-row"><span class="member-name">Andrew Papa</span></div><div class="member-row"><span class="member-name">Justin Evangelista</span></div><div class="member-row"><span class="member-name">Trixie Martizana</span></div><div class="member-row"><span class="member-name">Justine Kaye Balina</span></div><div class="member-row"><span class="member-name">Mariel libatique</span></div></div>
+          <div class="cleaner-body"><div class="member-row"><span class="member-name">Andrew Papa</span></div><div class="member-row"><span class="member-name">Justin Evangelista</span></div><div class="member-row"><span class="member-name">Trixie Martizana</span></div><div class="member-row"><span class="member-name">Justine Kaye Balina</span></div><div class="member-row"><span class="member-name">Mariel Libatique</span></div></div>
         </div>
         <div class="cleaner-card">
           <div class="cleaner-head" style="border-bottom: 3px solid var(--g3)"><div class="g-label">Team 03</div><div class="g-title">Group 3</div></div>
@@ -1087,7 +1087,7 @@
 
   const classData = {
     groups: {
-      1: { name: "Group 1", color: "var(--g1)", members: ["Angelo Salazar", "Dave Falogme", "Jewel Barrameda", "Jerica De la Cruz"] },
+      1: { name: "Group 1", color: "var(--g1)", members: ["Angelo Salazar", "Dave Falogme", "Jewel Barrameda", "Jerica Dela Cruz"] },
       2: { name: "Group 2", color: "var(--g2)", members: ["Andrew Papa", "Justin Evangelista", "Trixie Martizana", "Justine Kaye Balina", "Mariel Libatique"] },
       3: { name: "Group 3", color: "var(--g3)", members: ["Kenedy Nieves", "Vince Datinguinoo", "Jhoan Mae Coliat", "Althea Masangcay"] },
       4: { name: "Group 4", color: "var(--g4)", members: ["Gian Masangcay", "Kenneth Bisa", "Andrei Martija", "Jessa Brucal", "CJ Sagarino"] },
@@ -1194,11 +1194,9 @@
   function handleSwipeGesture() {
     const swipeThreshold = 80; 
     if (touchStartX - touchEndX > swipeThreshold) {
-      // Swipe Left -> Go to Assignments Board
       switchAppTab('assignments');
     }
     if (touchEndX - touchStartX > swipeThreshold) {
-      // Swipe Right -> Go to Main Dashboard
       switchAppTab('dashboard');
     }
   }
@@ -1222,43 +1220,42 @@
     const cleanSearch = searchString.toLowerCase().trim();
     if (!cleanSearch) return false;
 
-    const structuralInitials = computeMaskedInitialsList(rawCompletedList).toLowerCase();
+    // Normalizes strings to match fixed surname formatting
+    let normalizedList = rawCompletedList.replace(/de la cruz/gi, 'Dela Cruz').replace(/labatique/gi, 'Libatique');
+    
+    const structuralInitials = computeMaskedInitialsList(normalizedList).toLowerCase();
     if (structuralInitials.includes(cleanSearch)) return true;
 
-    const rawNamesArray = rawCompletedList.split(',').map(n => n.toLowerCase().trim());
+    const rawNamesArray = normalizedList.split(',').map(n => n.toLowerCase().trim());
     return rawNamesArray.some(name => name.includes(cleanSearch));
   }
 
   function computeMaskedInitialsList(rawNamesString) {
     if (!rawNamesString || rawNamesString.trim() === "" || rawNamesString === "-") return "";
-    const individualNames = rawNamesString.split(',');
+    let normalized = rawNamesString.replace(/de la cruz/gi, 'Dela Cruz').replace(/labatique/gi, 'Libatique');
+    const individualNames = normalized.split(',');
     const structuralInitials = individualNames.map(fullName => {
       let trimmed = fullName.trim();
       if (!trimmed) return "";
-      let nameSegments = trimmed.split(/\s+/);
-      if (nameSegments.length === 1) return trimmed;
-      let lastName = nameSegments[nameSegments.length - 1];
-      let firstName = nameSegments[0];
-      let firstInitial = firstName.charAt(0).toUpperCase();
-      if (nameSegments.length > 2 && nameSegments[nameSegments.length - 2].toLowerCase() === 'de') {
-         lastName = nameSegments[nameSegments.length - 2] + " " + lastName;
-      }
-      return `${firstInitial}. ${lastName}`;
+      return abbreviateNameString(trimmed);
     });
     return structuralInitials.filter(Boolean).join(', ');
   }
 
-  // Abbreviator utility for the timeline cleaner subheadings
+  // Adaptive Abbreviator utility processing single/double first initials dynamically
   function abbreviateNameString(name) {
-    let trimmed = name.trim();
-    let nameSegments = trimmed.split(/\s+/);
-    if (nameSegments.length === 1) return trimmed;
-    let lastName = nameSegments[nameSegments.length - 1];
-    let firstName = nameSegments[0];
-    let firstInitial = firstName.charAt(0).toUpperCase();
-    if (nameSegments.length > 2 && nameSegments[nameSegments.length - 2].toLowerCase() === 'de') {
-       lastName = nameSegments[nameSegments.length - 2] + " " + lastName;
+    let cleanName = name.trim().replace(/de la cruz/gi, 'Dela Cruz').replace(/labatique/gi, 'Libatique');
+    let segments = cleanName.split(/\s+/);
+    if (segments.length === 1) return cleanName;
+
+    let lastName = segments[segments.length - 1];
+    
+    // Explicit condition checking for Justine Kaye Balina profile overlap match
+    if (lastName.toLowerCase() === 'balina' && segments[0].toLowerCase() === 'justine') {
+      return "J.K. Balina";
     }
+
+    let firstInitial = segments[0].charAt(0).toUpperCase();
     return `${firstInitial}. ${lastName}`;
   }
 
@@ -1438,7 +1435,6 @@
     let renderingDayIndex = currentDayIndex;
     isDisplayingPreview = false;
 
-    // Standardize weekend indexes to Monday
     if (renderingDayIndex === 0 || renderingDayIndex === 6) {
       renderingDayIndex = 1;
     }
@@ -1448,7 +1444,6 @@
       const lastPeriodParts = currentDayData.schedule[currentDayData.schedule.length - 1].time.split('-');
       const schoolEndMinutes = parseTimeToMinutes(lastPeriodParts[1]);
       
-      // Advance to tomorrow's tracking once past schoolEndMinutes + 60 mins but reset at 3:00 AM
       if (currentMinutes >= (schoolEndMinutes + 60) || now.getHours() < 3) {
         if (now.getHours() >= 3 || currentMinutes >= (schoolEndMinutes + 60)) {
           isDisplayingPreview = true;
@@ -1499,7 +1494,6 @@
     let zoneHtml = '';
     for (const [zone, groupId] of Object.entries(renderDayData.cleaners.duties)) {
       const gObj = classData.groups[groupId];
-      // Format all member names down to clean, uniform initials
       const abbreviatedNames = gObj.members.map(m => abbreviateNameString(m)).join(', ');
       
       zoneHtml += `
@@ -1515,22 +1509,27 @@
   }
 
   function handleCleanerSearch() {
-    const searchInput = document.getElementById('cleanerSearchInput').value.trim().toLowerCase();
+    let rawSearch = document.getElementById('cleanerSearchInput').value.trim().toLowerCase();
     const alertBox = document.getElementById('cleanerHighlightAlert');
     
     document.querySelectorAll('.zone-item-row').forEach(row => row.classList.remove('zone-highlight'));
 
-    if (!searchInput) {
+    if (!rawSearch) {
       alertBox.style.display = 'none';
       return;
     }
+
+    let searchInput = rawSearch.replace(/de la cruz/gi, 'delacruz').replace(/labatique/gi, 'libatique');
 
     let foundMember = null;
     let foundGroupNum = null;
     let foundGroupName = "";
 
     for (const [groupNum, groupData] of Object.entries(classData.groups)) {
-      const matched = groupData.members.find(m => m.toLowerCase().includes(searchInput));
+      const matched = groupData.members.find(m => {
+        let normMember = m.toLowerCase().replace(/de la cruz/gi, 'delacruz').replace(/labatique/gi, 'libatique');
+        return normMember.includes(searchInput);
+      });
       if (matched) {
         foundMember = matched; foundGroupNum = groupNum; foundGroupName = groupData.name;
         break;
@@ -1640,7 +1639,6 @@
     return (hours * 60) + minutes;
   }
 
-  // Messenger format structuring utility function
   function shareToMessenger() {
     const targetData = classData.days[activeDayIndex];
     let templateText = `⚡ G12 KUMINTANG SCHEDULE UPDATE\n`;
