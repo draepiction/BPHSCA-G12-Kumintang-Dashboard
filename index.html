@@ -47,6 +47,7 @@
     line-height: 1.5;
     min-height: 100vh;
     padding: 0 0 48px;
+    overflow-x: hidden;
   }
 
   .ticker-wrap {
@@ -254,6 +255,25 @@
     color: var(--ink);
     border-bottom: 1px solid var(--warm-mid);
     padding-bottom: 4px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .share-btn {
+    background: var(--accent);
+    color: var(--parchment);
+    border: none;
+    padding: 4px 8px;
+    font-size: 11px;
+    border-radius: 4px;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  .share-btn:hover {
+    background: var(--ink);
   }
 
   .meta-card {
@@ -424,15 +444,25 @@
 
   .zone-item-row {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
+    flex-direction: column;
     background: #fff;
     border: 1px solid var(--warm-mid);
-    margin-bottom: 4px;
-    padding: 6px 10px;
-    border-radius: 5px;
+    margin-bottom: 6px;
+    padding: 8px 12px;
+    border-radius: 6px;
     font-size: 12.5px;
     transition: all 0.2s ease;
+  }
+  .zone-header-line {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 4px;
+  }
+  .zone-members-line {
+    font-size: 11px;
+    color: var(--muted);
+    font-style: italic;
   }
 
   .desktop-view { display: block; }
@@ -842,7 +872,10 @@
         </div>
 
         <div class="dashboard-pane">
-          <h3>Today's Timeline</h3>
+          <h3>
+            <span>Timeline</span>
+            <button class="share-btn" onclick="shareToMessenger()">📋 Copy for Group Chat</button>
+          </h3>
           <div id="todayScheduleContainer"></div>
         </div>
 
@@ -961,7 +994,7 @@
         </div>
         <div class="cleaner-card">
           <div class="cleaner-head" style="border-bottom: 3px solid var(--g2)"><div class="g-label">Team 02</div><div class="g-title">Group 2</div></div>
-          <div class="cleaner-body"><div class="member-row"><span class="member-name">Andrew Papa</span></div><div class="member-row"><span class="member-name">Justin Evangelista</span></div><div class="member-row"><span class="member-name">Trixie Martizana</span></div><div class="member-row"><span class="member-name">Justine Kaye Balina</span></div><div class="member-row"><span class="member-name">Mariel Labatique</span></div></div>
+          <div class="cleaner-body"><div class="member-row"><span class="member-name">Andrew Papa</span></div><div class="member-row"><span class="member-name">Justin Evangelista</span></div><div class="member-row"><span class="member-name">Trixie Martizana</span></div><div class="member-row"><span class="member-name">Justine Kaye Balina</span></div><div class="member-row"><span class="member-name">Mariel libatique</span></div></div>
         </div>
         <div class="cleaner-card">
           <div class="cleaner-head" style="border-bottom: 3px solid var(--g3)"><div class="g-label">Team 03</div><div class="g-title">Group 3</div></div>
@@ -1033,7 +1066,8 @@
 
 <script>
   let activeDayIndex = 1; 
-  let globalAssignmentsCache = []; // Internal memory store array matrix to preserve lightning fast rendering loops
+  let globalAssignmentsCache = []; 
+  let isDisplayingPreview = false;
 
   const ANNOUNCEMENTS_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTgmFZWIlhIamlLt7sDQEHR87JhLcXs_yqECpeckRbDkahNYZj3_QeKySuXrpFLZbxWPPaCE70cNyw4/pub?output=csv";
   const ASSIGNMENTS_CSV_URL = "https://docs.google.com/spreadsheets/d/1935ff7NQnasKpV1rF_g6lylAJ8e5NN0kTC1NJSBcxw0/export?format=csv&gid=1439225947";
@@ -1054,7 +1088,7 @@
   const classData = {
     groups: {
       1: { name: "Group 1", color: "var(--g1)", members: ["Angelo Salazar", "Dave Falogme", "Jewel Barrameda", "Jerica De la Cruz"] },
-      2: { name: "Group 2", color: "var(--g2)", members: ["Andrew Papa", "Justin Evangelista", "Trixie Martizana", "Justine Kaye Balina", "Mariel Labatique"] },
+      2: { name: "Group 2", color: "var(--g2)", members: ["Andrew Papa", "Justin Evangelista", "Trixie Martizana", "Justine Kaye Balina", "Mariel Libatique"] },
       3: { name: "Group 3", color: "var(--g3)", members: ["Kenedy Nieves", "Vince Datinguinoo", "Jhoan Mae Coliat", "Althea Masangcay"] },
       4: { name: "Group 4", color: "var(--g4)", members: ["Gian Masangcay", "Kenneth Bisa", "Andrei Martija", "Jessa Brucal", "CJ Sagarino"] },
       5: { name: "Group 5", color: "var(--g5)", members: ["Wilmer Hernandez", "Jeromy Balina", "Janellie Balmes", "Jada Javier"] }
@@ -1144,6 +1178,31 @@
     }
   }
 
+  // --- SWIPE GESTURES ENGINE ---
+  let touchStartX = 0;
+  let touchEndX = 0;
+
+  document.addEventListener('touchstart', e => {
+    touchStartX = e.changedTouches[0].screenX;
+  }, false);
+
+  document.addEventListener('touchend', e => {
+    touchEndX = e.changedTouches[0].screenX;
+    handleSwipeGesture();
+  }, false);
+
+  function handleSwipeGesture() {
+    const swipeThreshold = 80; 
+    if (touchStartX - touchEndX > swipeThreshold) {
+      // Swipe Left -> Go to Assignments Board
+      switchAppTab('assignments');
+    }
+    if (touchEndX - touchStartX > swipeThreshold) {
+      // Swipe Right -> Go to Main Dashboard
+      switchAppTab('dashboard');
+    }
+  }
+
   function parseCSVLine(text) {
     let p = '', r = [];
     let q = false;
@@ -1163,11 +1222,9 @@
     const cleanSearch = searchString.toLowerCase().trim();
     if (!cleanSearch) return false;
 
-    // Check by initials
     const structuralInitials = computeMaskedInitialsList(rawCompletedList).toLowerCase();
     if (structuralInitials.includes(cleanSearch)) return true;
 
-    // Check by full raw names listed in spreadsheet row cells
     const rawNamesArray = rawCompletedList.split(',').map(n => n.toLowerCase().trim());
     return rawNamesArray.some(name => name.includes(cleanSearch));
   }
@@ -1189,6 +1246,20 @@
       return `${firstInitial}. ${lastName}`;
     });
     return structuralInitials.filter(Boolean).join(', ');
+  }
+
+  // Abbreviator utility for the timeline cleaner subheadings
+  function abbreviateNameString(name) {
+    let trimmed = name.trim();
+    let nameSegments = trimmed.split(/\s+/);
+    if (nameSegments.length === 1) return trimmed;
+    let lastName = nameSegments[nameSegments.length - 1];
+    let firstName = nameSegments[0];
+    let firstInitial = firstName.charAt(0).toUpperCase();
+    if (nameSegments.length > 2 && nameSegments[nameSegments.length - 2].toLowerCase() === 'de') {
+       lastName = nameSegments[nameSegments.length - 2] + " " + lastName;
+    }
+    return `${firstInitial}. ${lastName}`;
   }
 
   async function fetchLiveTicker() {
@@ -1230,7 +1301,7 @@
       const data = await response.text();
       const lines = data.split('\n');
       
-      globalAssignmentsCache = []; // Reset local cache frame array matrix
+      globalAssignmentsCache = []; 
 
       for (let i = 1; i < lines.length; i++) {
         if (!lines[i].trim()) continue;
@@ -1256,14 +1327,13 @@
         }
       }
 
-      renderAssignmentsBoard(""); // Initial render with no search parameters active
+      renderAssignmentsBoard(""); 
     } catch (e) {
       console.error("Error updates parser execution failed:", e);
       document.getElementById('activeAssignmentsContainer').innerHTML = `<div style="font-size:13px; color:var(--g1); padding: 20px 0;">⚠️ Problem parsing current requirements workflow.</div>`;
     }
   }
 
-  // INTEGRATED FILTER GENERATOR RECONSTRUCTS DOM CARDS DYNAMICALLY BASED ON ACTIVE USER SEARCH QUERY
   function renderAssignmentsBoard(searchFilterString) {
     const container = document.getElementById('activeAssignmentsContainer');
     if (globalAssignmentsCache.length === 0) {
@@ -1301,7 +1371,6 @@
 
         let isCompletedByFilteredUser = checkUserCompletionStatus(item.completedRaw, searchFilterString);
         
-        // Dynamic clean indicator badges based on matching search states
         let badgeHtml = "";
         if (isSearching) {
           if (isCompletedByFilteredUser) {
@@ -1363,28 +1432,48 @@
 
   function updateDashboard() {
     const now = new Date();
-    let dayIndex = now.getDay(); 
-    let isWeekendPreview = false;
-    
-    if (dayIndex === 0 || dayIndex === 6) {
-      dayIndex = 1; 
-      isWeekendPreview = true;
+    let currentDayIndex = now.getDay(); 
+    const currentMinutes = (now.getHours() * 60) + now.getMinutes();
+
+    let renderingDayIndex = currentDayIndex;
+    isDisplayingPreview = false;
+
+    // Standardize weekend indexes to Monday
+    if (renderingDayIndex === 0 || renderingDayIndex === 6) {
+      renderingDayIndex = 1;
     }
 
-    activeDayIndex = dayIndex;
-    const currentDayData = classData.days[dayIndex];
+    const currentDayData = classData.days[renderingDayIndex];
+    if (currentDayData && currentDayData.schedule.length > 0) {
+      const lastPeriodParts = currentDayData.schedule[currentDayData.schedule.length - 1].time.split('-');
+      const schoolEndMinutes = parseTimeToMinutes(lastPeriodParts[1]);
+      
+      // Advance to tomorrow's tracking once past schoolEndMinutes + 60 mins but reset at 3:00 AM
+      if (currentMinutes >= (schoolEndMinutes + 60) || now.getHours() < 3) {
+        if (now.getHours() >= 3 || currentMinutes >= (schoolEndMinutes + 60)) {
+          isDisplayingPreview = true;
+          renderingDayIndex = currentDayIndex + 1;
+          if (renderingDayIndex > 5 || renderingDayIndex === 0) renderingDayIndex = 1; 
+        }
+      }
+    }
+
+    activeDayIndex = renderingDayIndex;
+    const renderDayData = classData.days[renderingDayIndex];
     
-    if (isWeekendPreview) {
+    if (isDisplayingPreview) {
+      document.getElementById('todayDayName').innerText = `Tomorrow's Preview · ${renderDayData.name}`;
+    } else if (now.getDay() === 0 || now.getDay() === 6) {
       document.getElementById('todayDayName').innerText = `Monday Preview · Weekend Mode`;
     } else {
-      document.getElementById('todayDayName').innerText = `Today's Overview · ${currentDayData.name}`;
+      document.getElementById('todayDayName').innerText = `Today's Overview · ${renderDayData.name}`;
     }
 
-    document.getElementById('todayUniformVal').innerText = currentDayData.uniform;
-    renderCleanersZones(currentDayData);
+    document.getElementById('todayUniformVal').innerText = renderDayData.uniform;
+    renderCleanersZones(renderDayData);
 
     let scheduleHtml = '';
-    currentDayData.schedule.forEach(item => {
+    renderDayData.schedule.forEach(item => {
       if (item.type === 'break' || item.type === 'lunch') {
         const rowBg = item.type === 'break' ? 'var(--break-bg)' : 'var(--lunch-bg)';
         scheduleHtml += `
@@ -1406,14 +1495,20 @@
     handleCleanerSearch(); 
   }
 
-  function renderCleanersZones(currentDayData) {
+  function renderCleanersZones(renderDayData) {
     let zoneHtml = '';
-    for (const [zone, groupId] of Object.entries(currentDayData.cleaners.duties)) {
+    for (const [zone, groupId] of Object.entries(renderDayData.cleaners.duties)) {
       const gObj = classData.groups[groupId];
+      // Format all member names down to clean, uniform initials
+      const abbreviatedNames = gObj.members.map(m => abbreviateNameString(m)).join(', ');
+      
       zoneHtml += `
         <div class="zone-item-row" id="zone-row-${zone.replace(/[^a-zA-Z0-9]/g, '')}">
-          <span style="font-weight: 500;">${zone}</span>
-          <span class="g-pill" style="background:${gObj.color}">${gObj.name}</span>
+          <div class="zone-header-line">
+            <span style="font-weight: 500;">${zone}</span>
+            <span class="g-pill" style="background:${gObj.color}">${gObj.name}</span>
+          </div>
+          <div class="zone-members-line">👥 ${abbreviatedNames}</div>
         </div>`;
     }
     document.getElementById('todayCleanersZones').innerHTML = zoneHtml;
@@ -1444,10 +1539,10 @@
 
     if (foundMember) {
       alertBox.style.display = 'block';
-      const currentDayData = classData.days[activeDayIndex];
+      const renderDayData = classData.days[activeDayIndex];
       let assignedZone = "None";
       
-      for (const [zone, groupId] of Object.entries(currentDayData.cleaners.duties)) {
+      for (const [zone, groupId] of Object.entries(renderDayData.cleaners.duties)) {
         if (parseInt(groupId) === parseInt(foundGroupNum)) {
           assignedZone = zone;
           const rowId = `zone-row-${zone.replace(/[^a-zA-Z0-9]/g, '')}`;
@@ -1455,7 +1550,7 @@
           if (targetRow) targetRow.classList.add('zone-highlight');
         }
       }
-      alertBox.innerHTML = `👋 <strong>${foundMember}</strong> is in <strong>${foundGroupName}</strong>.<br>📍 Today's Task: Assigned to clean the <strong>${assignedZone}</strong>.`;
+      alertBox.innerHTML = `👋 <strong>${foundMember}</strong> is in <strong>${foundGroupName}</strong>.<br>📍 Schedule Status: Assigned to clean the <strong>${assignedZone}</strong>.`;
     } else {
       alertBox.style.display = 'block';
       alertBox.innerHTML = `❌ No matching class member found in cleaner records.`;
@@ -1488,6 +1583,11 @@
     
     if (realDay === 0 || realDay === 6) {
       document.getElementById('currentPeriodLabel').innerText = "🎉 Weekend Mode: Enjoy your rest!";
+      return;
+    }
+
+    if (isDisplayingPreview) {
+      document.getElementById('currentPeriodLabel').innerText = "🌙 Day Completed: Showing Tomorrow's Track";
       return;
     }
 
@@ -1538,6 +1638,32 @@
       if (hours === 1 || hours === 2 || hours === 3) hours += 12;
     }
     return (hours * 60) + minutes;
+  }
+
+  // Messenger format structuring utility function
+  function shareToMessenger() {
+    const targetData = classData.days[activeDayIndex];
+    let templateText = `⚡ G12 KUMINTANG SCHEDULE UPDATE\n`;
+    templateText += `📅 Day: ${targetData.name}${isDisplayingPreview ? ' (Tomorrow\'s Preview)' : ''}\n`;
+    templateText += `👔 Uniform: ${targetData.uniform}\n\n`;
+    templateText += `📖 TIMELINE TRACK:\n`;
+    
+    targetData.schedule.forEach(item => {
+      templateText += `▪️ ${item.time} : ${item.name}\n`;
+    });
+    
+    templateText += `\n🧹 CLEANERS DUTY ROTATION:\n`;
+    for (const [zone, groupId] of Object.entries(targetData.cleaners.duties)) {
+      const groupData = classData.groups[groupId];
+      const initialsList = groupData.members.map(m => abbreviateNameString(m)).join(', ');
+      templateText += `📍 ${zone} -> ${groupData.name} (${initialsList})\n`;
+    }
+    
+    navigator.clipboard.writeText(templateText).then(() => {
+      alert("🎉 Group chat template text copied into clipboard! Paste directly into your Messenger app thread.");
+    }).catch(err => {
+      console.error("Clipboard engine failed to verify context action: ", err);
+    });
   }
 
   function runClock() {
