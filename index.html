@@ -18,13 +18,13 @@
     --lunch-bg:  #e2d8c9;
     --empty:     #ede8df;
 
-    --phil:  #c2856a;
-    --ucsp:  #7a9c7a;
-    --eapp:  #6a8ca0;
-    --ae:    #b09060;
-    --mil:   #8a7aaa;
-    --peh:   #c07070;
-    --hgp:   #78a090;
+    --perdev: #c2856a;
+    --lmdaf:  #7a9c7a;
+    --cpar:   #6a8ca0;
+    --ae:     #b09060;
+    --pr2:    #8a7aaa;
+    --peh:    #c07070;
+    --hgp:    #78a090;
     
     --g1:    #b56565;
     --g2:    #5f8575;
@@ -686,13 +686,13 @@
   .teacher-name { color: var(--muted); font-size: 11.5px; }
   .area-cell { font-weight: 500; color: var(--ink); width: 180px; }
 
-  .c-phil { background: var(--phil); }
-  .c-ucsp { background: var(--ucsp); }
-  .c-eapp { background: var(--eapp); }
-  .c-ae   { background: var(--ae);   }
-  .c-mil   { background: var(--mil);  }
-  .c-peh   { background: var(--peh);  }
-  .c-hgp   { background: var(--hgp); }
+  .c-perdev { background: var(--perdev); }
+  .c-lmdaf  { background: var(--lmdaf); }
+  .c-cpar   { background: var(--cpar); }
+  .c-ae     { background: var(--ae); }
+  .c-pr2    { background: var(--pr2); }
+  .c-peh    { background: var(--peh); }
+  .c-hgp    { background: var(--hgp); }
 
   .g-pill {
     display: inline-block;
@@ -848,7 +848,7 @@
 <header>
   <div class="eyebrow">Batangas Province High School for Culture and Arts</div>
   <h1>G12 <span>Kumintang</span></h1>
-  <div class="sub">First Trimester &middot; SY 2026-2027</div>
+  <div class="sub">Second Term &middot; SY 2026-2027</div>
 </header>
 
 <div class="app-nav-bar">
@@ -882,7 +882,7 @@
         <div class="dashboard-pane">
           <h3>Daily Protocol &amp; Tasks</h3>
           
-          <div class="meta-card" style="border-left: 4px solid var(--eapp);">
+          <div class="meta-card" style="border-left: 4px solid var(--cpar);">
             <div class="meta-title">Academic Term Status</div>
             <div class="meta-value" id="academicBlockVal" style="font-weight:700;">Calculating...</div>
             <div style="font-size: 11.5px; color: var(--muted);" id="academicBlockSub">Analyzing current term block...</div>
@@ -921,13 +921,13 @@
             </thead>
             <tbody>
               <tr><td class="time-cell">6:30 - 7:00</td><td class="subj-cell" colspan="5"><span class="subj-pill c-ae" style="max-width:none;width:96%;">Housekeeping &amp; Sanitation Activities</span></td></tr>
-              <tr><td class="time-cell">7:00 - 8:30</td><td class="subj-cell"><span class="subj-pill c-phil">Phil.</span></td><td class="subj-cell"><span class="subj-pill c-phil">Phil.</span></td><td class="subj-cell"><span class="subj-pill c-phil">Phil.</span></td><td class="subj-cell"><span class="subj-pill c-phil">Phil.</span></td><td class="subj-cell"><span class="subj-pill c-hgp">HGP</span></td></tr>
-              <tr><td class="time-cell">8:30 - 10:00</td><td class="subj-cell"><span class="subj-pill c-ucsp">UCSP</span></td><td class="subj-cell"><span class="subj-pill c-ucsp">UCSP</span></td><td class="subj-cell"><span class="subj-pill c-ucsp">UCSP</span></td><td class="subj-cell"><span class="subj-pill c-eapp">EAPP</span></td><td class="subj-cell"><span class="subj-pill c-eapp">EAPP</span></td></tr>
+              <tr><td class="time-cell">7:00 - 8:30</td><td class="subj-cell"><span class="subj-pill c-perdev">Personal Dev.</span></td><td class="subj-cell"><span class="subj-pill c-perdev">Personal Dev.</span></td><td class="subj-cell"><span class="subj-pill c-perdev">Personal Dev.</span></td><td class="subj-cell"><span class="subj-pill c-perdev">Personal Dev.</span></td><td class="subj-cell"><span class="subj-pill c-hgp">HGP (7:00-8:00)</span></td></tr>
+              <tr><td class="time-cell">8:30 - 10:00</td><td class="subj-cell"><span class="subj-pill c-lmdaf">LMDAF</span></td><td class="subj-cell"><span class="subj-pill c-lmdaf">LMDAF</span></td><td class="subj-cell"><span class="subj-pill c-lmdaf">LMDAF</span></td><td class="subj-cell"><span class="subj-pill c-pr2">PR 2</span></td><td class="subj-cell"><span class="subj-pill c-pr2">PR 2</span></td></tr>
               <tr class="break-row"><td class="time-cell">10:00 - 10:15</td><td class="break-label" colspan="5">Break</td></tr>
-              <tr><td class="time-cell">10:15 - 11:45</td><td class="subj-cell"><span class="subj-pill c-ae">A&amp;E</span></td><td class="subj-cell"><span class="subj-pill c-ae">A&amp;E</span></td><td class="subj-cell"><span class="subj-pill c-ae">A&amp;E</span></td><td class="subj-cell"><span class="subj-pill c-ae">A&amp;E</span></td><td class="subj-cell"><span class="subj-pill c-ucsp">UCSP</span></td></tr>
-              <tr class="lunch-row"><td class="time-cell">11:45 - 12:30</td><td class="break-label" colspan="5">Lunch Break</td></tr>
-              <tr><td class="time-cell">12:30 - 2:00</td><td class="subj-cell"><span class="subj-pill c-eapp">EAPP</span></td><td class="subj-cell"><span class="subj-pill c-eapp">EAPP</span></td><td class="subj-cell"><span class="subj-pill c-peh">PEH 3</span></td><td class="subj-cell"><span class="subj-pill c-mil">MIL</span></td><td class="subj-cell"><span class="subj-pill c-mil">MIL</span></td></tr>
-              <tr><td class="time-cell">2:00 - 3:30</td><td class="subj-cell"><span class="subj-pill c-mil">MIL</span></td><td class="subj-cell"><span class="subj-pill c-mil">MIL</span></td><td class="subj-cell empty-cell"></td><td class="subj-cell"><span class="subj-pill c-peh">PEH 3</span></td><td class="subj-cell empty-cell"></td></tr>
+              <tr><td class="time-cell">10:15 - 11:45</td><td class="subj-cell"><span class="subj-pill c-cpar">CPAR</span></td><td class="subj-cell"><span class="subj-pill c-cpar">CPAR</span></td><td class="subj-cell"><span class="subj-pill c-cpar">CPAR</span></td><td class="subj-cell"><span class="subj-pill c-cpar">CPAR</span></td><td class="subj-cell"><span class="subj-pill c-lmdaf">LMDAF</span></td></tr>
+              <tr class="lunch-row"><td class="time-cell">11:45 - 12:15</td><td class="break-label" colspan="5">Lunch Break</td></tr>
+              <tr><td class="time-cell">12:15 - 1:45</td><td class="subj-cell"><span class="subj-pill c-pr2">PR 2</span></td><td class="subj-cell"><span class="subj-pill c-pr2">PR 2</span></td><td class="subj-cell" rowspan="2"><span class="subj-pill c-peh" style="max-width:none;width:96%;height:90px;display:inline-flex;align-items:center;justify-content:center;">PE &amp; Health 4<br>(12:15-2:15)</span></td><td class="subj-cell empty-cell"></td><td class="subj-cell empty-cell"></td></tr>
+              <tr><td class="time-cell">1:45 - 3:15</td><td class="subj-cell empty-cell"></td><td class="subj-cell empty-cell"></td><td class="subj-cell empty-cell"></td><td class="subj-cell empty-cell"></td></tr>
             </tbody>
           </table>
         </div>
@@ -937,37 +937,75 @@
         <div class="day-card">
           <div class="day-header"><span class="day-num">Day 1</span> Monday</div>
           <div class="period-row"><div class="period-time">6:30-7:00</div><div class="period-subj"><span class="subj-pill c-ae">Housekeeping</span></div></div>
-          <div class="period-row"><div class="period-time">7:00-8:30</div><div class="period-subj"><span class="subj-pill c-phil">Intro to Phil.</span></div></div>
-          <div class="period-row"><div class="period-time">8:30-10:00</div><div class="period-subj"><span class="subj-pill c-ucsp">UCSP</span></div></div>
+          <div class="period-row"><div class="period-time">7:00-8:30</div><div class="period-subj"><span class="subj-pill c-perdev">Personal Development</span></div></div>
+          <div class="period-row"><div class="period-time">8:30-10:00</div><div class="period-subj"><span class="subj-pill c-lmdaf">LMDAF</span></div></div>
           <div class="period-row break-row-m"><div class="period-time">10:00-10:15</div><div class="period-break">Break</div></div>
-          <div class="period-row"><div class="period-time">10:15-11:45</div><div class="period-subj"><span class="subj-pill c-ae">A&amp;E</span></div></div>
-          <div class="period-row lunch-row-m"><div class="period-time">11:45-12:30</div><div class="period-break">Lunch Break</div></div>
-          <div class="period-row"><div class="period-time">12:30-2:00</div><div class="period-subj"><span class="subj-pill c-eapp">EAPP</span></div></div>
-          <div class="period-row"><div class="period-time">2:00-3:30</div><div class="period-subj"><span class="subj-pill c-mil">MIL</span></div></div>
+          <div class="period-row"><div class="period-time">10:15-11:45</div><div class="period-subj"><span class="subj-pill c-cpar">CPAR</span></div></div>
+          <div class="period-row lunch-row-m"><div class="period-time">11:45-12:15</div><div class="period-break">Lunch Break</div></div>
+          <div class="period-row"><div class="period-time">12:15-1:45</div><div class="period-subj"><span class="subj-pill c-pr2">Practical Research 2</span></div></div>
+        </div>
+
+        <div class="day-card">
+          <div class="day-header"><span class="day-num">Day 2</span> Tuesday</div>
+          <div class="period-row"><div class="period-time">6:30-7:00</div><div class="period-subj"><span class="subj-pill c-ae">Housekeeping</span></div></div>
+          <div class="period-row"><div class="period-time">7:00-8:30</div><div class="period-subj"><span class="subj-pill c-perdev">Personal Development</span></div></div>
+          <div class="period-row"><div class="period-time">8:30-10:00</div><div class="period-subj"><span class="subj-pill c-lmdaf">LMDAF</span></div></div>
+          <div class="period-row break-row-m"><div class="period-time">10:00-10:15</div><div class="period-break">Break</div></div>
+          <div class="period-row"><div class="period-time">10:15-11:45</div><div class="period-subj"><span class="subj-pill c-cpar">CPAR</span></div></div>
+          <div class="period-row lunch-row-m"><div class="period-time">11:45-12:15</div><div class="period-break">Lunch Break</div></div>
+          <div class="period-row"><div class="period-time">12:15-1:45</div><div class="period-subj"><span class="subj-pill c-pr2">Practical Research 2</span></div></div>
+        </div>
+
+        <div class="day-card">
+          <div class="day-header"><span class="day-num">Day 3</span> Wednesday</div>
+          <div class="period-row"><div class="period-time">6:30-7:00</div><div class="period-subj"><span class="subj-pill c-ae">Housekeeping</span></div></div>
+          <div class="period-row"><div class="period-time">7:00-8:30</div><div class="period-subj"><span class="subj-pill c-perdev">Personal Development</span></div></div>
+          <div class="period-row"><div class="period-time">8:30-10:00</div><div class="period-subj"><span class="subj-pill c-lmdaf">LMDAF</span></div></div>
+          <div class="period-row break-row-m"><div class="period-time">10:00-10:15</div><div class="period-break">Break</div></div>
+          <div class="period-row"><div class="period-time">10:15-11:45</div><div class="period-subj"><span class="subj-pill c-cpar">CPAR</span></div></div>
+          <div class="period-row lunch-row-m"><div class="period-time">11:45-12:15</div><div class="period-break">Lunch Break</div></div>
+          <div class="period-row"><div class="period-time">12:15-2:15</div><div class="period-subj"><span class="subj-pill c-peh">PE &amp; Health 4</span></div></div>
+        </div>
+
+        <div class="day-card">
+          <div class="day-header"><span class="day-num">Day 4</span> Thursday</div>
+          <div class="period-row"><div class="period-time">6:30-7:00</div><div class="period-subj"><span class="subj-pill c-ae">Housekeeping</span></div></div>
+          <div class="period-row"><div class="period-time">7:00-8:30</div><div class="period-subj"><span class="subj-pill c-perdev">Personal Development</span></div></div>
+          <div class="period-row"><div class="period-time">8:30-10:00</div><div class="period-subj"><span class="subj-pill c-pr2">Practical Research 2</span></div></div>
+          <div class="period-row break-row-m"><div class="period-time">10:00-10:15</div><div class="period-break">Break</div></div>
+          <div class="period-row"><div class="period-time">10:15-11:45</div><div class="period-subj"><span class="subj-pill c-cpar">CPAR</span></div></div>
+        </div>
+
+        <div class="day-card">
+          <div class="day-header"><span class="day-num">Day 5</span> Friday</div>
+          <div class="period-row"><div class="period-time">6:30-7:00</div><div class="period-subj"><span class="subj-pill c-ae">Housekeeping</span></div></div>
+          <div class="period-row"><div class="period-time">7:00-8:00</div><div class="period-subj"><span class="subj-pill c-hgp">HGP</span></div></div>
+          <div class="period-row"><div class="period-time">8:30-10:00</div><div class="period-subj"><span class="subj-pill c-pr2">Practical Research 2</span></div></div>
+          <div class="period-row break-row-m"><div class="period-time">10:00-10:15</div><div class="period-break">Break</div></div>
+          <div class="period-row"><div class="period-time">10:15-11:45</div><div class="period-subj"><span class="subj-pill c-lmdaf">LMDAF</span></div></div>
         </div>
       </div>
 
       <p class="section-label">Subjects</p>
       <div class="legend">
-        <div class="legend-item"><div class="legend-dot c-phil"></div>Intro to Philosophy</div>
-        <div class="legend-item"><div class="legend-dot c-ucsp"></div>UCSP</div>
-        <div class="legend-item"><div class="legend-dot c-eapp"></div>EAPP</div>
-        <div class="legend-item"><div class="legend-dot c-ae"></div>A&amp;E / Housekeeping</div>
-        <div class="legend-item"><div class="legend-dot c-mil"></div>MIL</div>
-        <div class="legend-item"><div class="legend-dot c-peh"></div>PEH 3</div>
+        <div class="legend-item"><div class="legend-dot c-perdev"></div>Personal Development</div>
+        <div class="legend-item"><div class="legend-dot c-lmdaf"></div>LMDAF</div>
+        <div class="legend-item"><div class="legend-dot c-cpar"></div>CPAR</div>
+        <div class="legend-item"><div class="legend-dot c-pr2"></div>Practical Research 2</div>
+        <div class="legend-item"><div class="legend-dot c-peh"></div>PE &amp; Health 4</div>
         <div class="legend-item"><div class="legend-dot c-hgp"></div>HGP</div>
+        <div class="legend-item"><div class="legend-dot c-ae"></div>Housekeeping / Sanitation</div>
       </div>
 
       <p class="section-label">Teachers</p>
       <table class="teachers-tbl">
         <thead><tr><th>Code</th><th>Subject</th><th>Teacher</th></tr></thead>
         <tbody>
-          <tr><td><span class="subject-code c-phil">Phil.</span></td><td>Introduction to the Philosophy of the Human Person</td><td class="teacher-name">Mrs. Emily C. Medrano</td></tr>
-          <tr><td><span class="subject-code c-ucsp">UCSP</span></td><td>Understanding Culture, Society, and Politics</td><td class="teacher-name">Mrs. Maribel B. Ellazar</td></tr>
-          <tr><td><span class="subject-code c-eapp">EAPP</span></td><td>English for Academic and Professional Purposes</td><td class="teacher-name">Mrs. Cristina J. Masangcay</td></tr>
-          <tr><td><span class="subject-code c-ae">A&amp;E</span></td><td>Apprenticeship and Exploration</td><td class="teacher-name">Mr. Mark Freddierick Divino</td></tr>
-          <tr><td><span class="subject-code c-mil">MIL</span></td><td>Media and Information Literacy</td><td class="teacher-name">Mrs. Cristina J. Masangcay</td></tr>
-          <tr><td><span class="subject-code c-peh">PEH 3</span></td><td>Physical Education and Health 3</td><td class="teacher-name">Mrs. Emily C. Medrano</td></tr>
+          <tr><td><span class="subject-code c-perdev">PerDev</span></td><td>Personal Development</td><td class="teacher-name">Mrs. Emily C. Medrano</td></tr>
+          <tr><td><span class="subject-code c-lmdaf">LMDAF</span></td><td>LMDAF</td><td class="teacher-name">Mrs. Maribel B. Ellazar</td></tr>
+          <tr><td><span class="subject-code c-cpar">CPAR</span></td><td>Contemporary Philippine Arts from the Regions</td><td class="teacher-name">Mr. Mark Freddierick Divino</td></tr>
+          <tr><td><span class="subject-code c-pr2">PR 2</span></td><td>Practical Research 2</td><td class="teacher-name">Mrs. Cristina J. Masangcay</td></tr>
+          <tr><td><span class="subject-code c-peh">PEH 4</span></td><td>Physical Education and Health 4</td><td class="teacher-name">Mrs. Emily C. Medrano</td></tr>
           <tr><td><span class="subject-code c-hgp">HGP</span></td><td>Homeroom Guidance Program</td><td class="teacher-name">Mrs. Maribel B. Ellazar</td></tr>
         </tbody>
       </table>
@@ -1061,7 +1099,7 @@
     <span class="g-num">201 days</span>
   </div>
 
-  <footer>G12 &middot; Kumintang &middot; First Trimester SY 2026-2027</footer>
+  <footer>G12 &middot; Kumintang &middot; Second Term SY 2026-2027</footer>
 </div>
 
 <script>
@@ -1073,16 +1111,22 @@
   const ASSIGNMENTS_CSV_URL = "https://docs.google.com/spreadsheets/d/1935ff7NQnasKpV1rF_g6lylAJ8e5NN0kTC1NJSBcxw0/export?format=csv&gid=1439225947";
 
   const subjectStyleMapping = {
-    "intro to philosophy": "c-phil",
-    "phil": "c-phil",
-    "ucsp": "c-ucsp",
-    "uspc": "c-ucsp",
-    "eapp": "c-eapp",
-    "a&e": "c-ae",
-    "a&e (apprenticeship)": "c-ae",
-    "mil": "c-mil",
+    "personal development": "c-perdev",
+    "perdev": "c-perdev",
+    "pdev": "c-perdev",
+    "lmdaf": "c-lmdaf",
+    "cpar": "c-cpar",
+    "practical research 2": "c-pr2",
+    "pr2": "c-pr2",
+    "research 2": "c-pr2",
+    "res2": "c-pr2",
+    "pe & health 4": "c-peh",
+    "pe and health 4": "c-peh",
+    "peh 4": "c-peh",
     "peh": "c-peh",
-    "hgp": "c-hgp"
+    "hgp": "c-hgp",
+    "housekeeping": "c-ae",
+    "a&e": "c-ae"
   };
 
   const classData = {
@@ -1099,13 +1143,12 @@
         cleaners: { duties: { "Room": 1, "Stairs": 2, "Hallway": 3, "Front Ground": 4, "Pathway & Side Ground": 5 } },
         schedule: [
           { time: "6:30-7:00", name: "Housekeeping & Sanitation", type: "c-ae" },
-          { time: "7:00-8:30", name: "Intro to Philosophy", type: "c-phil" },
-          { time: "8:30-10:00", name: "UCSP", type: "c-ucsp" },
+          { time: "7:00-8:30", name: "Personal Development", type: "c-perdev" },
+          { time: "8:30-10:00", name: "LMDAF", type: "c-lmdaf" },
           { time: "10:00-10:15", name: "Recess Break", type: "break" },
-          { time: "10:15-11:45", name: "A&E", type: "c-ae" },
-          { time: "11:45-12:30", name: "Lunch Break", type: "lunch" },
-          { time: "12:30-2:00", name: "EAPP", type: "c-eapp" },
-          { time: "2:00-3:30", name: "MIL", type: "c-mil" }
+          { time: "10:15-11:45", name: "CPAR", type: "c-cpar" },
+          { time: "11:45-12:15", name: "Lunch Break", type: "lunch" },
+          { time: "12:15-1:45", name: "Practical Research 2", type: "c-pr2" }
         ]
       },
       2: {
@@ -1113,13 +1156,12 @@
         cleaners: { duties: { "Room": 2, "Stairs": 3, "Hallway": 4, "Front Ground": 5, "Pathway & Side Ground": 1 } },
         schedule: [
           { time: "6:30-7:00", name: "Housekeeping & Sanitation", type: "c-ae" },
-          { time: "7:00-8:30", name: "Intro to Philosophy", type: "c-phil" },
-          { time: "8:30-10:00", name: "UCSP", type: "c-ucsp" },
+          { time: "7:00-8:30", name: "Personal Development", type: "c-perdev" },
+          { time: "8:30-10:00", name: "LMDAF", type: "c-lmdaf" },
           { time: "10:00-10:15", name: "Recess Break", type: "break" },
-          { time: "10:15-11:45", name: "A&E", type: "c-ae" },
-          { time: "11:45-12:30", name: "Lunch Break", type: "lunch" },
-          { time: "12:30-2:00", name: "EAPP", type: "c-eapp" },
-          { time: "2:00-3:30", name: "MIL", type: "c-mil" }
+          { time: "10:15-11:45", name: "CPAR", type: "c-cpar" },
+          { time: "11:45-12:15", name: "Lunch Break", type: "lunch" },
+          { time: "12:15-1:45", name: "Practical Research 2", type: "c-pr2" }
         ]
       },
       3: {
@@ -1127,12 +1169,12 @@
         cleaners: { duties: { "Room": 3, "Stairs": 4, "Hallway": 5, "Front Ground": 1, "Pathway & Side Ground": 2 } },
         schedule: [
           { time: "6:30-7:00", name: "Housekeeping & Sanitation", type: "c-ae" },
-          { time: "7:00-8:30", name: "Intro to Philosophy", type: "c-phil" },
-          { time: "8:30-10:00", name: "UCSP", type: "c-ucsp" },
+          { time: "7:00-8:30", name: "Personal Development", type: "c-perdev" },
+          { time: "8:30-10:00", name: "LMDAF", type: "c-lmdaf" },
           { time: "10:00-10:15", name: "Recess Break", type: "break" },
-          { time: "10:15-11:45", name: "A&E", type: "c-ae" },
-          { time: "11:45-12:30", name: "Lunch Break", type: "lunch" },
-          { time: "12:30-2:00", name: "PEH 3", type: "c-peh" }
+          { time: "10:15-11:45", name: "CPAR", type: "c-cpar" },
+          { time: "11:45-12:15", name: "Lunch Break", type: "lunch" },
+          { time: "12:15-2:15", name: "PE & Health 4", type: "c-peh" }
         ]
       },
       4: {
@@ -1140,13 +1182,10 @@
         cleaners: { duties: { "Room": 4, "Stairs": 5, "Hallway": 1, "Front Ground": 2, "Pathway & Side Ground": 3 } },
         schedule: [
           { time: "6:30-7:00", name: "Housekeeping & Sanitation", type: "c-ae" },
-          { time: "7:00-8:30", name: "Intro to Philosophy", type: "c-phil" },
-          { time: "8:30-10:00", name: "EAPP", type: "c-eapp" },
+          { time: "7:00-8:30", name: "Personal Development", type: "c-perdev" },
+          { time: "8:30-10:00", name: "Practical Research 2", type: "c-pr2" },
           { time: "10:00-10:15", name: "Recess Break", type: "break" },
-          { time: "10:15-11:45", name: "A&E", type: "c-ae" },
-          { time: "11:45-12:30", name: "Lunch Break", type: "lunch" },
-          { time: "12:30-2:00", name: "MIL", type: "c-mil" },
-          { time: "2:00-3:30", name: "PEH 3", type: "c-peh" }
+          { time: "10:15-11:45", name: "CPAR", type: "c-cpar" }
         ]
       },
       5: {
@@ -1155,11 +1194,9 @@
         schedule: [
           { time: "6:30-7:00", name: "Housekeeping & Sanitation", type: "c-ae" },
           { time: "7:00-8:00", name: "HGP", type: "c-hgp" },
-          { time: "8:30-10:00", name: "EAPP", type: "c-eapp" },
+          { time: "8:30-10:00", name: "Practical Research 2", type: "c-pr2" },
           { time: "10:00-10:15", name: "Recess Break", type: "break" },
-          { time: "10:15-11:45", name: "UCSP", type: "c-ucsp" },
-          { time: "11:45-12:30", name: "Lunch Break", type: "lunch" },
-          { time: "12:30-2:00", name: "MIL", type: "c-mil" }
+          { time: "10:15-11:45", name: "LMDAF", type: "c-lmdaf" }
         ]
       }
     }
@@ -1220,7 +1257,6 @@
     const cleanSearch = searchString.toLowerCase().trim();
     if (!cleanSearch) return false;
 
-    // Normalizes strings to match fixed surname formatting
     let normalizedList = rawCompletedList.replace(/de la cruz/gi, 'Dela Cruz').replace(/labatique/gi, 'Libatique');
     
     const structuralInitials = computeMaskedInitialsList(normalizedList).toLowerCase();
@@ -1242,7 +1278,6 @@
     return structuralInitials.filter(Boolean).join(', ');
   }
 
-  // Adaptive Abbreviator utility processing single/double first initials dynamically
   function abbreviateNameString(name) {
     let cleanName = name.trim().replace(/de la cruz/gi, 'Dela Cruz').replace(/labatique/gi, 'Libatique');
     let segments = cleanName.split(/\s+/);
@@ -1250,7 +1285,6 @@
 
     let lastName = segments[segments.length - 1];
     
-    // Explicit condition checking for Justine Kaye Balina profile overlap match
     if (lastName.toLowerCase() === 'balina' && segments[0].toLowerCase() === 'justine') {
       return "J.K. Balina";
     }
@@ -1564,15 +1598,22 @@
     const targetDate = now.getDate();
     
     if (targetYear === 2026) {
-      if (targetMonth === 6 && targetDate < 15) {
-        blockVal.innerText = "Term 1: Opening Block"; blockSub.innerText = "Completed! Instructional phase launches tomorrow, June 15.";
-      } else if (targetMonth === 6 && targetDate === 15) {
-        blockVal.innerText = "Term 1: Instructional Block"; blockSub.innerText = "Day 1 of 55 (Official shift initiated)";
+      if (targetMonth === 9 && targetDate < 16) {
+        blockVal.innerText = "Term 1 Transition"; 
+        blockSub.innerText = "Term 2 officially launches on Sept 16, 2026.";
+      } else if ((targetMonth === 9 && targetDate >= 16) || targetMonth === 10 || targetMonth === 11 || (targetMonth === 12 && targetDate <= 18)) {
+        blockVal.innerText = "Term 2: Instructional Block"; 
+        blockSub.innerText = "Term 2 track actively ongoing (Sept 16 - Dec 18, 2026)";
+      } else if (targetMonth === 12 && targetDate > 18) {
+        blockVal.innerText = "Term 2: Year-End Break"; 
+        blockSub.innerText = "Year-end holiday break active until Term 3 (Jan 4, 2027)";
       } else {
-        blockVal.innerText = "Term 1: Instructional Block"; blockSub.innerText = "Instructional track currently ongoing";
+        blockVal.innerText = "Term Track Active"; 
+        blockSub.innerText = "See master calendar grid below";
       }
     } else {
-      blockVal.innerText = "Term Track Active"; blockSub.innerText = "See master grid records below";
+      blockVal.innerText = "Term Track Active"; 
+      blockSub.innerText = "See master grid records below";
     }
   }
 
